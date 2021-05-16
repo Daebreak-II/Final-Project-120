@@ -16,7 +16,7 @@ let config = {
     scene: [ Menu, Play, GameOver ],
     physics: {
         default: 'arcade',
-        arcade: {debug: false} ,
+        arcade: {debug: true} ,
     }
 }
 
@@ -32,6 +32,8 @@ let borderUISize = game.config.height / 45;
 let borderPadding = borderUISize / 9;
 
 // gameplay variables
+let moving = false;
+let movingAway = false;
 
 //Control Variables
 
