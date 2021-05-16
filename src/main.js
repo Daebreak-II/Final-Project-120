@@ -28,7 +28,10 @@ let game = new Phaser.Game(config);
 let keyF, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
 
 // game dimension variables
+let gameWidth = 8000;
+let gameHeight = 8000;
 let spriteScale = 1;
+let playerScale = 0.07;
 
 // gameplay variables
 
@@ -37,3 +40,18 @@ let spriteScale = 1;
 
 // volume variables
 let volumeMultiplier = 1;
+
+// font for the text (not final)
+let textConfig = {
+    fontFamily: 'Monotype Corsiva',
+    fontSize: '36px',
+    color: '#000',
+    stroke: '#000',
+    strokeThickness: 2,
+    align: 'center',
+    padding: {
+        top: 5,
+        bottom: 5,
+    },
+    width: 100
+}
