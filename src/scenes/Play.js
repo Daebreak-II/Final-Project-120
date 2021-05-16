@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
 
         for(let i = 0; i < 200; i++) {
-          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2);
+          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
         }
 
         for(let i = 0; i < 50; i++) {
@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
         this.player.setSize(this.player.width, this.player.height);
 
 
-        this.prey = new Prey(this, gameWidth/4, gameHeight/4, 'prey', 0).setOrigin(0.5, 0.5);
+        this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
         this.prey.setScale(0.1);
         this.prey.setSize(this.prey.width, this.prey.height);
 
