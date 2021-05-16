@@ -11,12 +11,12 @@ completed ???
 
 let config = {
     type: Phaser.CANVAS,
-    width: 800,  // originally 480
-    height: 1000,  // originally 600
+    width: 1200,
+    height: 800,
     scene: [ Menu, Play, GameOver ],
     physics: {
         default: 'arcade',
-        arcade: {debug: false} ,
+        arcade: {debug: true} ,
     }
 }
 
@@ -28,8 +28,7 @@ let game = new Phaser.Game(config);
 let keyF, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
 
 // game dimension variables
-let borderUISize = game.config.height / 45;
-let borderPadding = borderUISize / 9;
+let spriteScale = 1;
 
 // gameplay variables
 
