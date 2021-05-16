@@ -5,24 +5,34 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       // add object to existing scene
       scene.add.existing(this);
       scene.physics.add.existing(this);
-      this.moveSpeed = 20;
+      this.moveSpeed = 1000;
     }
 
 
     update() {
-      // movement
-      if(keyRIGHT.isDown && this.x < gameWidth - this.moveSpeed - (this.width * playerScale / 2)) {
-        this.x += this.moveSpeed;
+      // player's 8 direction movement
+      if(keyLEFT.isDown){
+        this.setVelocityX(this.moveSpeed * -1);                
       }
-      if(keyLEFT.isDown && this.x > 0 + this.moveSpeed + (this.width * playerScale / 2)) {
-        this.x -= this.moveSpeed;
+      else if(keyRIGHT.isDown){
+         this.setVelocityX(this.moveSpeed);
       }
-
-      if(keyDOWN.isDown && this.y < gameHeight - this.moveSpeed - (this.height * playerScale / 2)) {
-        this.y += this.moveSpeed;
+      else{
+         this.setVelocityX(0);
       }
-      if(keyUP.isDown && this.y > 0 + this.moveSpeed + (this.height * playerScale / 2)) {
-        this.y -= this.moveSpeed;
+      if(keyUP.isDown){
+          this.setVelocityY(this.moveSpeed * -1);                
+      }
+      else if(keyDOWN.isDown){
+          this.setVelocityY(this.moveSpeed);
+      }
+      else{
+          this.setVelocityY(0);
+      }
+      // If no movement keys are pressed character will stop moving
+      if(!keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown && !keyDOWN.isDown){
+         this.setVelocityY(0);
+         this.setVelocityX(0);
       }
     }
 

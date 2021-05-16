@@ -34,6 +34,8 @@ let spriteScale = 1;
 let playerScale = 0.07;
 
 // gameplay variables
+let moving = false;
+let movingAway = false;
 
 //Control Variables
 
