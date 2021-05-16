@@ -5,26 +5,30 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       // add object to existing scene
       scene.add.existing(this);
       scene.physics.add.existing(this);
-      this.moveSpeed = 1000;
+      this.moveSpeed = 500;
     }
 
 
     update() {
       // player's 8 direction movement
       if(keyLEFT.isDown){
-        this.setVelocityX(this.moveSpeed * -1);                
+        this.setVelocityX(this.moveSpeed * -1);  
+        playerMoving = true;              
       }
       else if(keyRIGHT.isDown){
          this.setVelocityX(this.moveSpeed);
+         playerMoving = true; 
       }
-      else{
+      else {
          this.setVelocityX(0);
       }
       if(keyUP.isDown){
-          this.setVelocityY(this.moveSpeed * -1);                
+          this.setVelocityY(this.moveSpeed * -1);
+          playerMoving = true;                 
       }
       else if(keyDOWN.isDown){
           this.setVelocityY(this.moveSpeed);
+          playerMoving = true; 
       }
       else{
           this.setVelocityY(0);
@@ -33,6 +37,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if(!keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown && !keyDOWN.isDown){
          this.setVelocityY(0);
          this.setVelocityX(0);
+         playerMoving = false; 
       }
     }
 

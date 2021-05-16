@@ -16,7 +16,10 @@ class Play extends Phaser.Scene {
       this.load.image('ground', './Assets/sprites/ground.png');
 
       // load audio
-      // this.load.audio('', './Assets/sfx/');
+      this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
+      this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
+      this.load.audio('music', './Assets/sfx/ambient_music.wav');
+      this.load.audio('walking', './Assets/sfx/walking.wav');
       //load animations
     }
 
@@ -65,6 +68,15 @@ class Play extends Phaser.Scene {
         this.player.body.collideWorldBounds = true;
         this.prey.body.collideWorldBounds = true;
 
+        // play music
+        this.ambientMusic = this.sound.add('music', { volume: 1 * volumeMultiplier, loop: true });
+        this.ambientMusic.play();
+
+        this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: true});
+        this.walking.setRate(0.75);
+        this.walking.play();
+        this.walking.pause();
+
       }
 
     update() {
@@ -75,6 +87,8 @@ class Play extends Phaser.Scene {
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
+        this.ambientMusic.stop();
+        this.walking.stop();
         this.scene.start('menuScene');
       }
 
@@ -133,7 +147,22 @@ class Play extends Phaser.Scene {
 
     // collisions 
     if(this.physics.collide(this.player, this.prey)) {
-      this.scene.start("gameOverScene");
+      let i = Phaser.Math.Between(1, 2);
+      if(i == 1) {
+        this.sound.play('scream1', { volume: 1 * volumeMultiplier});
+      } else {
+        this.sound.play('scream2', { volume: 1 * volumeMultiplier});
+      }
+      this.ambientMusic.stop();
+      this.walking.stop();
+      this.scene.start('gameOverScene');
     }    
+
+    // walking sounds
+    if(playerMoving == true && this.walking.isPaused == true) {
+      this.walking.resume();
+    } else if (playerMoving == false && this.walking.isPlaying == true) {
+      this.walking.pause();
+    }
   }
 }
