@@ -77,6 +77,20 @@ class Play extends Phaser.Scene {
         this.walking.play();
         this.walking.pause();
 
+        //adding text explaining your goal
+        let textConfig = {
+          fontFamily: 'Courier',
+          fontSize: '24px',
+          color: '#FFFFFF',
+          align: 'right',
+          padding: {
+              top: 5,
+              bottom: 5,
+          },
+          Width: 0
+        }
+        this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
+
       }
 
     update() {
@@ -89,6 +103,8 @@ class Play extends Phaser.Scene {
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
         this.ambientMusic.stop();
         this.walking.stop();
+        moving = false;
+        movingAway = false;
         this.scene.start('menuScene');
       }
 
@@ -98,19 +114,19 @@ class Play extends Phaser.Scene {
       moving = true;
       let changeDirection = Phaser.Math.Between(1, 4);
       if(changeDirection <= 1) {
-        this.prey.setVelocityX(100);
+        this.prey.setVelocityX(500);
       } else if(changeDirection <= 2) {
-        this.prey.setVelocityX(-100);
+        this.prey.setVelocityX(-500);
       } else if (changeDirection <= 3) {
-        this.prey.setVelocityY(100);
+        this.prey.setVelocityY(500);
       } else if (changeDirection <= 4) {
-        this.prey.setVelocityY(-100);
+        this.prey.setVelocityY(-500);
       }
 
       this.prey.setVelocityX(Phaser.Math.Between(-100, 100));
       this.prey.setVelocityY(Phaser.Math.Between(-100, 100));
 
-      this.clock = this.time.delayedCall(500, () => {
+      this.clock = this.time.delayedCall(1000, () => {
         moving = false;
       }, null, this);
       }
@@ -120,19 +136,19 @@ class Play extends Phaser.Scene {
           movingAway = true;
           moving = true;
           if(keyLEFT.isDown){
-            this.prey.setVelocityX(-200);                
+            this.prey.setVelocityX(-480);                
           }
           else if(keyRIGHT.isDown){
-            this.prey.setVelocityX(200);
+            this.prey.setVelocityX(480);
           }
           else{
             this.prey.setVelocityX(0);
           }
           if(keyUP.isDown){
-            this.prey.setVelocityY(-200);                
+            this.prey.setVelocityY(-480);                
           }
           else if(keyDOWN.isDown){
-            this.prey.setVelocityY(200);
+            this.prey.setVelocityY(480);
           }
           else{
             this.prey.setVelocityY(0);
@@ -155,6 +171,8 @@ class Play extends Phaser.Scene {
       }
       this.ambientMusic.stop();
       this.walking.stop();
+      moving = false;
+      movingAway = false;
       this.scene.start('gameOverScene');
     }    
 
