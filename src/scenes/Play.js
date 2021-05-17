@@ -19,7 +19,7 @@ class Play extends Phaser.Scene {
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
-      this.load.audio('walking', './Assets/sfx/walking.wav');
+      this.load.audio('walking', './Assets/sfx/Walking.wav');
       //load animations
     }
 
