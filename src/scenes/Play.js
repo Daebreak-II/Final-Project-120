@@ -20,6 +20,7 @@ class Play extends Phaser.Scene {
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
+      //why is this not working
       //load animations
     }
 
