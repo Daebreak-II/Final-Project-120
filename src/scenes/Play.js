@@ -72,10 +72,8 @@ class Play extends Phaser.Scene {
         this.ambientMusic = this.sound.add('music', { volume: 1 * volumeMultiplier, loop: true });
         this.ambientMusic.play();
 
-        this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: true});
+        this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
-        this.walking.play();
-        this.walking.pause();
 
         //adding text explaining your goal
         let textConfig = {
@@ -177,10 +175,9 @@ class Play extends Phaser.Scene {
     }    
 
     // walking sounds
-    if(playerMoving == true && this.walking.isPaused == true) {
-      this.walking.resume();
-    } else if (playerMoving == false && this.walking.isPlaying == true) {
-      this.walking.pause();
+    if(playerMoving == true && this.walking.isPlaying == false) {
+      this.walking.play();
     }
+    
   }
 }
