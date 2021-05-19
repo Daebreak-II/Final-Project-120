@@ -35,6 +35,9 @@ class Play extends Phaser.Scene {
       
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
+
+        //this.map = game.add.tilemap(); 
+        //this.floorLayer = this.map.createStaticLayer('groundTile', tileset);
         this.add.image(0, 0, 'border').setOrigin(0,0);
 
 
@@ -130,7 +133,7 @@ class Play extends Phaser.Scene {
       }, null, this);
       }
 
-      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 150){
+      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 250){
         if(!movingAway) {
           movingAway = true;
           moving = true;
