@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
       this.load.image('groundTile', './Assets/sprites/groundTile.png');
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('ground', './Assets/sprites/ground.png');
+      this.load.image('fog', './Assets/sprites/fogTileSet.png');
 
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
@@ -36,13 +37,12 @@ class Play extends Phaser.Scene {
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
 
-        //this.map = game.add.tilemap(); 
-        //this.floorLayer = this.map.createStaticLayer('groundTile', tileset);
+        
         this.add.image(0, 0, 'border').setOrigin(0,0);
 
 
         // adding background objects
-        this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
+        this.campfire = this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
 
         for(let i = 0; i < 200; i++) {
           this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
@@ -79,6 +79,22 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
+        this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameHeight, gameWidth);
+        this.deathZone = new Phaser.Geom.Circle(0, 0, 500);
+        this.particles = this.add.particles('fog');
+        this.emitter = this.particles.createEmitter({
+          speed: { min: -20, max: 20 },
+          lifespan: 10000,
+          quantity: 1,
+          scale: { min: 3, max: 10 },
+          alpha: { start: 1, end: 0 },
+          blendMode: 'ADD',
+          emitZone: { source: this.emitZone },
+          deathZone: { type: 'onEnter', source: this.deathZone }
+        });
+        this.graphics = this.add.graphics();
+        this.deathZone.x = this.player.x;
+        this.deathZone.y = this.player.y;
         //adding text explaining your goal
         let textConfig = {
           fontFamily: 'Courier',
@@ -100,6 +116,14 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
 
+      this.deathZone.x = this.player.x;
+      this.deathZone.y = this.player.y;
+
+      this.graphics.clear();
+
+      this.graphics.lineStyle(1, 0x00ff00, 1);
+
+      this.graphics.strokeCircleShape(this.deathZone);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
