@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
       this.load.image('groundTile', './Assets/sprites/groundTile.png');
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('ground', './Assets/sprites/ground.png');
-      this.load.image('fog', './Assets/sprites/fogTileSet.png');
+      this.load.image('fog', './Assets/sprites/fogSprite1.png');
 
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
@@ -79,15 +79,15 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
-        this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameHeight, gameWidth);
-        this.deathZone = new Phaser.Geom.Circle(0, 0, 500);
+        this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
+        this.deathZone = new Phaser.Geom.Circle(0, 0, 400);
         this.particles = this.add.particles('fog');
         this.emitter = this.particles.createEmitter({
           speed: { min: -20, max: 20 },
-          lifespan: 10000,
+          lifespan: 30000,
           quantity: 1,
-          scale: { min: 3, max: 10 },
-          alpha: { start: 1, end: 0 },
+          scale: { min: 1, max: 12 },
+          alpha: { start: 0.8, end: 0 },
           blendMode: 'ADD',
           emitZone: { source: this.emitZone },
           deathZone: { type: 'onEnter', source: this.deathZone }
@@ -115,6 +115,9 @@ class Play extends Phaser.Scene {
       // updating objects
       this.player.update();
       this.prey.update();
+
+      this.emitZone.x = this.player.x - 3600 / 2;
+      this.emitZone.y = this.player.y - 2400 / 2;
 
       this.deathZone.x = this.player.x;
       this.deathZone.y = this.player.y;
