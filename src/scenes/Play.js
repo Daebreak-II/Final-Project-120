@@ -33,6 +33,7 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
       
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
@@ -80,21 +81,30 @@ class Play extends Phaser.Scene {
         this.walking.setRate(0.75);
 
         this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
-        this.deathZone = new Phaser.Geom.Circle(0, 0, 400);
-        this.particles = this.add.particles('fog');
-        this.emitter = this.particles.createEmitter({
-          speed: { min: -20, max: 20 },
-          lifespan: 30000,
-          quantity: 1,
-          scale: { min: 1, max: 12 },
-          alpha: { start: 0.8, end: 0 },
-          blendMode: 'ADD',
-          emitZone: { source: this.emitZone },
-          deathZone: { type: 'onEnter', source: this.deathZone }
-        });
-        this.graphics = this.add.graphics();
-        this.deathZone.x = this.player.x;
-        this.deathZone.y = this.player.y;
+        
+        this.deathZone = new Phaser.Geom.Circle(0, 0, 300);
+        this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
+
+        
+        
+
+        // this.particles = this.add.particles('fog');
+        // this.emitter = this.particles.createEmitter({
+        //   speed: { min: -20, max: 20 },
+        //   lifespan: 30000,
+        //   quantity: 2,
+        //   scale: { min: 1, max: 8 },
+        //   alpha: { start: 0.8, end: 0 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.emitZone },
+        //   deathZone: { type: 'onEnter', source: (this.deathZone2, this.deathZone) },
+        //   //deathZone: { type: 'onEnter', source: this.deathZone }
+        // });
+
+        // this.graphics = this.add.graphics();
+        // this.deathZone2.x = this.campfire.x;
+        // this.deathZone2.y = this.campfire.y;
+        
         //adding text explaining your goal
         let textConfig = {
           fontFamily: 'Courier',
@@ -108,7 +118,7 @@ class Play extends Phaser.Scene {
           Width: 0
         }
         this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
-
+        this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
       }
 
     update() {
@@ -116,17 +126,17 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
 
-      this.emitZone.x = this.player.x - 3600 / 2;
-      this.emitZone.y = this.player.y - 2400 / 2;
+      // this.emitZone.x = this.player.x - 3600 / 2;
+      // this.emitZone.y = this.player.y - 2400 / 2;
 
-      this.deathZone.x = this.player.x;
-      this.deathZone.y = this.player.y;
+      // this.deathZone.x = this.player.x;
+      // this.deathZone.y = this.player.y;
 
-      this.graphics.clear();
+      // this.graphics.clear();
 
-      this.graphics.lineStyle(1, 0x00ff00, 1);
+      // this.graphics.lineStyle(1, 0x00ff00, 1);
 
-      this.graphics.strokeCircleShape(this.deathZone);
+      // this.graphics.strokeCircleShape(this.deathZone2);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -137,6 +147,61 @@ class Play extends Phaser.Scene {
         this.scene.start('menuScene');
       }
 
+      this.playerSpeaking.x = this.player.x;
+      this.playerSpeaking.y = this.player.y;
+      // Smell mechanic
+      if(Phaser.Input.Keyboard.JustDown(keyS) && !smellUse){
+        smellUse = true;
+        let differentLine = Phaser.Math.Between(1, 3);
+
+        // When the player is close to the prey
+        if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 1000){
+          if(differentLine <= 1){
+            this.playerSpeaking.text = 'Close';
+          }
+          else if(differentLine <= 2){
+            this.playerSpeaking.text = 'He is around here';
+          }
+          else if(differentLine <= 3){
+            this.playerSpeaking.text = 'I can smell him';
+          }    
+        }
+
+        //when the player is somewhat close
+        else if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 2000){
+          if(differentLine <= 1){
+            this.playerSpeaking.text = 'A bit far';
+          }
+          else if(differentLine <= 2){
+            this.playerSpeaking.text = 'Not here, but we are getting closer';
+          }
+          else if(differentLine <= 3){
+            this.playerSpeaking.text = 'He is somewhere close by';
+          }    
+        }
+
+        //When the player is really far
+        else if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) > 2000){
+          if(differentLine <= 1){
+            this.playerSpeaking.text = 'He is not around here';
+          }
+          else if(differentLine <= 2){
+            this.playerSpeaking.text = 'Cannot hear him or smell him';
+          }
+          else if(differentLine <= 3){
+            this.playerSpeaking.text = 'He is somewhere else';
+          }    
+        }
+
+        this.clock = this.time.delayedCall(2000, () => {
+          this.playerSpeaking.text = '';
+        }, null, this);
+        // Giving a timer to the smell so it cannot be spam
+        this.clock = this.time.delayedCall(5000, () => {
+          smellUse = false;
+        }, null, this);
+
+      }
 
       //Prey's movement
       if(!moving) {
@@ -160,6 +225,7 @@ class Play extends Phaser.Scene {
       }, null, this);
       }
 
+      
       if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 250){
         if(!movingAway) {
           movingAway = true;
