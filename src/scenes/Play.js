@@ -80,30 +80,37 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
-        this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
+        // this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
+        this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight);
         
-        this.deathZone = new Phaser.Geom.Circle(0, 0, 300);
+        this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
 
-        
+        let a = this.deathZone;
+        let b = this.deathZone2;
+        let superDeathZone = {
+          contains(x, y){
+            return a.contains(x,y) || b.contains(x,y);
+          }
+        }        
         
 
-        // this.particles = this.add.particles('fog');
-        // this.emitter = this.particles.createEmitter({
-        //   speed: { min: -20, max: 20 },
-        //   lifespan: 30000,
-        //   quantity: 2,
-        //   scale: { min: 1, max: 8 },
-        //   alpha: { start: 0.8, end: 0 },
-        //   blendMode: 'ADD',
-        //   emitZone: { source: this.emitZone },
-        //   deathZone: { type: 'onEnter', source: (this.deathZone2, this.deathZone) },
-        //   //deathZone: { type: 'onEnter', source: this.deathZone }
-        // });
+        this.particles = this.add.particles('fog');
+        this.emitter = this.particles.createEmitter({
+          speed: { min: -100, max: 100 },
+          lifespan: 20000,
+          quantity: 5,
+          //frequency: 0.5,
+          scale: { min: 0.5, max: 9 },
+          alpha: { start: 0, end: 1 },
+          blendMode: 'ADD',
+          emitZone: { source: this.emitZone },
+          deathZone: { type: 'onEnter', source: superDeathZone },
+        });
 
-        // this.graphics = this.add.graphics();
-        // this.deathZone2.x = this.campfire.x;
-        // this.deathZone2.y = this.campfire.y;
+        this.graphics = this.add.graphics();
+        this.deathZone2.x = this.campfire.x;
+        this.deathZone2.y = this.campfire.y;
         
         //adding text explaining your goal
         let textConfig = {
@@ -126,17 +133,17 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
 
-      // this.emitZone.x = this.player.x - 3600 / 2;
-      // this.emitZone.y = this.player.y - 2400 / 2;
+      this.emitZone.x = this.player.x - 3600 / 2;
+      this.emitZone.y = this.player.y - 2400 / 2;
 
-      // this.deathZone.x = this.player.x;
-      // this.deathZone.y = this.player.y;
+      this.deathZone.x = this.player.x;
+      this.deathZone.y = this.player.y;
 
-      // this.graphics.clear();
+      this.graphics.clear();
 
-      // this.graphics.lineStyle(1, 0x00ff00, 1);
+      this.graphics.lineStyle(1, 0x00ff00, 1);
 
-      // this.graphics.strokeCircleShape(this.deathZone2);
+      this.graphics.strokeCircleShape(this.deathZone2);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
