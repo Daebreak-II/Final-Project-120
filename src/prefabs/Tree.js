@@ -6,6 +6,9 @@ class Tree extends Phaser.Physics.Arcade.Sprite {
       scene.add.existing(this);
       scene.physics.add.existing(this);
 
+      this.setOrigin(0.5, 0);
+      this.setSize(this.width, this.height);
+      this.setScale(0.1);
     }
 
 
