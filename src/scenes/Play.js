@@ -15,6 +15,7 @@ class Play extends Phaser.Scene {
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('ground', './Assets/sprites/ground.png');
       this.load.image('fog', './Assets/sprites/fogSprite1.png');
+      this.load.image('smell', './Assets/sprites/scentSprite.png');
 
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
@@ -82,31 +83,58 @@ class Play extends Phaser.Scene {
 
         // this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight);
+        this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         
         this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
-
-        let a = this.deathZone;
-        let b = this.deathZone2;
-        let superDeathZone = {
-          contains(x, y){
-            return a.contains(x,y) || b.contains(x,y);
-          }
-        }        
+        //this.image = this.add.image(gameHeight/2, gameWidth/2, 'smell');
+        // let a = this.deathZone;
+        // let b = this.deathZone2;
+        // let superDeathZone = {
+        //   contains(x, y){
+        //     return a.contains(x,y) || b.contains(x,y);
+        //   }
+        // }        
         
 
-        this.particles = this.add.particles('fog');
-        this.emitter = this.particles.createEmitter({
+        // this.particles = this.add.particles('fog');
+         this.smellParticles = this.add.particles('smell');
+        // this.emitter = this.particles.createEmitter({
+        //   speed: { min: -100, max: 100 },
+        //   lifespan: 20000,
+        //   quantity: 1,
+        //   //frequency: 0.5,
+        //   scale: { min: 0.5, max: 9 },
+        //   //alpha: { start: 0, end: 1 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: trandomemitZone },
+        //   type: 'onEnter', source: superDeathZone },
+        // });
+        this.smellEmitter = this.smellParticles.createEmitter({
           speed: { min: -100, max: 100 },
-          lifespan: 20000,
-          quantity: 5,
-          //frequency: 0.5,
-          scale: { min: 0.5, max: 9 },
-          alpha: { start: 0, end: 1 },
+          //x: this.smellLine.x, y: this.smellLine.y,
+          lifespan: 2000,
+          //radial = true,
+          //angle: ,
+          //rotate: 0,
+          //quantity: 1,
+          frequency: 100,
+          scale: 0.05,
+          alpha: { start: 1, end: 0 },
           blendMode: 'ADD',
-          emitZone: { source: this.emitZone },
-          deathZone: { type: 'onEnter', source: superDeathZone },
+          emitZone: { type: 'random', source: this.smellLine},
+          //deathZone: { type: 'onEnter', source: superDeathZone },
         });
+
+        this.smellEmitter.setAlpha(0);
+        this.fade = 0;
+        this.fadeOut = 0;
+        //this.smellEmitter.setAngle(Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y));
+
+        // this.emitter.setAlpha(function (p, k, t) {
+        //   return 1 - 2 * Math.abs(t - 0.5);
+        // });
+        
 
         this.graphics = this.add.graphics();
         this.deathZone2.x = this.campfire.x;
@@ -138,12 +166,19 @@ class Play extends Phaser.Scene {
 
       this.deathZone.x = this.player.x;
       this.deathZone.y = this.player.y;
+      this.rotation = (Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y) + Math.PI / 2) * 10;
+      
+      //this.smellParticles.angle = this.rotation;
+
+      //console.log(this.rotation);
+
+      this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
 
       this.graphics.clear();
 
       this.graphics.lineStyle(1, 0x00ff00, 1);
 
-      this.graphics.strokeCircleShape(this.deathZone2);
+      this.graphics.strokeLineShape(this.smellLine);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -156,56 +191,57 @@ class Play extends Phaser.Scene {
 
       this.playerSpeaking.x = this.player.x;
       this.playerSpeaking.y = this.player.y;
+      
       // Smell mechanic
       if(Phaser.Input.Keyboard.JustDown(keyS) && !smellUse){
         smellUse = true;
-        let differentLine = Phaser.Math.Between(1, 3);
 
-        // When the player is close to the prey
-        if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 1000){
-          if(differentLine <= 1){
-            this.playerSpeaking.text = 'Close';
-          }
-          else if(differentLine <= 2){
-            this.playerSpeaking.text = 'He is around here';
-          }
-          else if(differentLine <= 3){
-            this.playerSpeaking.text = 'I can smell him';
-          }    
-        }
+        // for(this.fade = 0; this.fade < 10; this.fade += 0.01){
+        //   //console.log(this.fade);
+        //   this.smellEmitter.setAlpha(this.fade);
+        // }
 
-        //when the player is somewhat close
-        else if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 2000){
-          if(differentLine <= 1){
-            this.playerSpeaking.text = 'A bit far';
-          }
-          else if(differentLine <= 2){
-            this.playerSpeaking.text = 'Not here, but we are getting closer';
-          }
-          else if(differentLine <= 3){
-            this.playerSpeaking.text = 'He is somewhere close by';
-          }    
-        }
-
-        //When the player is really far
-        else if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) > 2000){
-          if(differentLine <= 1){
-            this.playerSpeaking.text = 'He is not around here';
-          }
-          else if(differentLine <= 2){
-            this.playerSpeaking.text = 'Cannot hear him or smell him';
-          }
-          else if(differentLine <= 3){
-            this.playerSpeaking.text = 'He is somewhere else';
-          }    
-        }
-
-        this.clock = this.time.delayedCall(2000, () => {
-          this.playerSpeaking.text = '';
+        this.smellEmitter.setAlpha(0);
+        this.clock = this.time.delayedCall(1000, () => {
+          this.smellEmitter.setAlpha(0.2);
         }, null, this);
-        // Giving a timer to the smell so it cannot be spam
-        this.clock = this.time.delayedCall(5000, () => {
-          smellUse = false;
+        this.clock = this.time.delayedCall(2000, () => {
+          this.smellEmitter.setAlpha(0.4);
+        }, null, this);
+        this.clock = this.time.delayedCall(3000, () => {
+          this.smellEmitter.setAlpha(0.6);
+        }, null, this);
+        this.clock = this.time.delayedCall(4000, () => {
+          this.smellEmitter.setAlpha(0.8);
+        }, null, this);
+        this.clock = this.time.delayedCall(6000, () => {
+          this.smellEmitter.setAlpha(function (p, k, t) {
+            return 1 - 2 * Math.abs(t - 0.5);
+          });
+        }, null, this);
+        
+        
+
+        this.clock = this.time.delayedCall(15000, () => {
+          this.clock = this.time.delayedCall(1000, () => {
+            this.smellEmitter.setAlpha(0.8);
+          }, null, this);
+          this.clock = this.time.delayedCall(2000, () => {
+            this.smellEmitter.setAlpha(0.6);
+          }, null, this);
+          this.clock = this.time.delayedCall(3000, () => {
+            this.smellEmitter.setAlpha(0.4);
+          }, null, this);
+          this.clock = this.time.delayedCall(4000, () => {
+            this.smellEmitter.setAlpha(0.2);
+          }, null, this);
+          this.clock = this.time.delayedCall(5000, () => {
+            this.smellEmitter.setAlpha(0);
+          }, null, this);
+          this.clock = this.time.delayedCall(15000, () => {
+            smellUse = false;
+            this.fade = 0;
+          }, null, this);
         }, null, this);
 
       }
