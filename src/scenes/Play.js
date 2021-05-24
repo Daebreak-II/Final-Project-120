@@ -50,12 +50,13 @@ class Play extends Phaser.Scene {
         for(let i = 0; i < 200; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
           this.tree = this.treeGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree');
-          this.tree.setSize(800, 2000);
+          this.tree.setSize(200, 1500);
+          this.tree.setOffset(580, 910); // needs to be changed for proper scaling
           this.tree.body.immovable = true;
           this.tree.body.moves = false;
         }
         this.treeGroup.setOrigin(0.5, 0.5);
-        this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
+        // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
         this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
 
         
