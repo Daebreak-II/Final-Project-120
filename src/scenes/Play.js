@@ -37,17 +37,27 @@ class Play extends Phaser.Scene {
       
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
-
-        
         this.add.image(0, 0, 'border').setOrigin(0,0);
 
 
         // adding background objects
         this.campfire = this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
 
+        this.treeGroup = this.physics.add.group();
+        this.treeGroup.runChildUpdate = true;
+
         for(let i = 0; i < 200; i++) {
-          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+          // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+          this.tree = this.treeGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree');
+          this.tree.setSize(800, 2000);
+          this.tree.body.immovable = true;
+          this.tree.body.moves = false;
         }
+        this.treeGroup.setOrigin(0.5, 0.5);
+        this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
+        this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
+
+        
 
         for(let i = 0; i < 50; i++) {
           this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2).setAngle(Phaser.Math.Between(-25, 25));
@@ -80,6 +90,7 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
+        // fog handling
         // this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight);
         
@@ -97,12 +108,12 @@ class Play extends Phaser.Scene {
 
         this.particles = this.add.particles('fog');
         this.emitter = this.particles.createEmitter({
-          speed: { min: -100, max: 100 },
-          lifespan: 20000,
+          speed: { min: -10, max: 10 },
+          lifespan: 60000,
           quantity: 5,
           //frequency: 0.5,
-          scale: { min: 0.5, max: 9 },
-          alpha: { start: 0, end: 1 },
+          scale: { min: 1, max: 5 },
+          alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.emitZone },
           deathZone: { type: 'onEnter', source: superDeathZone },
@@ -132,6 +143,7 @@ class Play extends Phaser.Scene {
       // updating objects
       this.player.update();
       this.prey.update();
+      
 
       this.emitZone.x = this.player.x - 3600 / 2;
       this.emitZone.y = this.player.y - 2400 / 2;
@@ -277,6 +289,8 @@ class Play extends Phaser.Scene {
       movingAway = false;
       this.scene.start('gameOverScene');
     }    
+
+    this.physics.collide(this.player, this.treeGroup);
 
     // walking sounds
     if(playerMoving == true && this.walking.isPlaying == false) {
