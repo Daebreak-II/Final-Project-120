@@ -93,6 +93,8 @@ class Play extends Phaser.Scene {
 
         // fog handling
         // this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
+        this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
+        this.blackScreen.alpha = 0;
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         
@@ -122,19 +124,18 @@ class Play extends Phaser.Scene {
         //   type: 'onEnter', source: superDeathZone },
         // });
         this.smellEmitter = this.smellParticles.createEmitter({
-          speed: { min: -100, max: 100 },
+          //speed: { min: -10, max: 10 },
           //x: this.smellLine.x, y: this.smellLine.y,
-          lifespan: 2000,
+          lifespan: 1500,
           //radial = true,
           //angle: ,
-          //rotate: 0,
+          //rotate: 45,
           //quantity: 1,
-          frequency: 100,
-          scale: 0.05,
+          frequency: 500,
+          scale: 0.08,
           alpha: { start: 1, end: 0 },
           blendMode: 'ADD',
           emitZone: { type: 'random', source: this.smellLine},
-          //deathZone: { type: 'onEnter', source: superDeathZone },
         });
 
         this.smellEmitter.setAlpha(0);
@@ -163,14 +164,20 @@ class Play extends Phaser.Scene {
           },
           Width: 0
         }
+        
         this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
+        
       }
 
     update() {
       // updating objects
       this.player.update();
       this.prey.update();
+
+      this.blackScreen.x = this.player.x;
+      this.blackScreen.y = this.player.y;
+
       
 
       this.emitZone.x = this.player.x - 3600 / 2;
@@ -178,8 +185,12 @@ class Play extends Phaser.Scene {
 
       this.deathZone.x = this.player.x;
       this.deathZone.y = this.player.y;
-      this.rotation = (Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y) + Math.PI / 2) * 10;
+      this.rotation = (Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y));
       
+      this.smellEmitter.forEachAlive((particle) => {
+          particle.rotation = this.rotation;
+        
+      });
       //this.smellParticles.angle = this.rotation;
 
       //console.log(this.rotation);
@@ -205,57 +216,55 @@ class Play extends Phaser.Scene {
       this.playerSpeaking.y = this.player.y;
       
       // Smell mechanic
-      if(Phaser.Input.Keyboard.JustDown(keyS) && !smellUse){
+      if(keyS.isDown && !smellUse){
         smellUse = true;
+        //fading in the smell particle
+        // this.smellEmitter.setAlpha(0);
+        // this.clock = this.time.delayedCall(1000, () => {
+        //   this.smellEmitter.setAlpha(0.2);
+        // }, null, this);
+        // this.clock = this.time.delayedCall(2000, () => {
+        //   this.smellEmitter.setAlpha(0.4);
+        // }, null, this);
+        // this.clock = this.time.delayedCall(3000, () => {
+        //   this.smellEmitter.setAlpha(0.6);
+        // }, null, this);
+        // this.clock = this.time.delayedCall(4000, () => {
+        //   this.smellEmitter.setAlpha(0.8);
+        // }, null, this);
 
-        // for(this.fade = 0; this.fade < 10; this.fade += 0.01){
-        //   //console.log(this.fade);
-        //   this.smellEmitter.setAlpha(this.fade);
-        // }
-
-        this.smellEmitter.setAlpha(0);
-        this.clock = this.time.delayedCall(1000, () => {
-          this.smellEmitter.setAlpha(0.2);
-        }, null, this);
-        this.clock = this.time.delayedCall(2000, () => {
-          this.smellEmitter.setAlpha(0.4);
-        }, null, this);
-        this.clock = this.time.delayedCall(3000, () => {
-          this.smellEmitter.setAlpha(0.6);
-        }, null, this);
-        this.clock = this.time.delayedCall(4000, () => {
-          this.smellEmitter.setAlpha(0.8);
-        }, null, this);
-        this.clock = this.time.delayedCall(6000, () => {
+        // //this helps the particles fade in and out instead of popping of existance
+        // this.clock = this.time.delayedCall(6000, () => {
+          this.blackScreen.alpha = 0.8;
           this.smellEmitter.setAlpha(function (p, k, t) {
             return 1 - 2 * Math.abs(t - 0.5);
           });
-        }, null, this);
+          
+        // }, null, this);
         
         
+        
+      }
 
-        this.clock = this.time.delayedCall(15000, () => {
-          this.clock = this.time.delayedCall(1000, () => {
-            this.smellEmitter.setAlpha(0.8);
-          }, null, this);
-          this.clock = this.time.delayedCall(2000, () => {
-            this.smellEmitter.setAlpha(0.6);
-          }, null, this);
-          this.clock = this.time.delayedCall(3000, () => {
-            this.smellEmitter.setAlpha(0.4);
-          }, null, this);
-          this.clock = this.time.delayedCall(4000, () => {
-            this.smellEmitter.setAlpha(0.2);
-          }, null, this);
-          this.clock = this.time.delayedCall(5000, () => {
-            this.smellEmitter.setAlpha(0);
-          }, null, this);
-          this.clock = this.time.delayedCall(15000, () => {
-            smellUse = false;
-            this.fade = 0;
-          }, null, this);
+      //Once the smell key is not being pressed the smell should start dissapearing
+      if(!keyS.isDown && smellUse){
+        smellUse = false;
+        this.blackScreen.alpha = 0;
+        this.clock = this.time.delayedCall(1000, () => {
+          this.smellEmitter.setAlpha(0.8);
         }, null, this);
-
+        this.clock = this.time.delayedCall(2000, () => {
+          this.smellEmitter.setAlpha(0.6);
+        }, null, this);
+        this.clock = this.time.delayedCall(3000, () => {
+          this.smellEmitter.setAlpha(0.4);
+        }, null, this);
+        this.clock = this.time.delayedCall(4000, () => {
+          this.smellEmitter.setAlpha(0.2);
+        }, null, this);
+        this.clock = this.time.delayedCall(5000, () => {
+          this.smellEmitter.setAlpha(0);
+        }, null, this);
       }
 
       //Prey's movement
