@@ -16,6 +16,7 @@ class Play extends Phaser.Scene {
       this.load.image('ground', './Assets/sprites/ground.png');
       this.load.image('fog', './Assets/sprites/fogSprite1.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
+      this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
 
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
@@ -40,6 +41,12 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.add.image(0, 0, 'border').setOrigin(0,0);
 
+        // add overlay
+        this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
+        this.overlay.setScale(1.4);
+        this.overlay.setAlpha(0.95);
+        this.overlay.depth = 10; // temporary, need a way to bring to absolute top
+
 
         // adding background objects
         this.campfire = this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
@@ -50,12 +57,13 @@ class Play extends Phaser.Scene {
         for(let i = 0; i < 200; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
           this.tree = this.treeGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree');
-          this.tree.setSize(800, 2000);
+          this.tree.setSize(200, 1500);
+          this.tree.setOffset(580, 910); // needs to be changed for proper scaling
           this.tree.body.immovable = true;
           this.tree.body.moves = false;
         }
         this.treeGroup.setOrigin(0.5, 0.5);
-        this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
+        // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
         this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
 
         
@@ -64,7 +72,7 @@ class Play extends Phaser.Scene {
           this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2).setAngle(Phaser.Math.Between(-25, 25));
         }
 
-        // adding in objects
+        // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
         this.player.setScale(playerScale);
         this.player.setSize(this.player.width, this.player.height);
@@ -100,29 +108,30 @@ class Play extends Phaser.Scene {
         
         this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
-        //this.image = this.add.image(gameHeight/2, gameWidth/2, 'smell');
-        // let a = this.deathZone;
-        // let b = this.deathZone2;
-        // let superDeathZone = {
-        //   contains(x, y){
-        //     return a.contains(x,y) || b.contains(x,y);
-        //   }
-        // }        
+        this.image = this.add.image(gameHeight/2, gameWidth/2, 'smell');
+        let a = this.deathZone;
+        let b = this.deathZone2;
+        let superDeathZone = {
+          contains(x, y){
+            return a.contains(x,y) || b.contains(x,y);
+          }
+        }        
         
 
-        // this.particles = this.add.particles('fog');
-         this.smellParticles = this.add.particles('smell');
-        // this.emitter = this.particles.createEmitter({
-        //   speed: { min: -100, max: 100 },
-        //   lifespan: 20000,
-        //   quantity: 1,
-        //   //frequency: 0.5,
-        //   scale: { min: 0.5, max: 9 },
-        //   //alpha: { start: 0, end: 1 },
-        //   blendMode: 'ADD',
-        //   emitZone: { source: trandomemitZone },
-        //   type: 'onEnter', source: superDeathZone },
-        // });
+        this.fogParticles = this.add.particles('fog');
+        this.fogEmitter = this.fogParticles.createEmitter({
+          speed: { min: -100, max: 100 },
+          lifespan: 20000,
+          quantity: 1,
+          frequency: 0.5,
+          scale: { min: 0.5, max: 9 },
+          alpha: { start: 0, end: 1 },
+          blendMode: 'ADD',
+          emitZone: { source: trandomemitZone },
+          type: 'onEnter', source: superDeathZone },
+        });
+        
+        this.smellParticles = this.add.particles('smell');
         this.smellEmitter = this.smellParticles.createEmitter({
           //speed: { min: -10, max: 10 },
           //x: this.smellLine.x, y: this.smellLine.y,
