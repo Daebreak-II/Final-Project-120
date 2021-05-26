@@ -127,8 +127,8 @@ class Play extends Phaser.Scene {
           scale: { min: 0.5, max: 9 },
           alpha: { start: 0, end: 1 },
           blendMode: 'ADD',
-          emitZone: { source: trandomemitZone ,
-          type:  'onEnter', source: superDeathZone },
+          emitZone: { source: this.emitZone },
+          deathzone: {type:  'onEnter', source: superDeathZone },
         });
         
         this.smellParticles = this.add.particles('smell');
