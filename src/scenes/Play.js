@@ -14,7 +14,10 @@ class Play extends Phaser.Scene {
       this.load.image('groundTile', './Assets/sprites/groundTile.png');
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('ground', './Assets/sprites/ground.png');
-      this.load.image('fog', './Assets/sprites/fogSprite1.png');
+      this.load.image('fog1', './Assets/sprites/fogSprite1.png');
+      this.load.image('fog2', './Assets/sprites/fogSprite2.png');
+      this.load.image('fog3', './Assets/sprites/fogSprite3.png');
+      this.load.image('fog4', './Assets/sprites/fogSprite4.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
       this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
 
@@ -23,7 +26,6 @@ class Play extends Phaser.Scene {
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
-      //why is this not working
       //load animations
     }
 
@@ -43,7 +45,7 @@ class Play extends Phaser.Scene {
 
         // add overlay
         this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
-        this.overlay.setScale(1);
+        this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
         this.overlay.depth = 10; // temporary, need a way to bring to absolute top
 
@@ -99,13 +101,13 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
-        // fog handling
-        this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
+        // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
+
+        this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
-        
         this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
         let a = this.deathZone;
@@ -117,20 +119,58 @@ class Play extends Phaser.Scene {
         }        
         
 
-        this.fogParticles = this.add.particles('fog');
-        this.fogEmitter = this.fogParticles.createEmitter({
+
+        this.fogParticle1 = this.add.particles('fog1');
+        this.fogParticle2 = this.add.particles('fog2');
+        this.fogParticle3 = this.add.particles('fog3');
+        this.fogParticle4 = this.add.particles('fog4');
+        this.smellParticles = this.add.particles('smell');
+
+        this.fogEmitter1 = this.fogParticle1.createEmitter({
           speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 400,
+          frequency: 1600,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
-        
-        this.smellParticles = this.add.particles('smell');
+        this.fogEmitter2 = this.fogParticle2.createEmitter({
+          speed: { min: -10, max: 10 },
+          lifespan: 20000,
+          quantity: 1,
+          frequency: 1600,
+          scale: { min: 2 , max: 4 },
+          alpha: { start: 0, end: 0.8 },
+          blendMode: 'ADD',
+          emitZone: { source: this.fogEmitZone },
+          deathzone: {type:  'onEnter', source: superDeathZone },
+        });
+        this.fogEmitter3 = this.fogParticle3.createEmitter({
+          speed: { min: -10, max: 10 },
+          lifespan: 20000,
+          quantity: 1,
+          frequency: 1600,
+          scale: { min: 2 , max: 4 },
+          alpha: { start: 0, end: 0.8 },
+          blendMode: 'ADD',
+          emitZone: { source: this.fogEmitZone },
+          deathzone: {type:  'onEnter', source: superDeathZone },
+        });
+        this.fogEmitter4 = this.fogParticle4.createEmitter({
+          speed: { min: -10, max: 10 },
+          lifespan: 20000,
+          quantity: 1,
+          frequency: 1600,
+          scale: { min: 2 , max: 4 },
+          alpha: { start: 0, end: 0.8 },
+          blendMode: 'ADD',
+          emitZone: { source: this.fogEmitZone },
+          deathzone: {type:  'onEnter', source: superDeathZone },
+        });
+
         this.smellEmitter = this.smellParticles.createEmitter({
           //speed: { min: -10, max: 10 },
           //x: this.smellLine.x, y: this.smellLine.y,
