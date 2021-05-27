@@ -17,6 +17,9 @@ class Play extends Phaser.Scene {
       this.load.image('fog', './Assets/sprites/fogSprite1.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
       this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
+      this.load.image('cabin', './Assets/sprites/cabinSprite.png');
+      this.load.image('river', './Assets/sprites/riverSprite.png');
+      
 
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
@@ -49,7 +52,18 @@ class Play extends Phaser.Scene {
 
 
         // adding background objects
-        this.campfire = this.add.image(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
+        this.campfire = this.add.sprite(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
+        this.cabin = this.physics.add.image(gameWidth / 2 + 1400, 1100 ,'cabin');
+        // this.add.existing(this.cabin);
+        // this.physics.add.existing(this.cabin);
+        
+        this.cabin.setScale(0.5);
+        this.cabin.setSize(1200,600);
+        this.cabin.setOffset(130, 910);
+        this.cabin.setOrigin(0.5,0);
+        this.cabin.body.immovable = true;
+        this.cabin.body.moves = false;
+        
 
         this.treeGroup = this.physics.add.group();
         this.treeGroup.runChildUpdate = true;
@@ -183,8 +197,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-      this.overlay.x = this.player.x;
-      this.overlay.y = this.player.y;
+      // this.overlay.x = this.player.x;
+      // this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
@@ -350,6 +364,7 @@ class Play extends Phaser.Scene {
     }    
 
     this.physics.collide(this.player, this.treeGroup);
+    this.physics.collide(this.player, this.cabin);
 
     // walking sounds
     if(playerMoving == true && this.walking.isPlaying == false) {
