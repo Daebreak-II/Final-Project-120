@@ -77,6 +77,10 @@ class Play extends Phaser.Scene {
           this.tree.setOffset(580, 910); // needs to be changed for proper scaling
           this.tree.body.immovable = true;
           this.tree.body.moves = false;
+          if(this.physics.collide(this.tree, this.cabin)) {
+            this.tree.destroy();
+          }
+
         }
         this.treeGroup.setOrigin(0.5, 0.5);
         // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
@@ -405,6 +409,7 @@ class Play extends Phaser.Scene {
 
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.player, this.cabin);
+    
 
     // walking sounds
     if(playerMoving == true && this.walking.isPlaying == false) {
