@@ -43,8 +43,8 @@ class Play extends Phaser.Scene {
 
         // add overlay
         this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
-        this.overlay.setScale(1.4);
-        this.overlay.setAlpha(0.95);
+        this.overlay.setScale(1);
+        this.overlay.setAlpha(1);
         this.overlay.depth = 10; // temporary, need a way to bring to absolute top
 
 
@@ -100,15 +100,14 @@ class Play extends Phaser.Scene {
         this.walking.setRate(0.75);
 
         // fog handling
-        // this.emitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, 3600, 2400);
+        this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
-        this.emitZone = new Phaser.Geom.Rectangle(0, 0, gameWidth, gameHeight);
+        this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         
         this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
-        this.image = this.add.image(gameHeight/2, gameWidth/2, 'smell');
         let a = this.deathZone;
         let b = this.deathZone2;
         let superDeathZone = {
@@ -120,14 +119,14 @@ class Play extends Phaser.Scene {
 
         this.fogParticles = this.add.particles('fog');
         this.fogEmitter = this.fogParticles.createEmitter({
-          speed: { min: -100, max: 100 },
+          speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 0.5,
-          scale: { min: 0.5, max: 9 },
-          alpha: { start: 0, end: 1 },
+          frequency: 400,
+          scale: { min: 2 , max: 4 },
+          alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
-          emitZone: { source: this.emitZone },
+          emitZone: { source: this.fogEmitZone },
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         
@@ -183,6 +182,12 @@ class Play extends Phaser.Scene {
       // updating objects
       this.player.update();
       this.prey.update();
+      // updating overlay
+      this.overlay.x = this.player.x;
+      this.overlay.y = this.player.y;
+
+      this.fogEmitZone.x = this.player.x - game.config.width / 2;
+      this.fogEmitZone.y = this.player.y - game.config.height / 2;
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
@@ -208,9 +213,9 @@ class Play extends Phaser.Scene {
 
       this.graphics.clear();
 
-      this.graphics.lineStyle(1, 0x00ff00, 1);
+      // this.graphics.lineStyle(1, 0x00ff00, 1);
 
-      this.graphics.strokeLineShape(this.smellLine);
+      // this.graphics.strokeLineShape(this.smellLine);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
