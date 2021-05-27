@@ -44,6 +44,7 @@ class Play extends Phaser.Scene {
       
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
+        this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.add.image(0, 0, 'border').setOrigin(0,0);
 
         // add overlay
@@ -52,6 +53,13 @@ class Play extends Phaser.Scene {
         this.overlay.setAlpha(1);
         this.overlay.depth = 10; // temporary, need a way to bring to absolute top
 
+
+        //adding the hitboxes of the river 
+
+        this.hitbox1 = this.add.rectangle(gameWidth/2+ 2100, gameHeight/2+400, 1200, 300,);
+        
+        this.physics.add.existing(this.hitbox1);
+        this.hitbox1.angle = 160;
 
         // adding background objects
         this.campfire = this.add.sprite(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
@@ -153,6 +161,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter2 = this.fogParticle2.createEmitter({
@@ -164,6 +173,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter3 = this.fogParticle3.createEmitter({
@@ -175,6 +185,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter4 = this.fogParticle4.createEmitter({
@@ -186,6 +197,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
 
