@@ -16,7 +16,7 @@ let config = {
     scene: [ Menu, Play, GameOver ],
     physics: {
         default: 'arcade',
-        arcade: {debug: true} ,
+        arcade: {debug: false} ,
     }
 }
 
@@ -38,6 +38,7 @@ let moving = false;
 let movingAway = false;
 let playerMoving = false;
 let smellUse = false;
+let echoCooldown = false;
 
 //Control Variables
 

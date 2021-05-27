@@ -41,6 +41,7 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
       
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
@@ -68,7 +69,7 @@ class Play extends Phaser.Scene {
         // this.physics.add.existing(this.cabin);
         
         this.cabin.setScale(0.5);
-        this.cabin.setSize(1200,600);
+        this.cabin.setSize(1200, 600);
         this.cabin.setOffset(130, 910);
         this.cabin.setOrigin(0.5,0);
         this.cabin.body.immovable = true;
@@ -97,7 +98,7 @@ class Play extends Phaser.Scene {
         
 
         for(let i = 0; i < 50; i++) {
-          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2).setAngle(Phaser.Math.Between(-25, 25));
+          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
         }
 
         // adding in moving objects
@@ -253,8 +254,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-      // this.overlay.x = this.player.x;
-      // this.overlay.y = this.player.y;
+      this.overlay.x = this.player.x;
+      this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
@@ -293,12 +294,44 @@ class Play extends Phaser.Scene {
         this.walking.stop();
         moving = false;
         movingAway = false;
+        echoCooldown = false;
+        smellUse =  false;
         this.scene.start('menuScene');
       }
 
       this.playerSpeaking.x = this.player.x;
       this.playerSpeaking.y = this.player.y;
       
+      // echolocation Mechanic
+      if (keySPACE.isDown && !echoCooldown) {
+        echoCooldown = true;
+        this.clock = this.time.delayedCall(333, () => {
+          this.overlay.setScale(this.overlay.scale + 0.1);
+          this.overlay.setAlpha(this.overlay.alpha - 0.1);
+        }, null, this);
+        this.clock = this.time.delayedCall(666, () => {
+          this.overlay.setScale(this.overlay.scale + 0.1);
+          this.overlay.setAlpha(this.overlay.alpha - 0.1);
+        }, null, this);
+        this.clock = this.time.delayedCall(1000, () => {
+          this.overlay.setScale(this.overlay.scale + 0.1);
+          this.overlay.setAlpha(this.overlay.alpha - 0.1);
+        }, null, this);
+        this.clock = this.time.delayedCall(2000, () => {
+          this.overlay.setScale(this.overlay.scale - 0.1);
+          this.overlay.setAlpha(this.overlay.alpha + 0.1);
+        }, null, this);
+        this.clock = this.time.delayedCall(2333, () => {
+          this.overlay.setScale(this.overlay.scale - 0.1);
+          this.overlay.setAlpha(this.overlay.alpha + 0.1);
+        }, null, this);
+        this.clock = this.time.delayedCall(2666, () => {
+          this.overlay.setScale(this.overlay.scale - 0.1);
+          this.overlay.setAlpha(this.overlay.alpha + 0.1);
+          echoCooldown = false;
+        }, null, this);
+      }
+
       // Smell mechanic
       if(keyS.isDown && !smellUse){
         smellUse = true;
@@ -420,6 +453,7 @@ class Play extends Phaser.Scene {
     }    
 
     this.physics.collide(this.player, this.treeGroup);
+    this.physics.collide(this.prey, this.treeGroup);
     this.physics.collide(this.player, this.cabin);
     
 

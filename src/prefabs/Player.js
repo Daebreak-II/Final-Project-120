@@ -10,37 +10,31 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
     update() {
+      if (smellUse || echoCooldown) {
+        this.moveSpeed = 800/4;
+      } else {
+        this.moveSpeed = 800;
+      }
+
       // player's 8 direction movement
       if(keyLEFT.isDown){
         this.setVelocityX(this.moveSpeed * -1);  
-        playerMoving = true;
-        if(smellUse){
-          this.setVelocityX(this.moveSpeed * -1 / 2);
-        }              
+        playerMoving = true;         
       }
       else if(keyRIGHT.isDown){
          this.setVelocityX(this.moveSpeed);
          playerMoving = true;
-         if(smellUse){
-          this.setVelocityX(this.moveSpeed / 2);
-        } 
       }
       else {
          this.setVelocityX(0);
       }
       if(keyUP.isDown){
           this.setVelocityY(this.moveSpeed * -1);
-          playerMoving = true;
-          if(smellUse){
-            this.setVelocityY(this.moveSpeed * -1 / 2);
-          }                 
+          playerMoving = true;          
       }
       else if(keyDOWN.isDown){
           this.setVelocityY(this.moveSpeed);
           playerMoving = true;
-          if(smellUse){
-            this.setVelocityY(this.moveSpeed / 2);
-          } 
       }
       else{
           this.setVelocityY(0);
