@@ -123,9 +123,13 @@ class Play extends Phaser.Scene {
         this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
 
         
-
+        this.logGroup = this.physics.add.group();
+        this.logGroup.runChildUpdate = true;
         for(let i = 0; i < 50; i++) {
-          this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+          this.log = this.logGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2);
+          this.log.body.immovable = true;
+          this.log.body.moves = false;
+          // setAngle(Phaser.Math.Between(-5, 5))
         }
 
         // adding in moving objects
@@ -481,6 +485,8 @@ class Play extends Phaser.Scene {
 
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.prey, this.treeGroup);
+    this.physics.collide(this.player, this.logGroup);
+    this.physics.collide(this.prey, this.logGroup);
     this.physics.collide(this.player, this.cabin);
     this.physics.collide(this.prey, this.cabin);
 
