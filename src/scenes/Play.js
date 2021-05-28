@@ -67,12 +67,26 @@ class Play extends Phaser.Scene {
         
         
         this.physics.add.existing(this.leftBoundary1);
+        this.leftBoundary1.body.immovable = true;
+        this.leftBoundary1.body.moves = false;
         this.physics.add.existing(this.leftBoundary2);
+        this.leftBoundary2.body.immovable = true;
+        this.leftBoundary2.body.moves = false;
         this.physics.add.existing(this.upperBoundary1);
+        this.upperBoundary1.body.immovable = true;
+        this.upperBoundary1.body.moves = false;
         this.physics.add.existing(this.upperBoundary2);
+        this.upperBoundary2.body.immovable = true;
+        this.upperBoundary2.body.moves = false;
         this.physics.add.existing(this.rightBoundary1);
+        this.rightBoundary1.body.immovable = true;
+        this.rightBoundary1.body.moves = false;
         this.physics.add.existing(this.rightBoundary2);
+        this.rightBoundary2.body.immovable = true;
+        this.rightBoundary2.body.moves = false;
         this.physics.add.existing(this.downBoundary1);
+        this.downBoundary1.body.immovable = true;
+        this.downBoundary1.body.moves = false;
 
 
         // adding background objects
@@ -468,6 +482,24 @@ class Play extends Phaser.Scene {
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.prey, this.treeGroup);
     this.physics.collide(this.player, this.cabin);
+    this.physics.collide(this.prey, this.cabin);
+
+    //Boundaries for player
+    this.physics.collide(this.player, this.rightBoundary1);
+    this.physics.collide(this.player, this.rightBoundary2);
+    this.physics.collide(this.player, this.upperBoundary1);
+    this.physics.collide(this.player, this.upperBoundary2);
+    this.physics.collide(this.player, this.leftBoundary1);
+    this.physics.collide(this.player, this.leftBoundary2);
+    this.physics.collide(this.player, this.downBoundary1);
+    //boundaries for prey
+    this.physics.collide(this.prey, this.rightBoundary1);
+    this.physics.collide(this.prey, this.rightBoundary2);
+    this.physics.collide(this.prey, this.upperBoundary1);
+    this.physics.collide(this.prey, this.upperBoundary2);
+    this.physics.collide(this.prey, this.leftBoundary1);
+    this.physics.collide(this.prey, this.leftBoundary2);
+    this.physics.collide(this.prey, this.downBoundary1);
     
 
     // walking sounds
