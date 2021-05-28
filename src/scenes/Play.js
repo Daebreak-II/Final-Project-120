@@ -57,10 +57,23 @@ class Play extends Phaser.Scene {
 
         //adding the hitboxes of the river 
 
-        this.hitbox1 = this.add.rectangle(gameWidth/2+ 2100, gameHeight/2+400, 1200, 300,);
+        this.leftBoundary1 = this.add.rectangle(0, 0, 1500, gameHeight*1500);
+        this.leftBoundary2 = this.add.rectangle(500 , gameHeight / 2 * 2 + 800, 1500, gameHeight);
+        this.upperBoundary1 = this.add.rectangle(0, 0, gameWidth - 800, 1800);
+        this.upperBoundary2 = this.add.rectangle(gameWidth/2, 0, gameWidth - 800, 800);
+        this.rightBoundary1 = this.add.rectangle(gameWidth - 800, 0, 1200, gameHeight+600);
+        this.rightBoundary2 = this.add.rectangle(gameWidth, gameHeight/2, 800, gameHeight+600);
+        this.downBoundary1 = this.add.rectangle(0, gameHeight, gameWidth * 2, 1500);
         
-        this.physics.add.existing(this.hitbox1);
-        this.hitbox1.angle = 160;
+        
+        this.physics.add.existing(this.leftBoundary1);
+        this.physics.add.existing(this.leftBoundary2);
+        this.physics.add.existing(this.upperBoundary1);
+        this.physics.add.existing(this.upperBoundary2);
+        this.physics.add.existing(this.rightBoundary1);
+        this.physics.add.existing(this.rightBoundary2);
+        this.physics.add.existing(this.downBoundary1);
+
 
         // adding background objects
         this.campfire = this.add.sprite(gameWidth/2, gameHeight/2, 'campfire').setScale(0.1);
@@ -254,8 +267,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-      this.overlay.x = this.player.x;
-      this.overlay.y = this.player.y;
+      // this.overlay.x = this.player.x;
+      // this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
