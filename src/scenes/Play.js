@@ -101,6 +101,7 @@ class Play extends Phaser.Scene {
         this.cabin.setSize(1200, 600);
         this.cabin.setOffset(130, 910);
         this.cabin.setOrigin(0.5,0);
+        this.cabin.setAlpha(0);
         this.cabin.body.immovable = true;
         this.cabin.body.moves = false;
         
@@ -123,6 +124,7 @@ class Play extends Phaser.Scene {
         this.treeGroup.setOrigin(0.5, 0.5);
         // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
         this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
+        this.treeGroup.setAlpha(0);
 
         
         this.logGroup = this.physics.add.group();
@@ -133,6 +135,7 @@ class Play extends Phaser.Scene {
           this.log.body.moves = false;
           // setAngle(Phaser.Math.Between(-5, 5))
         }
+        this.logGroup.setAlpha(0);
 
         this.rockGroup = this.physics.add.group();
         this.rockGroup.runChildUpdate = true;
@@ -144,6 +147,7 @@ class Play extends Phaser.Scene {
           this.rock.body.moves = false;
           // setAngle(Phaser.Math.Between(-5, 5))
         }
+        this.rockGroup.setAlpha(0);
 
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
@@ -284,10 +288,24 @@ class Play extends Phaser.Scene {
         
         this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
+        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFDD0);
+        this.daylight.setAlpha(0.2);
+        this.timeRemain = 60000;
         
       }
 
-    update() {
+    update(time, delta) {
+      //checking if timer is done
+      this.timeRemain -= delta;
+      if(this.timeRemain <= 0){
+        timesUP = true;
+        this.scene.start('gameOverScene');
+      }
+
+      this.clock = this.time.delayedCall(1000, () => {
+        this.daylight.y -= 1.2;
+      }, null, this);
+
       // updating objects
       this.player.update();
       this.prey.update();
@@ -339,14 +357,26 @@ class Play extends Phaser.Scene {
         this.clock = this.time.delayedCall(333, () => {
           this.overlay.setScale(this.overlay.scale + 0.1);
           this.overlay.setAlpha(this.overlay.alpha - 0.1);
+          this.cabin.setAlpha(this.cabin.alpha + 0.1);
+          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
+          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
+          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
         }, null, this);
         this.clock = this.time.delayedCall(666, () => {
           this.overlay.setScale(this.overlay.scale + 0.1);
           this.overlay.setAlpha(this.overlay.alpha - 0.1);
+          this.cabin.setAlpha(this.cabin.alpha + 0.1);
+          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
+          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
+          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
         }, null, this);
         this.clock = this.time.delayedCall(1000, () => {
           this.overlay.setScale(this.overlay.scale + 0.1);
           this.overlay.setAlpha(this.overlay.alpha - 0.1);
+          this.cabin.setAlpha(this.cabin.alpha + 0.1);
+          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
+          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
+          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
         }, null, this);
         this.clock = this.time.delayedCall(2000, () => {
           this.overlay.setScale(this.overlay.scale - 0.1);
@@ -361,6 +391,14 @@ class Play extends Phaser.Scene {
           this.overlay.setAlpha(this.overlay.alpha + 0.1);
           echoCooldown = false;
         }, null, this);
+      }
+      
+      if (!keySPACE.isDown && echoCooldown) {
+        this.cabin.setAlpha(0);
+        this.treeGroup.setAlpha(0);
+        this.logGroup.setAlpha(0);
+        this.rockGroup.setAlpha(0);
+
       }
 
       // Smell mechanic
@@ -516,4 +554,5 @@ class Play extends Phaser.Scene {
     }
     
   }
+  
 }

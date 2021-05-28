@@ -39,6 +39,7 @@ let movingAway = false;
 let playerMoving = false;
 let smellUse = false;
 let echoCooldown = false;
+let timesUP = false;
 
 //Control Variables
 
