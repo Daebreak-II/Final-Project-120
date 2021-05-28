@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
       this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
+      this.load.image('rock', './Assets/sprites/rockSprite.png');
       
 
       // load audio
@@ -55,7 +56,7 @@ class Play extends Phaser.Scene {
         this.overlay.depth = 10; // temporary, need a way to bring to absolute top
 
 
-        //adding the hitboxes of the river 
+        //adding the boundary hitboxes of the map 
 
         this.leftBoundary1 = this.add.rectangle(0, 0, 1500, gameHeight*1500);
         this.leftBoundary2 = this.add.rectangle(500 , gameHeight / 2 * 2 + 800, 1500, gameHeight);
@@ -65,6 +66,7 @@ class Play extends Phaser.Scene {
         this.rightBoundary2 = this.add.rectangle(gameWidth, gameHeight/2, 800, gameHeight+600);
         this.downBoundary1 = this.add.rectangle(0, gameHeight, gameWidth * 2, 1500);
         
+        //Adding the physics for said boundaries
         
         this.physics.add.existing(this.leftBoundary1);
         this.leftBoundary1.body.immovable = true;
@@ -132,6 +134,17 @@ class Play extends Phaser.Scene {
           // setAngle(Phaser.Math.Between(-5, 5))
         }
 
+        this.rockGroup = this.physics.add.group();
+        this.rockGroup.runChildUpdate = true;
+        for(let i = 0; i < 4; i++) {
+          this.rock = this.rockGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'rock').setScale(0.7);
+          this.rock.setSize(680, 100);
+          this.rock.setOffset(0, 100);
+          this.rock.body.immovable = true;
+          this.rock.body.moves = false;
+          // setAngle(Phaser.Math.Between(-5, 5))
+        }
+
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
         this.player.setScale(playerScale);
@@ -193,7 +206,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: false,
+          on: true,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter2 = this.fogParticle2.createEmitter({
@@ -205,7 +218,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: false,
+          on: true,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter3 = this.fogParticle3.createEmitter({
@@ -217,7 +230,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: false,
+          on: true,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter4 = this.fogParticle4.createEmitter({
@@ -229,7 +242,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: false,
+          on: true,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
 
@@ -251,12 +264,6 @@ class Play extends Phaser.Scene {
         this.smellEmitter.setAlpha(0);
         this.fade = 0;
         this.fadeOut = 0;
-        //this.smellEmitter.setAngle(Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y));
-
-        // this.emitter.setAlpha(function (p, k, t) {
-        //   return 1 - 2 * Math.abs(t - 0.5);
-        // });
-        
 
         this.graphics = this.add.graphics();
         this.deathZone2.x = this.campfire.x;
@@ -285,8 +292,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-      // this.overlay.x = this.player.x;
-      // this.overlay.y = this.player.y;
+       this.overlay.x = this.player.x;
+       this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
@@ -307,17 +314,10 @@ class Play extends Phaser.Scene {
           particle.rotation = this.rotation;
         
       });
-      //this.smellParticles.angle = this.rotation;
-
-      //console.log(this.rotation);
 
       this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
 
       this.graphics.clear();
-
-      // this.graphics.lineStyle(1, 0x00ff00, 1);
-
-      // this.graphics.strokeLineShape(this.smellLine);
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -487,6 +487,8 @@ class Play extends Phaser.Scene {
     this.physics.collide(this.prey, this.treeGroup);
     this.physics.collide(this.player, this.logGroup);
     this.physics.collide(this.prey, this.logGroup);
+    this.physics.collide(this.player, this.rockGroup);
+    this.physics.collide(this.prey, this.rockGroup);
     this.physics.collide(this.player, this.cabin);
     this.physics.collide(this.prey, this.cabin);
 

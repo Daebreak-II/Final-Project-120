@@ -5,15 +5,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       // add object to existing scene
       scene.add.existing(this);
       scene.physics.add.existing(this);
-      this.moveSpeed = 800;
+      this.moveSpeed = 400;
     }
 
 
     update() {
       if (smellUse || echoCooldown) {
-        this.moveSpeed = 800/4;
+        this.moveSpeed = 400/4;
       } else {
-        this.moveSpeed = 800;
+        this.moveSpeed = 400;
       }
 
       // player's 8 direction movement
