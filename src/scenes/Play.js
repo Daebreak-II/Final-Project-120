@@ -351,73 +351,44 @@ class Play extends Phaser.Scene {
       this.playerSpeaking.x = this.player.x;
       this.playerSpeaking.y = this.player.y;
       
+
+      
       // echolocation Mechanic
       if (keySPACE.isDown && !echoCooldown) {
         echoCooldown = true;
-        this.clock = this.time.delayedCall(333, () => {
-          this.overlay.setScale(this.overlay.scale + 0.1);
-          this.overlay.setAlpha(this.overlay.alpha - 0.1);
-          this.cabin.setAlpha(this.cabin.alpha + 0.1);
-          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
-          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
-          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
-        }, null, this);
-        this.clock = this.time.delayedCall(666, () => {
-          this.overlay.setScale(this.overlay.scale + 0.1);
-          this.overlay.setAlpha(this.overlay.alpha - 0.1);
-          this.cabin.setAlpha(this.cabin.alpha + 0.1);
-          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
-          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
-          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
-        }, null, this);
-        this.clock = this.time.delayedCall(1000, () => {
-          this.overlay.setScale(this.overlay.scale + 0.1);
-          this.overlay.setAlpha(this.overlay.alpha - 0.1);
-          this.cabin.setAlpha(this.cabin.alpha + 0.1);
-          this.treeGroup.setAlpha(this.treeGroup.alpha + 0.1);
-          this.logGroup.setAlpha(this.logGroup.alpha + 0.1);
-          this.rockGroup.setAlpha(this.rockGroup.alpha + 0.1);
-        }, null, this);
-        this.clock = this.time.delayedCall(2000, () => {
-          this.overlay.setScale(this.overlay.scale - 0.1);
-          this.overlay.setAlpha(this.overlay.alpha + 0.1);
-        }, null, this);
-        this.clock = this.time.delayedCall(2333, () => {
-          this.overlay.setScale(this.overlay.scale - 0.1);
-          this.overlay.setAlpha(this.overlay.alpha + 0.1);
-        }, null, this);
-        this.clock = this.time.delayedCall(2666, () => {
-          this.overlay.setScale(this.overlay.scale - 0.1);
-          this.overlay.setAlpha(this.overlay.alpha + 0.1);
+        for (var i = 0; i < 50; i++) {
+          this.clock = this.time.delayedCall(i * 20, () => {
+            this.overlay.setScale(this.overlay.scale + 0.01);
+            this.overlay.setAlpha(this.overlay.alpha - 0.01);
+            // groups don't have alphas, so cabin alpha is substituting 
+            // for other current alphas cause they're equal here
+            this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+            this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+            this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+            this.cabin.setAlpha(this.cabin.alpha + 0.02);
+          }, null, this);
+        }
+
+        for (var i = 0; i < 50; i++) {
+          this.clock = this.time.delayedCall(i * 20 + 2000, () => {
+            this.overlay.setScale(this.overlay.scale - 0.01);
+            this.overlay.setAlpha(this.overlay.alpha + 0.01);
+
+            this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+            this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+            this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+            this.cabin.setAlpha(this.cabin.alpha - 0.02);
+          }, null, this);
+        }
+
+        this.clock = this.time.delayedCall(3000, () => {
           echoCooldown = false;
         }, null, this);
-      }
-      
-      if (!keySPACE.isDown && echoCooldown) {
-        this.cabin.setAlpha(0);
-        this.treeGroup.setAlpha(0);
-        this.logGroup.setAlpha(0);
-        this.rockGroup.setAlpha(0);
-
       }
 
       // Smell mechanic
       if(keyS.isDown && !smellUse){
         smellUse = true;
-        //fading in the smell particle
-        // this.smellEmitter.setAlpha(0);
-        // this.clock = this.time.delayedCall(1000, () => {
-        //   this.smellEmitter.setAlpha(0.2);
-        // }, null, this);
-        // this.clock = this.time.delayedCall(2000, () => {
-        //   this.smellEmitter.setAlpha(0.4);
-        // }, null, this);
-        // this.clock = this.time.delayedCall(3000, () => {
-        //   this.smellEmitter.setAlpha(0.6);
-        // }, null, this);
-        // this.clock = this.time.delayedCall(4000, () => {
-        //   this.smellEmitter.setAlpha(0.8);
-        // }, null, this);
 
         // //this helps the particles fade in and out instead of popping of existance
         // this.clock = this.time.delayedCall(6000, () => {
