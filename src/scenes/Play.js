@@ -299,6 +299,10 @@ class Play extends Phaser.Scene {
       this.timeRemain -= delta;
       if(this.timeRemain <= 0){
         timesUP = true;
+        this.ambientMusic.stop();
+        this.walking.stop();
+        moving = false;
+        movingAway = false;
         this.scene.start('gameOverScene');
       }
 

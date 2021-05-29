@@ -24,7 +24,7 @@ class GameOver extends Phaser.Scene {
       if(!timesUP){
         this.add.text(game.config.width / 2 , game.config.height / 2, 'Game Over, press r to restart', textConfig).setOrigin(0.5,0);
       }
-      else{
+      else if(timesUP){
         this.add.text(game.config.width / 2 , game.config.height / 2, "Game Over, you couldn't find your friend\n Press R to restart" , textConfig).setOrigin(0.5,0);
       }
     }
