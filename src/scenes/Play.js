@@ -314,8 +314,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-      //  this.overlay.x = this.player.x;
-      //  this.overlay.y = this.player.y;
+      this.overlay.x = this.player.x;
+      this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
