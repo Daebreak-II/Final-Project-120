@@ -316,8 +316,8 @@ class Play extends Phaser.Scene {
       this.player.update();
       this.prey.update();
       // updating overlay
-       this.overlay.x = this.player.x;
-       this.overlay.y = this.player.y;
+      this.overlay.x = this.player.x;
+      this.overlay.y = this.player.y;
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
@@ -444,10 +444,10 @@ class Play extends Phaser.Scene {
         this.prey.setVelocityY(-500);
       }
 
-      this.prey.setVelocityX(Phaser.Math.Between(-100, 100));
-      this.prey.setVelocityY(Phaser.Math.Between(-100, 100));
+      this.prey.setVelocityX(Phaser.Math.Between(-500, 500));
+      this.prey.setVelocityY(Phaser.Math.Between(-500, 500));
 
-      this.clock = this.time.delayedCall(1000, () => {
+      this.clock = this.time.delayedCall(4000, () => {
         moving = false;
       }, null, this);
       }
@@ -457,29 +457,100 @@ class Play extends Phaser.Scene {
         if(!movingAway) {
           movingAway = true;
           moving = true;
-          if(keyLEFT.isDown){
-            this.prey.setVelocityX(-480);                
+          // if(keyLEFT.isDown){
+          //   this.prey.setVelocityX(-480);                
+          // }
+          // else if(keyRIGHT.isDown){
+          //   this.prey.setVelocityX(480);
+          // }
+          // else{
+          //   this.prey.setVelocityX(0);
+          // }
+          // if(keyUP.isDown){
+          //   this.prey.setVelocityY(-480);                
+          // }
+          // else if(keyDOWN.isDown){
+          //   this.prey.setVelocityY(480);
+          // }
+          // else{
+          //   this.prey.setVelocityY(0);
+          // }
+          // if player is on the left makes the prey move to the right faster
+          if (this.player.x < this.prey.x && this.prey.body.velocity.x >= 0) {
+            // move prey to the right
+            this.prey.body.velocity.x = 480;
           }
-          else if(keyRIGHT.isDown){
-            this.prey.setVelocityX(480);
+          // if player is on the right makes the prey move to the left faster
+          if (this.player.x > this.prey.x && this.prey.body.velocity.x <= 0) {
+            // move prey to left
+            this.prey.body.velocity.x -= 480;
           }
-          else{
-            this.prey.setVelocityX(0);
+          // if player is on the bottom makes the prey moves up faster
+          if (this.player.y < this.prey.y && this.prey.body.velocity.y >= 0) {
+            // move prey up
+            this.prey.body.velocity.y = 480;
           }
-          if(keyUP.isDown){
-            this.prey.setVelocityY(-480);                
+          // if player is on the top prey moves downward faster
+          if (this.player.y > this.prey.y && this.prey.body.velocity.y <= 0) {
+            // move prey downward
+            this.prey.body.velocity.y -= 480;
           }
-          else if(keyDOWN.isDown){
-            this.prey.setVelocityY(480);
-          }
-          else{
-            this.prey.setVelocityY(0);
-          }
+    
 
           this.clock = this.time.delayedCall(50, () => {
             movingAway = false;
           }, null, this);
         }
+      }
+      //if prey is on the boudanries move them to either direction depending on the boundary
+
+      //upper boundaries bounces prey diagonally down
+      if(this.physics.collide(this.prey, this.upperBoundary1) || this.physics.collide(this.prey, this.upperBoundary2)){
+        let changeDirection = Phaser.Math.Between(1, 2);
+        if(changeDirection <= 1) {
+          this.prey.setVelocityX(500);
+          this.prey.setVelocityY(500);
+        } else if(changeDirection <= 2) {
+          this.prey.setVelocityX(-500);
+          this.prey.setVelocityY(500);
+        }
+
+      }
+      //left boundary bounces prey diagonally right
+      if(this.physics.collide(this.prey, this.leftBoundary1) || this.physics.collide(this.prey, this.leftBoundary2)){
+        let changeDirection = Phaser.Math.Between(1, 2);
+        if(changeDirection <= 1) {
+          this.prey.setVelocityX(500);
+          this.prey.setVelocityY(-500);
+        } else if(changeDirection <= 2) {
+          this.prey.setVelocityX(500);
+          this.prey.setVelocityY(500);
+        }
+
+      }
+      //right boundaries bounces prey diagonally left 
+      if(this.physics.collide(this.prey, this.rightBoundary1) || this.physics.collide(this.prey,this.rightBoundary2)){
+        let changeDirection = Phaser.Math.Between(1, 2);
+        if(changeDirection <= 1) {
+          this.prey.setVelocityX(-500);
+          this.prey.setVelocityY(-500);
+        } else if(changeDirection <= 2) {
+          this.prey.setVelocityX(-500);
+          this.prey.setVelocityY(500);
+        }
+
+      }
+      //down boundary bounces prey up diagonally
+      if(this.physics.collide(this.prey, this.downBoundary1)){
+        let changeDirection = Phaser.Math.Between(1, 2);
+        if(changeDirection <= 1) {
+          this.prey.setVelocityX(500);
+          this.prey.setVelocityY(-500);
+        } else if(changeDirection <= 2) {
+          this.prey.setVelocityX(-500);
+          this.prey.setVelocityY(-500);
+        }
+
       }
     
 
