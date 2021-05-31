@@ -303,6 +303,8 @@ class Play extends Phaser.Scene {
         this.walking.stop();
         moving = false;
         movingAway = false;
+        echoCooldown = false;
+        smellUse = false;
         this.scene.start('gameOverScene');
       }
 
