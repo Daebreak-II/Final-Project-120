@@ -47,7 +47,7 @@ class Play extends Phaser.Scene {
         // add background
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
-        this.add.image(0, 0, 'border').setOrigin(0,0);
+        this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
 
         // add overlay
         this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
@@ -112,8 +112,8 @@ class Play extends Phaser.Scene {
         for(let i = 0; i < 200; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
           this.tree = this.treeGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree');
-          this.tree.setSize(200, 1500);
-          this.tree.setOffset(580, 910); // needs to be changed for proper scaling
+          this.tree.setSize(200, 350);
+          this.tree.setOffset(580, 2060); // needs to be changed for proper scaling
           this.tree.body.immovable = true;
           this.tree.body.moves = false;
           if(this.physics.collide(this.tree, this.cabin)) {
@@ -152,7 +152,7 @@ class Play extends Phaser.Scene {
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
         this.player.setScale(playerScale);
-        this.player.setSize(this.player.width, this.player.height);
+        this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
 
 
         this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
@@ -200,6 +200,7 @@ class Play extends Phaser.Scene {
         this.fogParticle3 = this.add.particles('fog3');
         this.fogParticle4 = this.add.particles('fog4');
         this.smellParticles = this.add.particles('smell');
+
 
         this.fogEmitter1 = this.fogParticle1.createEmitter({
           speed: { min: -10, max: 10 },
@@ -250,6 +251,8 @@ class Play extends Phaser.Scene {
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
 
+        // problem: as the line gets shorter, the particles get more concentrated because
+        // the spawn area is reduced. Actually maybe not a problem?
         this.smellEmitter = this.smellParticles.createEmitter({
           //speed: { min: -10, max: 10 },
           //x: this.smellLine.x, y: this.smellLine.y,
@@ -257,19 +260,16 @@ class Play extends Phaser.Scene {
           //radial = true,
           //angle: ,
           //rotate: 45,
-          //quantity: 1,
-          frequency: 500,
-          scale: 0.08,
+          quantity: 1,
+          frequency: 20,
+          scale: 0.01,
           alpha: { start: 1, end: 0 },
           blendMode: 'ADD',
+          on: false,
           emitZone: { type: 'random', source: this.smellLine},
         });
 
-        this.smellEmitter.setAlpha(0);
-        this.fade = 0;
-        this.fadeOut = 0;
-
-        this.graphics = this.add.graphics();
+        this.graphics = this.add.graphics(); // what does this do Juan?
         this.deathZone2.x = this.campfire.x;
         this.deathZone2.y = this.campfire.y;
         
@@ -360,7 +360,7 @@ class Play extends Phaser.Scene {
 
       
       // echolocation Mechanic
-      if (keySPACE.isDown && !echoCooldown) {
+      if (keySPACE.isDown && !echoCooldown && !smellUse) {
         echoCooldown = true;
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
@@ -372,6 +372,7 @@ class Play extends Phaser.Scene {
             this.logGroup.setAlpha(this.cabin.alpha + 0.02);
             this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
             this.cabin.setAlpha(this.cabin.alpha + 0.02);
+            this.border.setAlpha(this.border.alpha + 0.02);
           }, null, this);
         }
 
@@ -384,6 +385,7 @@ class Play extends Phaser.Scene {
             this.logGroup.setAlpha(this.cabin.alpha - 0.02);
             this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
             this.cabin.setAlpha(this.cabin.alpha - 0.02);
+            this.border.setAlpha(this.border.alpha - 0.02);
           }, null, this);
         }
 
@@ -395,17 +397,17 @@ class Play extends Phaser.Scene {
       // Smell mechanic
       if(keyS.isDown && !smellUse){
         smellUse = true;
+        this.smellEmitter.start();
+        this.blackScreen.alpha = 0.8;
 
         // //this helps the particles fade in and out instead of popping of existance
         // this.clock = this.time.delayedCall(6000, () => {
-          this.blackScreen.alpha = 0.8;
-          this.smellEmitter.setAlpha(function (p, k, t) {
-            return 1 - 2 * Math.abs(t - 0.5);
-          });
+          // this.blackScreen.alpha = 0.8;
+          // this.smellEmitter.setAlpha(function (p, k, t) {
+          //   return 1 - 2 * Math.abs(t - 0.5);
+          // });
           
         // }, null, this);
-        
-        
         
       }
 
@@ -413,22 +415,9 @@ class Play extends Phaser.Scene {
       if(!keyS.isDown && smellUse){
         smellUse = false;
         this.blackScreen.alpha = 0;
-        this.clock = this.time.delayedCall(1000, () => {
-          this.smellEmitter.setAlpha(0.8);
-        }, null, this);
-        this.clock = this.time.delayedCall(2000, () => {
-          this.smellEmitter.setAlpha(0.6);
-        }, null, this);
-        this.clock = this.time.delayedCall(3000, () => {
-          this.smellEmitter.setAlpha(0.4);
-        }, null, this);
-        this.clock = this.time.delayedCall(4000, () => {
-          this.smellEmitter.setAlpha(0.2);
-        }, null, this);
-        this.clock = this.time.delayedCall(5000, () => {
-          this.smellEmitter.setAlpha(0);
-        }, null, this);
+        this.smellEmitter.stop();
       }
+
 
       //Prey's movement
       if(!moving) {
