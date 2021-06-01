@@ -352,11 +352,6 @@ class Play extends Phaser.Scene {
         this.scene.start('menuScene');
       }
 
-      this.playerSpeaking.x = this.player.x;
-      this.playerSpeaking.y = this.player.y;
-      
-
-      
       // echolocation Mechanic
       if (keySPACE.isDown && !echoCooldown) {
         echoCooldown = true;
@@ -455,24 +450,6 @@ class Play extends Phaser.Scene {
         if(!movingAway) {
           movingAway = true;
           moving = true;
-          // if(keyLEFT.isDown){
-          //   this.prey.setVelocityX(-480);                
-          // }
-          // else if(keyRIGHT.isDown){
-          //   this.prey.setVelocityX(480);
-          // }
-          // else{
-          //   this.prey.setVelocityX(0);
-          // }
-          // if(keyUP.isDown){
-          //   this.prey.setVelocityY(-480);                
-          // }
-          // else if(keyDOWN.isDown){
-          //   this.prey.setVelocityY(480);
-          // }
-          // else{
-          //   this.prey.setVelocityY(0);
-          // }
           // if player is on the left makes the prey move to the right faster
           if (this.player.x < this.prey.x && this.prey.body.velocity.x >= 0) {
             // move prey to the right
@@ -550,7 +527,11 @@ class Play extends Phaser.Scene {
         }
 
       }
-    
+      
+      if(this.physics.collide(this.prey, this.treeGroup)){
+        this.prey.body.bounce.x = 1;
+        this.prey.body.bounce.x = 1;
+      }
 
     // collisions 
     if(this.physics.collide(this.player, this.prey)) {
@@ -565,7 +546,31 @@ class Play extends Phaser.Scene {
       moving = false;
       movingAway = false;
       this.scene.start('gameOverScene');
-    }    
+    }
+    //making ob fade in when touching them and then fading them out when you are not    
+    if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
+      for (var i = 0; i < 50; i++) {
+        this.clock = this.time.delayedCall(i * 20, () => {
+          // groups don't have alphas, so cabin alpha is substituting 
+          // for other current alphas cause they're equal here
+          this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.cabin.setAlpha(this.cabin.alpha + 0.02);
+        }, null, this);
+      }
+    }
+    if(!this.physics.collide(this.player, this.treeGroup)){
+      for (var i = 0; i < 50; i++) {
+        this.clock = this.time.delayedCall(i * 20 + 2000, () => {
+          this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.cabin.setAlpha(this.cabin.alpha - 0.02);
+        }, null, this);
+      }
+    }
+    
 
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.prey, this.treeGroup);
