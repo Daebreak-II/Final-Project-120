@@ -569,6 +569,7 @@ class Play extends Phaser.Scene {
       //fadeVariable = true;
     }
     
+    
 
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.prey, this.treeGroup);
