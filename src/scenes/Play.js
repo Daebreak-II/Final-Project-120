@@ -33,6 +33,7 @@ class Play extends Phaser.Scene {
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
+      this.load.audio('smelling', './Assets/sfx/smelling.wav');
       //load animations
     }
 
@@ -50,7 +51,7 @@ class Play extends Phaser.Scene {
         // add background
         // this.map = this.make.tilemap('gameMap');
         // this.jsonBackgroun = this.map.createLayer("border")
-        // this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
 
@@ -181,80 +182,84 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
+        this.echoSoundScream = this.sound.add('scream1', { volume: 0.1 * volumeMultiplier, loop: false});
+
+        this.smellSound = this.sound.add('smelling', { volume: 1 * volumeMultiplier, loop: false});
+
         // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
 
-        this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
-        this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
+        // this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
+        // this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
-        this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
-        this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
-        let a = this.deathZone;
-        let b = this.deathZone2;
-        let superDeathZone = {
-          contains(x, y){
-            return a.contains(x,y) || b.contains(x,y);
-          }
-        }        
+        // this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
+        // this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
+        // let a = this.deathZone;
+        // let b = this.deathZone2;
+        // let superDeathZone = {
+        //   contains(x, y){
+        //     return a.contains(x,y) || b.contains(x,y);
+        //   }
+        // }        
         
 
 
-        this.fogParticle1 = this.add.particles('fog1');
-        this.fogParticle2 = this.add.particles('fog2');
-        this.fogParticle3 = this.add.particles('fog3');
-        this.fogParticle4 = this.add.particles('fog4');
+        // this.fogParticle1 = this.add.particles('fog1');
+        // this.fogParticle2 = this.add.particles('fog2');
+        // this.fogParticle3 = this.add.particles('fog3');
+        // this.fogParticle4 = this.add.particles('fog4');
         this.smellParticles = this.add.particles('smell');
 
 
-        this.fogEmitter1 = this.fogParticle1.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 1600,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: true,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter2 = this.fogParticle2.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 1600,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: true,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter3 = this.fogParticle3.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 1600,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: true,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter4 = this.fogParticle4.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 1600,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: true,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
+        // this.fogEmitter1 = this.fogParticle1.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 20000,
+        //   quantity: 1,
+        //   frequency: 1600,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: true,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.fogEmitter2 = this.fogParticle2.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 20000,
+        //   quantity: 1,
+        //   frequency: 1600,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: true,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.fogEmitter3 = this.fogParticle3.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 20000,
+        //   quantity: 1,
+        //   frequency: 1600,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: true,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.fogEmitter4 = this.fogParticle4.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 20000,
+        //   quantity: 1,
+        //   frequency: 1600,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: true,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
 
         // problem: as the line gets shorter, the particles get more concentrated because
         // the spawn area is reduced. Actually maybe not a problem?
@@ -275,8 +280,6 @@ class Play extends Phaser.Scene {
         });
 
         this.graphics = this.add.graphics(); // what does this do Juan?
-        this.deathZone2.x = this.campfire.x;
-        this.deathZone2.y = this.campfire.y;
         
         //adding text explaining your goal
         let textConfig = {
@@ -324,19 +327,19 @@ class Play extends Phaser.Scene {
       this.overlay.x = this.player.x;
       this.overlay.y = this.player.y;
 
-      this.fogEmitZone.x = this.player.x - game.config.width / 2;
-      this.fogEmitZone.y = this.player.y - game.config.height / 2;
+      // this.fogEmitZone.x = this.player.x - game.config.width / 2;
+      // this.fogEmitZone.y = this.player.y - game.config.height / 2;
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
 
       
 
-      this.emitZone.x = this.player.x - 3600 / 2;
-      this.emitZone.y = this.player.y - 2400 / 2;
+      // this.emitZone.x = this.player.x - 3600 / 2;
+      // this.emitZone.y = this.player.y - 2400 / 2;
 
-      this.deathZone.x = this.player.x;
-      this.deathZone.y = this.player.y;
+      // this.deathZone.x = this.player.x;
+      // this.deathZone.y = this.player.y;
       this.rotation = (Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y));
       
       this.smellEmitter.forEachAlive((particle) => {
@@ -361,6 +364,9 @@ class Play extends Phaser.Scene {
 
       // echolocation Mechanic
       if (keySPACE.isDown && !echoCooldown && !smellUse) {
+        if(!echoSound){
+          this.echoSoundScream.play();
+        }
         echoCooldown = true;
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
@@ -391,6 +397,7 @@ class Play extends Phaser.Scene {
 
         this.clock = this.time.delayedCall(3000, () => {
           echoCooldown = false;
+          echoSound = false;
         }, null, this);
       }
 
@@ -399,16 +406,7 @@ class Play extends Phaser.Scene {
         smellUse = true;
         this.smellEmitter.start();
         this.blackScreen.alpha = 0.8;
-
-        // //this helps the particles fade in and out instead of popping of existance
-        // this.clock = this.time.delayedCall(6000, () => {
-          // this.blackScreen.alpha = 0.8;
-          // this.smellEmitter.setAlpha(function (p, k, t) {
-          //   return 1 - 2 * Math.abs(t - 0.5);
-          // });
-          
-        // }, null, this);
-        
+        this.smellSound.play();        
       }
 
       //Once the smell key is not being pressed the smell should start dissapearing
@@ -420,7 +418,7 @@ class Play extends Phaser.Scene {
 
 
       //Prey's movement
-      if(!moving) {
+      if(!moving && !movingAway) {
       moving = true;
       let changeDirection = Phaser.Math.Between(1, 4);
       if(changeDirection <= 1) {
@@ -445,7 +443,7 @@ class Play extends Phaser.Scene {
       if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 250){
         if(!movingAway) {
           movingAway = true;
-          moving = true;
+          //moving = true;
           // if player is on the left makes the prey move to the right faster
           if (this.player.x < this.prey.x && this.prey.body.velocity.x >= 0) {
             // move prey to the right
@@ -531,12 +529,12 @@ class Play extends Phaser.Scene {
 
     // collisions 
     if(this.physics.collide(this.player, this.prey)) {
-      let i = Phaser.Math.Between(1, 2);
-      if(i == 1) {
-        this.sound.play('scream1', { volume: 1 * volumeMultiplier});
-      } else {
-        this.sound.play('scream2', { volume: 1 * volumeMultiplier});
-      }
+      //let i = Phaser.Math.Between(1, 2);
+      //if(i == 1) {
+        //this.sound.play('scream1', { volume: 1 * volumeMultiplier});
+      //} else {
+      this.sound.play('scream2', { volume: 1 * volumeMultiplier});
+      
       this.ambientMusic.stop();
       this.walking.stop();
       moving = false;
@@ -544,7 +542,8 @@ class Play extends Phaser.Scene {
       this.scene.start('gameOverScene');
     }
     //making ob fade in when touching them and then fading them out when you are not    
-    if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
+    if(!fadeVariable && this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
+      fadeVariable = true;
       for (var i = 0; i < 50; i++) {
         this.clock = this.time.delayedCall(i * 20, () => {
           // groups don't have alphas, so cabin alpha is substituting 
@@ -555,8 +554,10 @@ class Play extends Phaser.Scene {
           this.cabin.setAlpha(this.cabin.alpha + 0.02);
         }, null, this);
       }
+      //fadeVariable = false;
     }
-    if(!this.physics.collide(this.player, this.treeGroup)){
+    if(fadeVariable && !this.physics.collide(this.player, this.treeGroup) || !this.physics.collide(this.player, this.logGroup) || !this.physics.collide(this.player, this.rockGroup) || !this.physics.collide(this.player, this.cabin)){
+      fadeVariable = false;
       for (var i = 0; i < 50; i++) {
         this.clock = this.time.delayedCall(i * 20 + 2000, () => {
           this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
@@ -565,6 +566,7 @@ class Play extends Phaser.Scene {
           this.cabin.setAlpha(this.cabin.alpha - 0.02);
         }, null, this);
       }
+      //fadeVariable = true;
     }
     
 

@@ -40,6 +40,9 @@ let playerMoving = false;
 let smellUse = false;
 let echoCooldown = false;
 let timesUP = false;
+let fadeVariable = false;
+let echoSound = false;
+let smellGoing = false;
 
 //Control Variables
 
