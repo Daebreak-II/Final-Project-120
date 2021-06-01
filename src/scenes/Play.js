@@ -34,6 +34,7 @@ class Play extends Phaser.Scene {
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
       this.load.audio('smelling', './Assets/sfx/smelling.wav');
+      this.load.audio('preyWalking', './Assets/sfx/prey_walking.wav');
       //load animations
     }
 
@@ -186,6 +187,8 @@ class Play extends Phaser.Scene {
 
         this.smellSound = this.sound.add('smelling', { volume: 1 * volumeMultiplier, loop: false});
 
+        this.preyWalking = this.sound.add('preyWalking', { volume: 1.5 * volumeMultiplier, loop: true});
+
         // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
@@ -313,6 +316,7 @@ class Play extends Phaser.Scene {
         movingAway = false;
         echoCooldown = false;
         smellUse = false;
+        this.preyWalking.stop();
         this.scene.start('gameOverScene');
       }
 
@@ -359,6 +363,7 @@ class Play extends Phaser.Scene {
         movingAway = false;
         echoCooldown = false;
         smellUse =  false;
+        this.preyWalking.stop();
         this.scene.start('menuScene');
       }
 
@@ -471,6 +476,13 @@ class Play extends Phaser.Scene {
           }, null, this);
         }
       }
+
+      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 500){
+        this.preyWalking.play();
+      }
+      else{
+        this.preyWalking.stop();
+      }
       //if prey is on the boudanries move them to either direction depending on the boundary
 
       //upper boundaries bounces prey diagonally down
@@ -537,6 +549,7 @@ class Play extends Phaser.Scene {
       
       this.ambientMusic.stop();
       this.walking.stop();
+      this.preyWalking.stop();
       moving = false;
       movingAway = false;
       this.scene.start('gameOverScene');
