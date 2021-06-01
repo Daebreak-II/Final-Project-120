@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="250" height="250" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="146">
+ <tileset firstgid="1" name="Tree" tilewidth="280" tileheight="508" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="2">
+   <image width="280" height="508" source="smallertreeSprite.png"/>
+   <objectgroup draworder="index" id="5">
+    <object id="5" x="123.5" y="449.5" width="39" height="59.5"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="Campfire" tilewidth="200" tileheight="207" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="2">
+   <image width="200" height="207" source="smallcampfireSprite.png"/>
+   <objectgroup draworder="index" id="3">
+    <object id="3" x="7.68277" y="85.0881" width="177.5" height="96.5" rotation="359.621">
+     <ellipse/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="7" name="Border" tilewidth="8000" tileheight="8000" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="8000" height="8000" source="border.png"/>
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="4304" y="6544">
+     <polygon points="0,0 480.98,517.331 1132.2,443.952 1821.15,167.282 2637.54,-282.529 3184,-1040 3274.55,-1643.4 2977.07,-2103.14 2609.85,-2278.95 1984,-2368 2254.46,-3370.14 2224,-4272 1872,-5072 2128,-5760 2112,-5744 1561.36,-5935.05 208,-6128 -1248,-5520 -2529.75,-5727.1 -3456,-5264 -3472,-2832 -3024,-1776 -3104,304 -2986.51,553.765 -1420.1,727.865 -588.089,471.631"/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="8" name="cabin" tilewidth="1387" tileheight="1773" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="1387" height="1773" source="cabinSprite.png"/>
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="1512.12">
+     <polygon points="0,0 736.364,166.667 1336.36,-212.121 172.727,-215.152 169.697,-154.545 -3.0303,-66.6667"/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="9" name="log" tilewidth="280" tileheight="62" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="280" height="62" source="smalllogSprite.png"/>
+   <objectgroup draworder="index" id="4">
+    <object id="4" x="-1" y="1" width="280" height="63"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="10" name="rock" tilewidth="767" tileheight="263" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="767" height="263" source="rockSprite.png"/>
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="50" y="188">
+     <polygon points="0,0 588,8 554,-62 18,-72"/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="11" name="rock" tilewidth="1" tileheight="1" tilecount="0" columns="0"/>
+ <tileset firstgid="11" name="ground" tilewidth="7000" tileheight="6991" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="7000" height="6991" source="ground.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="12" name="tent" tilewidth="240" tileheight="201" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="1">
+   <image width="240" height="201" source="smalltentSprite.png"/>
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="21" y="136">
+     <polygon points="0,0 190,28 219.876,-1.30779 200,-28 23,-41"/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <objectgroup id="8" name="ground">
+  <object id="141" gid="11" x="628" y="7336" width="7000" height="6991"/>
+  <object id="142" gid="11" x="628" y="7336" width="7000" height="6991"/>
+ </objectgroup>
+ <objectgroup id="6" name="border">
+  <object id="69" gid="7" x="0" y="8016" width="8000" height="8000"/>
+ </objectgroup>
+ <objectgroup id="5" name="logs">
+  <object id="101" gid="9" x="3802.42" y="3949.18" width="280" height="62"/>
+  <object id="103" gid="9" x="2372" y="6367" width="280" height="62"/>
+  <object id="104" gid="9" x="2172" y="6247" width="280" height="62"/>
+  <object id="105" gid="9" x="1556" y="4175" width="280" height="62"/>
+  <object id="106" gid="9" x="1796" y="3919" width="280" height="62"/>
+  <object id="107" gid="9" x="1796" y="3919" width="280" height="62"/>
+  <object id="108" gid="9" x="5164" y="6391" width="280" height="62"/>
+  <object id="109" gid="9" x="5164" y="6391" width="280" height="62"/>
+  <object id="110" gid="9" x="5292" y="5943" width="280" height="62"/>
+  <object id="111" gid="9" x="5484" y="6231" width="280" height="62"/>
+  <object id="112" gid="9" x="5884" y="4599" width="280" height="62"/>
+  <object id="113" gid="9" x="5492" y="4119" width="280" height="62"/>
+  <object id="116" gid="9" x="5772" y="3831" width="280" height="62"/>
+  <object id="117" gid="9" x="5772" y="3831" width="280" height="62"/>
+  <object id="118" gid="9" x="3900" y="2143" width="280" height="62"/>
+  <object id="119" gid="9" x="3420" y="1543" width="280" height="62"/>
+  <object id="120" gid="9" x="3564" y="1911" width="280" height="62"/>
+  <object id="121" gid="9" x="2300" y="1487" width="280" height="62"/>
+  <object id="122" gid="9" x="2508" y="1695" width="280" height="62"/>
+  <object id="123" gid="9" x="2324" y="2871" width="280" height="62"/>
+  <object id="124" gid="9" x="2324" y="2863" width="280" height="62"/>
+  <object id="125" gid="9" x="2324" y="2863" width="280" height="62"/>
+  <object id="126" gid="9" x="2164" y="2639" width="280" height="62"/>
+  <object id="127" gid="9" x="5628" y="903" width="280" height="62"/>
+  <object id="128" gid="9" x="5628" y="903" width="280" height="62"/>
+  <object id="129" gid="9" x="5724" y="1039" width="280" height="62"/>
+  <object id="130" gid="9" x="5916" y="2751" width="280" height="62"/>
+  <object id="131" gid="9" x="2948" y="5519" width="280" height="62"/>
+ </objectgroup>
+ <objectgroup id="7" name="rocks">
+  <object id="132" gid="10" x="1753" y="4636" width="767" height="263"/>
+  <object id="133" gid="10" x="5753" y="5916" width="767" height="263"/>
+  <object id="134" gid="10" x="5753" y="5916" width="767" height="263"/>
+  <object id="135" gid="10" x="2609" y="3868" width="767" height="263"/>
+  <object id="136" gid="10" x="2609" y="3868" width="767" height="263"/>
+  <object id="137" gid="10" x="1025" y="1828" width="767" height="263"/>
+  <object id="140" gid="10" x="4433" y="3388" width="767" height="263"/>
+ </objectgroup>
+ <objectgroup id="2" name="trees">
+  <object id="27" gid="3" x="2212" y="4966" width="280" height="508"/>
+  <object id="28" gid="3" x="2484" y="5278" width="280" height="508"/>
+  <object id="29" gid="3" x="2212" y="5470" width="280" height="508"/>
+  <object id="30" gid="3" x="1940" y="5310" width="280" height="508"/>
+  <object id="31" gid="3" x="2412" y="5822" width="280" height="508"/>
+  <object id="32" gid="3" x="2972" y="3006" width="280" height="508"/>
+  <object id="33" gid="3" x="2724" y="2718" width="280" height="508"/>
+  <object id="34" gid="3" x="2964" y="2526" width="280" height="508"/>
+  <object id="35" gid="3" x="3244" y="2254" width="280" height="508"/>
+  <object id="36" gid="3" x="2124" y="2246" width="280" height="508"/>
+  <object id="37" gid="3" x="1932" y="2502" width="280" height="508"/>
+  <object id="38" gid="3" x="1540" y="2126" width="280" height="508"/>
+  <object id="39" gid="3" x="1316" y="2910" width="280" height="508"/>
+  <object id="40" gid="3" x="1732" y="2958" width="280" height="508"/>
+  <object id="41" gid="3" x="4540" y="4742" width="280" height="508"/>
+  <object id="42" gid="3" x="4836" y="5318" width="280" height="508"/>
+  <object id="43" gid="3" x="5052" y="4670" width="280" height="508"/>
+  <object id="44" gid="3" x="4276" y="5342" width="280" height="508"/>
+  <object id="45" gid="3" x="5276" y="5318" width="280" height="508"/>
+  <object id="46" gid="3" x="3444" y="4534" width="280" height="508"/>
+  <object id="47" gid="3" x="3284" y="4958" width="280" height="508"/>
+  <object id="48" gid="3" x="6708" y="2694" width="280" height="508"/>
+  <object id="50" gid="3" x="4500" y="1254" width="280" height="508"/>
+  <object id="51" gid="3" x="4148" y="1662" width="280" height="508"/>
+  <object id="52" gid="3" x="1452" y="3718" width="280" height="508"/>
+  <object id="53" gid="3" x="2148" y="4102" width="280" height="508"/>
+  <object id="54" gid="3" x="1828" y="3638" width="280" height="508"/>
+  <object id="55" gid="3" x="5196" y="3686" width="280" height="508"/>
+  <object id="56" gid="3" x="5196" y="3686" width="280" height="508"/>
+  <object id="57" gid="3" x="5492" y="2558" width="280" height="508"/>
+  <object id="58" gid="3" x="5516" y="3238" width="280" height="508"/>
+  <object id="59" gid="3" x="4900" y="2926" width="280" height="508"/>
+  <object id="60" gid="3" x="3692" y="6390" width="280" height="508"/>
+  <object id="61" gid="3" x="3356" y="6230" width="280" height="508"/>
+  <object id="62" gid="3" x="3580" y="5950" width="280" height="508"/>
+  <object id="63" gid="3" x="4580" y="5822" width="280" height="508"/>
+  <object id="64" gid="3" x="6284" y="5246" width="280" height="508"/>
+  <object id="65" gid="3" x="6284" y="5262" width="280" height="508"/>
+  <object id="66" gid="3" x="6092" y="5526" width="280" height="508"/>
+  <object id="67" gid="3" x="6620" y="5558" width="280" height="508"/>
+ </objectgroup>
+ <objectgroup id="9" name="cabin">
+  <object id="70" gid="8" x="4619" y="1983" width="1136.67" height="1453"/>
+ </objectgroup>
+ <objectgroup id="10" name="camping">
+  <object id="68" gid="6" x="3852" y="3656" width="200" height="207"/>
+  <object id="145" gid="13" x="3430" y="3407" width="488.716" height="409.3"/>
+ </objectgroup>
+</map>
