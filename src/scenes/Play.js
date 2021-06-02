@@ -331,8 +331,8 @@ class Play extends Phaser.Scene {
       this.overlay.x = this.player.x;
       this.overlay.y = this.player.y;
 
-      // this.fogEmitZone.x = this.player.x - game.config.width / 2;
-      // this.fogEmitZone.y = this.player.y - game.config.height / 2;
+      this.fogEmitZone.x = this.player.x - game.config.width / 2;
+      this.fogEmitZone.y = this.player.y - game.config.height / 2;
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
