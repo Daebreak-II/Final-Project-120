@@ -27,7 +27,6 @@ class Play extends Phaser.Scene {
 
       this.load.tilemapTiledJSON('gameMap', './Assets/sprites/gameMap.json');
       
-
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
@@ -35,7 +34,9 @@ class Play extends Phaser.Scene {
       this.load.audio('walking', './Assets/sfx/Walking.wav');
       this.load.audio('smelling', './Assets/sfx/smelling.wav');
       this.load.audio('preyWalking', './Assets/sfx/prey_walking.wav');
+
       //load animations
+      this.load.atlas('playerAnim', './Assets/animations/playerAnimations-0.png', './Assets/animations/playerAnimations.json')
     }
 
         
@@ -48,6 +49,64 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // creating Animations
+        this.anims.create({
+          key: 'walkRight',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerR1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'walkLeft',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerL1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'walkDown',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerU1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
       
         // add background
         // this.map = this.make.tilemap('gameMap');
@@ -157,10 +216,10 @@ class Play extends Phaser.Scene {
         this.rockGroup.setAlpha(0);
 
         // adding in moving objects
-        this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
-        this.player.setScale(playerScale);
+        this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
+        this.player.setScale(playerScale * 3);
         this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
-
+        this.player.setFrame('playerR4.png');
 
         this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
         this.prey.setScale(0.1);
@@ -301,7 +360,7 @@ class Play extends Phaser.Scene {
         
         this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
-        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFDD0);
+        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFFFF);
         this.daylight.setAlpha(0.2);
         this.timeRemain = 60000;
         

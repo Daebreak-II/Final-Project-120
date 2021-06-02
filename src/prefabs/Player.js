@@ -19,10 +19,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       // player's 8 direction movement
       if(keyLEFT.isDown){
         this.setVelocityX(this.moveSpeed * -1);  
+        this.playAfterRepeat('walkLeft');
         playerMoving = true;         
       }
       else if(keyRIGHT.isDown){
          this.setVelocityX(this.moveSpeed);
+         this.playAfterRepeat('walkRight', 1);
          playerMoving = true;
       }
       else {
@@ -30,10 +32,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
       if(keyUP.isDown){
           this.setVelocityY(this.moveSpeed * -1);
+          this.setFrame('playerR4.png');
           playerMoving = true;          
       }
       else if(keyDOWN.isDown){
           this.setVelocityY(this.moveSpeed);
+          this.playAfterRepeat('walkDown', 1);
           playerMoving = true;
       }
       else{
@@ -41,9 +45,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       }
       // If no movement keys are pressed character will stop moving
       if(!keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown && !keyDOWN.isDown){
-         this.setVelocityY(0);
-         this.setVelocityX(0);
-         playerMoving = false; 
+        this.setVelocityY(0);
+        this.setVelocityX(0);
+        this.stop();
+        playerMoving = false; 
       }
     }
 

@@ -9,8 +9,8 @@ class Prey extends Phaser.Physics.Arcade.Sprite {
     }
 
 
-    // update() {
+    update() {
 
-    // }
+    }
 
 }
