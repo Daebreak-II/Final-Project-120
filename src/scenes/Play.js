@@ -554,29 +554,29 @@ class Play extends Phaser.Scene {
       this.scene.start('gameOverScene');
     }
     //making ob fade in when touching them and then fading them out when you are not    
-    if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
-      //fadeVariable = true;
-      for (var i = 0; i < 50; i++) {
-        this.clock = this.time.delayedCall(i * 20, () => {
-          // groups don't have alphas, so cabin alpha is substituting 
-          // for other current alphas cause they're equal here
-          this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
-          this.logGroup.setAlpha(this.cabin.alpha + 0.02);
-          this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
-          this.cabin.setAlpha(this.cabin.alpha + 0.02);
-        }, null, this);
-      }
+    // if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
+    //   //fadeVariable = true;
+    //   for (var i = 0; i < 50; i++) {
+    //     this.clock = this.time.delayedCall(i * 20, () => {
+    //       // groups don't have alphas, so cabin alpha is substituting 
+    //       // for other current alphas cause they're equal here
+    //       this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+    //       this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+    //       this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+    //       this.cabin.setAlpha(this.cabin.alpha + 0.02);
+    //     }, null, this);
+    //   }
 
-      for (var i = 0; i < 50; i++) {
-        this.clock = this.time.delayedCall(i * 20 + 2000, () => {
-          this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-          this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-          this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-          this.cabin.setAlpha(this.cabin.alpha - 0.02);
-        }, null, this);
-      }
-      //fadeVariable = false;
-    }
+    //   for (var i = 0; i < 50; i++) {
+    //     this.clock = this.time.delayedCall(i * 20 + 2000, () => {
+    //       this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+    //       this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+    //       this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+    //       this.cabin.setAlpha(this.cabin.alpha - 0.02);
+    //     }, null, this);
+    //   }
+    //   //fadeVariable = false;
+    // }
     // if(!this.physics.collide(this.player, this.treeGroup) || !this.physics.collide(this.player, this.logGroup) || !this.physics.collide(this.player, this.rockGroup) || !this.physics.collide(this.player, this.cabin)){
     //   //fadeVariable = false;
     //   for (var i = 0; i < 50; i++) {
