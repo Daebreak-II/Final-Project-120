@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
 
     preload() {
       // load sprites
+      
       this.load.image('player', './Assets/sprites/playerSprite.png');
       this.load.image('prey', './Assets/sprites/preySprite.png');
       this.load.image('tree', './Assets/sprites/treeSprite.png');
@@ -24,8 +25,9 @@ class Play extends Phaser.Scene {
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
       this.load.image('tent', './Assets/sprites/tentSprite.png');
-
       this.load.tilemapTiledJSON('gameMap', './Assets/sprites/gameMap.json');
+
+      
       
 
       // load audio
@@ -50,8 +52,8 @@ class Play extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
       
         // add background
-        // this.map = this.make.tilemap('gameMap');
-        // this.jsonBackgroun = this.map.createLayer("border")
+        this.gameMap = this.add.tilemap('gameMap');
+        //this.jsonBackgroun = this.map.createLayer("border")
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);

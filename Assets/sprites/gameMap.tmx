@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="250" height="250" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="146">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="250" height="250" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="146">
  <tileset firstgid="1" name="Tree" tilewidth="280" tileheight="508" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="2">
@@ -62,14 +62,13 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="11" name="rock" tilewidth="1" tileheight="1" tilecount="0" columns="0"/>
- <tileset firstgid="11" name="ground" tilewidth="7000" tileheight="6991" tilecount="1" columns="0">
+ <tileset firstgid="17" name="ground" tilewidth="7000" tileheight="6991" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="7000" height="6991" source="ground.png"/>
   </tile>
  </tileset>
- <tileset firstgid="12" name="tent" tilewidth="240" tileheight="201" tilecount="1" columns="0">
+ <tileset firstgid="18" name="tent" tilewidth="240" tileheight="201" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="1">
    <image width="240" height="201" source="smalltentSprite.png"/>
@@ -80,11 +79,11 @@
    </objectgroup>
   </tile>
  </tileset>
- <objectgroup id="8" name="ground">
-  <object id="141" gid="11" x="628" y="7336" width="7000" height="6991"/>
-  <object id="142" gid="11" x="628" y="7336" width="7000" height="6991"/>
+ <objectgroup id="8" name="ground" locked="1">
+  <object id="141" gid="17" x="628" y="7336" width="7000" height="6991"/>
+  <object id="142" gid="17" x="628" y="7336" width="7000" height="6991"/>
  </objectgroup>
- <objectgroup id="6" name="border">
+ <objectgroup id="6" name="border" locked="1">
   <object id="69" gid="7" x="0" y="8016" width="8000" height="8000"/>
  </objectgroup>
  <objectgroup id="5" name="logs">
@@ -117,7 +116,7 @@
   <object id="130" gid="9" x="5916" y="2751" width="280" height="62"/>
   <object id="131" gid="9" x="2948" y="5519" width="280" height="62"/>
  </objectgroup>
- <objectgroup id="7" name="rocks">
+ <objectgroup id="7" name="rocks" locked="1">
   <object id="132" gid="10" x="1753" y="4636" width="767" height="263"/>
   <object id="133" gid="10" x="5753" y="5916" width="767" height="263"/>
   <object id="134" gid="10" x="5753" y="5916" width="767" height="263"/>
@@ -168,11 +167,11 @@
   <object id="66" gid="3" x="6092" y="5526" width="280" height="508"/>
   <object id="67" gid="3" x="6620" y="5558" width="280" height="508"/>
  </objectgroup>
- <objectgroup id="9" name="cabin">
+ <objectgroup id="9" name="cabin" locked="1">
   <object id="70" gid="8" x="4619" y="1983" width="1136.67" height="1453"/>
  </objectgroup>
- <objectgroup id="10" name="camping">
+ <objectgroup id="10" name="camping" locked="1">
   <object id="68" gid="6" x="3852" y="3656" width="200" height="207"/>
-  <object id="145" gid="13" x="3430" y="3407" width="488.716" height="409.3"/>
+  <object id="145" gid="19" x="3430" y="3407" width="488.716" height="409.3"/>
  </objectgroup>
 </map>
