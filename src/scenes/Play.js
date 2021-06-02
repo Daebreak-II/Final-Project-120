@@ -29,7 +29,6 @@ class Play extends Phaser.Scene {
 
       
       
-
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
@@ -37,7 +36,9 @@ class Play extends Phaser.Scene {
       this.load.audio('walking', './Assets/sfx/Walking.wav');
       this.load.audio('smelling', './Assets/sfx/smelling.wav');
       this.load.audio('preyWalking', './Assets/sfx/prey_walking.wav');
+
       //load animations
+      this.load.atlas('playerAnim', './Assets/animations/playerAnimations-0.png', './Assets/animations/playerAnimations.json')
     }
 
         
@@ -50,6 +51,64 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // creating Animations
+        this.anims.create({
+          key: 'walkRight',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerR1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerR4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'walkLeft',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerL1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerL4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'walkDown',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerU1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerU4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
       
         // add background
         this.gameMap = this.add.tilemap('gameMap');
@@ -159,10 +218,10 @@ class Play extends Phaser.Scene {
         this.rockGroup.setAlpha(0);
 
         // adding in moving objects
-        this.player = new Player(this, gameWidth/2, gameHeight/2, 'player', 0).setOrigin(0.5, 0.5);
-        this.player.setScale(playerScale);
+        this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
+        this.player.setScale(playerScale * 3);
         this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
-
+        this.player.setFrame('playerR4.png');
 
         this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
         this.prey.setScale(0.1);
@@ -178,18 +237,21 @@ class Play extends Phaser.Scene {
         this.player.body.collideWorldBounds = true;
         this.prey.body.collideWorldBounds = true;
 
-        // play music
+        // play music/sfx
         this.ambientMusic = this.sound.add('music', { volume: 1 * volumeMultiplier, loop: true });
         this.ambientMusic.play();
 
-        this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
-        this.walking.setRate(0.75);
+        this.playerWalking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
+        this.playerWalking.setRate(0.75);
 
-        this.echoSoundScream = this.sound.add('scream1', { volume: 0.1 * volumeMultiplier, loop: false});
+        this.preyWalking = this.sound.add('preyWalking', { volume: 0.5 * volumeMultiplier, loop: true});
+        this.preyWalking.setRate(1);
+        this.preyWalking.play();
+        this.preyWalking.pause();
 
         this.smellSound = this.sound.add('smelling', { volume: 1 * volumeMultiplier, loop: false});
 
-        this.preyWalking = this.sound.add('preyWalking', { volume: 1.5 * volumeMultiplier, loop: true});
+        
 
         // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
@@ -269,20 +331,19 @@ class Play extends Phaser.Scene {
         // problem: as the line gets shorter, the particles get more concentrated because
         // the spawn area is reduced. Actually maybe not a problem?
         this.smellEmitter = this.smellParticles.createEmitter({
-          //speed: { min: -10, max: 10 },
-          //x: this.smellLine.x, y: this.smellLine.y,
-          lifespan: 1500,
-          //radial = true,
-          //angle: ,
-          //rotate: 45,
+          speed: { min: -5, max: 5 },
+          lifespan: { min: 1000, max: 1500 },
+          rotate: { min: -90, max: 90 },
           quantity: 1,
           frequency: 20,
           scale: 0.01,
           alpha: { start: 1, end: 0 },
           blendMode: 'ADD',
           on: false,
-          emitZone: { type: 'random', source: this.smellLine},
+          emitZone: { type: 'random', source: this.smellLine}, 
         });
+
+
 
         this.graphics = this.add.graphics(); // what does this do Juan?
         
@@ -301,7 +362,7 @@ class Play extends Phaser.Scene {
         
         this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
-        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFDD0);
+        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFFFF);
         this.daylight.setAlpha(0.2);
         this.timeRemain = 60000;
         
@@ -313,12 +374,12 @@ class Play extends Phaser.Scene {
       if(this.timeRemain <= 0){
         timesUP = true;
         this.ambientMusic.stop();
-        this.walking.stop();
+        this.playerWalking.stop();
+        this.preyWalking.stop();
         moving = false;
         movingAway = false;
         echoCooldown = false;
         smellUse = false;
-        this.preyWalking.stop();
         this.scene.start('gameOverScene');
       }
 
@@ -345,35 +406,32 @@ class Play extends Phaser.Scene {
 
       this.deathZone.x = this.player.x;
       this.deathZone.y = this.player.y;
-      this.rotation = (Phaser.Math.Angle.Between(this.player.x, this.player.y, this.prey.x, this.prey.y));
-      
-      this.smellEmitter.forEachAlive((particle) => {
-          particle.rotation = this.rotation;
-        
-      });
 
       this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
+      var preyDistance = Phaser.Math.Distance.BetweenPoints(this.player, this.prey);
 
       this.graphics.clear();
 
       // option to restart
       if(Phaser.Input.Keyboard.JustDown(keyR)) {
         this.ambientMusic.stop();
-        this.walking.stop();
+        this.playerWalking.stop();
+        this.preyWalking.stop();
         moving = false;
         movingAway = false;
+        echoUse = false;
+        smellUse = false;
+        smellCooldown = false;
         echoCooldown = false;
-        smellUse =  false;
-        this.preyWalking.stop();
+
         this.scene.start('menuScene');
       }
 
       // echolocation Mechanic
-      if (keySPACE.isDown && !echoCooldown && !smellUse) {
-        if(!echoSound){
-          this.echoSoundScream.play();
-        }
+      if (Phaser.Input.Keyboard.JustDown(keySPACE) && !echoCooldown && !smellCooldown) {
+        echoUse = true; 
         echoCooldown = true;
+        this.playerWalking.setRate(this.playerWalking.rate / 1.1);
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
             this.overlay.setScale(this.overlay.scale + 0.01);
@@ -387,6 +445,11 @@ class Play extends Phaser.Scene {
             this.border.setAlpha(this.border.alpha + 0.02);
           }, null, this);
         }
+
+        this.clock = this.time.delayedCall(2000, () => {
+          echoUse = false;
+          this.playerWalking.setRate(this.playerWalking.rate * 1.1);
+        }, null, this);
 
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20 + 2000, () => {
@@ -403,16 +466,17 @@ class Play extends Phaser.Scene {
 
         this.clock = this.time.delayedCall(3000, () => {
           echoCooldown = false;
-          echoSound = false;
         }, null, this);
       }
 
       // Smell mechanic
-      if(keyS.isDown && !smellUse && !echoCooldown){
+      if(Phaser.Input.Keyboard.JustDown(keyS) && !smellCooldown && !echoCooldown){
         smellUse = true;
+        smellCooldown = true;
         this.smellEmitter.start();
         this.blackScreen.alpha = 0.8;
-        this.smellSound.play();        
+        this.smellSound.play();
+        this.playerWalking.setRate(this.playerWalking.rate / 1.1);        
       }
 
       //Once the smell key is not being pressed the smell should start dissapearing
@@ -420,6 +484,11 @@ class Play extends Phaser.Scene {
         smellUse = false;
         this.blackScreen.alpha = 0;
         this.smellEmitter.stop();
+        this.playerWalking.setRate(this.playerWalking.rate * 1.1);
+        
+        this.clock = this.time.delayedCall(500, () => {
+          smellCooldown = false
+        }, null, this);
       }
 
 
@@ -446,7 +515,7 @@ class Play extends Phaser.Scene {
       }
 
       
-      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 250){
+      if(preyDistance <= 250){
         if(!movingAway) {
           movingAway = true;
           //moving = true;
@@ -478,12 +547,8 @@ class Play extends Phaser.Scene {
         }
       }
 
-      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 500){
-        this.preyWalking.play();
-      }
-      else{
-        this.preyWalking.stop();
-      }
+
+
       //if prey is on the boudanries move them to either direction depending on the boundary
 
       //upper boundaries bounces prey diagonally down
@@ -549,12 +614,17 @@ class Play extends Phaser.Scene {
       this.sound.play('scream2', { volume: 1 * volumeMultiplier});
       
       this.ambientMusic.stop();
-      this.walking.stop();
+      this.playerWalking.stop();
       this.preyWalking.stop();
       moving = false;
       movingAway = false;
+      echoUse = false;
+      smellUse = false;
+      smellCooldown = false;
+      echoCooldown = false;
       this.scene.start('gameOverScene');
     }
+
     //making ob fade in when touching them and then fading them out when you are not    
     // if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
     //   //fadeVariable = true;
@@ -622,10 +692,19 @@ class Play extends Phaser.Scene {
     
 
     // walking sounds
-    if(playerMoving == true && this.walking.isPlaying == false) {
-      this.walking.play();
+    // repeating single step
+    if(playerMoving && !this.playerWalking.isPlaying) {
+      this.playerWalking.play();
+    }
+
+
+    // turning on/off multiple step recording
+    if(preyDistance <= 4000){
+      this.preyWalking.setVolume((4000 - preyDistance) / 40000  * volumeMultiplier);
+      this.preyWalking.resume();
+    } else {
+      this.preyWalking.pause();
     }
     
   }
-  
 }
