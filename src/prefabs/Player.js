@@ -10,7 +10,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 
     update() {
-      if (smellUse || echoCooldown) {
+      if (smellUse || echoUse) {
         this.moveSpeed = 400/4;
       } else {
         this.moveSpeed = 400;
