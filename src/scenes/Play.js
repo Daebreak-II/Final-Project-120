@@ -53,7 +53,7 @@ class Play extends Phaser.Scene {
         this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
-        this.overlay.depth = 10; // temporary, need a way to bring to absolute top
+        this.overlay.depth = 4; // temporary, need a way to bring to absolute top
 
 
         //adding the boundary hitboxes of the map 
@@ -206,7 +206,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 1600,
+          frequency: 2500,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -218,7 +218,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 1600,
+          frequency: 2500,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -230,7 +230,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 1600,
+          frequency: 2500,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -242,7 +242,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 20000,
           quantity: 1,
-          frequency: 1600,
+          frequency: 2500,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -325,8 +325,7 @@ class Play extends Phaser.Scene {
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
 
-      
-
+    
       this.emitZone.x = this.player.x - 3600 / 2;
       this.emitZone.y = this.player.y - 2400 / 2;
 
@@ -395,7 +394,7 @@ class Play extends Phaser.Scene {
       }
 
       // Smell mechanic
-      if(keyS.isDown && !smellUse){
+      if(keyS.isDown && !smellUse && !echoCooldown){
         smellUse = true;
         this.smellEmitter.start();
         this.blackScreen.alpha = 0.8;
