@@ -23,6 +23,9 @@ class Play extends Phaser.Scene {
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
+      this.load.image('tent', './Assets/sprites/tentSprite.png');
+
+      this.load.tilemapTiledJSON('gameMap', './Assets/sprites/gameMap.json');
       
 
       // load audio
@@ -30,6 +33,8 @@ class Play extends Phaser.Scene {
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
+      this.load.audio('smelling', './Assets/sfx/smelling.wav');
+      this.load.audio('preyWalking', './Assets/sfx/prey_walking.wav');
       //load animations
     }
 
@@ -45,6 +50,8 @@ class Play extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
       
         // add background
+        // this.map = this.make.tilemap('gameMap');
+        // this.jsonBackgroun = this.map.createLayer("border")
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
@@ -176,6 +183,12 @@ class Play extends Phaser.Scene {
         this.walking = this.sound.add('walking', { volume: 0.1 * volumeMultiplier, loop: false});
         this.walking.setRate(0.75);
 
+        this.echoSoundScream = this.sound.add('scream1', { volume: 0.1 * volumeMultiplier, loop: false});
+
+        this.smellSound = this.sound.add('smelling', { volume: 1 * volumeMultiplier, loop: false});
+
+        this.preyWalking = this.sound.add('preyWalking', { volume: 1.5 * volumeMultiplier, loop: true});
+
         // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
@@ -211,7 +224,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: true,
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter2 = this.fogParticle2.createEmitter({
@@ -223,7 +236,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: true,
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter3 = this.fogParticle3.createEmitter({
@@ -235,7 +248,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: true,
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
         this.fogEmitter4 = this.fogParticle4.createEmitter({
@@ -247,7 +260,7 @@ class Play extends Phaser.Scene {
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
           emitZone: { source: this.fogEmitZone },
-          on: true,
+          on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
 
@@ -270,8 +283,6 @@ class Play extends Phaser.Scene {
         });
 
         this.graphics = this.add.graphics(); // what does this do Juan?
-        this.deathZone2.x = this.campfire.x;
-        this.deathZone2.y = this.campfire.y;
         
         //adding text explaining your goal
         let textConfig = {
@@ -305,6 +316,7 @@ class Play extends Phaser.Scene {
         movingAway = false;
         echoCooldown = false;
         smellUse = false;
+        this.preyWalking.stop();
         this.scene.start('gameOverScene');
       }
 
@@ -319,8 +331,8 @@ class Play extends Phaser.Scene {
       this.overlay.x = this.player.x;
       this.overlay.y = this.player.y;
 
-      this.fogEmitZone.x = this.player.x - game.config.width / 2;
-      this.fogEmitZone.y = this.player.y - game.config.height / 2;
+      // this.fogEmitZone.x = this.player.x - game.config.width / 2;
+      // this.fogEmitZone.y = this.player.y - game.config.height / 2;
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
@@ -350,16 +362,15 @@ class Play extends Phaser.Scene {
         movingAway = false;
         echoCooldown = false;
         smellUse =  false;
+        this.preyWalking.stop();
         this.scene.start('menuScene');
       }
 
-      this.playerSpeaking.x = this.player.x;
-      this.playerSpeaking.y = this.player.y;
-      
-
-      
       // echolocation Mechanic
       if (keySPACE.isDown && !echoCooldown && !smellUse) {
+        if(!echoSound){
+          this.echoSoundScream.play();
+        }
         echoCooldown = true;
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
@@ -390,6 +401,7 @@ class Play extends Phaser.Scene {
 
         this.clock = this.time.delayedCall(3000, () => {
           echoCooldown = false;
+          echoSound = false;
         }, null, this);
       }
 
@@ -398,16 +410,7 @@ class Play extends Phaser.Scene {
         smellUse = true;
         this.smellEmitter.start();
         this.blackScreen.alpha = 0.8;
-
-        // //this helps the particles fade in and out instead of popping of existance
-        // this.clock = this.time.delayedCall(6000, () => {
-          // this.blackScreen.alpha = 0.8;
-          // this.smellEmitter.setAlpha(function (p, k, t) {
-          //   return 1 - 2 * Math.abs(t - 0.5);
-          // });
-          
-        // }, null, this);
-        
+        this.smellSound.play();        
       }
 
       //Once the smell key is not being pressed the smell should start dissapearing
@@ -419,7 +422,7 @@ class Play extends Phaser.Scene {
 
 
       //Prey's movement
-      if(!moving) {
+      if(!moving && !movingAway) {
       moving = true;
       let changeDirection = Phaser.Math.Between(1, 4);
       if(changeDirection <= 1) {
@@ -444,25 +447,7 @@ class Play extends Phaser.Scene {
       if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 250){
         if(!movingAway) {
           movingAway = true;
-          moving = true;
-          // if(keyLEFT.isDown){
-          //   this.prey.setVelocityX(-480);                
-          // }
-          // else if(keyRIGHT.isDown){
-          //   this.prey.setVelocityX(480);
-          // }
-          // else{
-          //   this.prey.setVelocityX(0);
-          // }
-          // if(keyUP.isDown){
-          //   this.prey.setVelocityY(-480);                
-          // }
-          // else if(keyDOWN.isDown){
-          //   this.prey.setVelocityY(480);
-          // }
-          // else{
-          //   this.prey.setVelocityY(0);
-          // }
+          //moving = true;
           // if player is on the left makes the prey move to the right faster
           if (this.player.x < this.prey.x && this.prey.body.velocity.x >= 0) {
             // move prey to the right
@@ -489,6 +474,13 @@ class Play extends Phaser.Scene {
             movingAway = false;
           }, null, this);
         }
+      }
+
+      if(Phaser.Math.Distance.BetweenPoints(this.player, this.prey) <= 500){
+        this.preyWalking.play();
+      }
+      else{
+        this.preyWalking.stop();
       }
       //if prey is on the boudanries move them to either direction depending on the boundary
 
@@ -540,22 +532,56 @@ class Play extends Phaser.Scene {
         }
 
       }
-    
+      
+      if(this.physics.collide(this.prey, this.treeGroup)){
+        this.prey.body.bounce.x = 1;
+        this.prey.body.bounce.x = 1;
+      }
 
     // collisions 
     if(this.physics.collide(this.player, this.prey)) {
-      let i = Phaser.Math.Between(1, 2);
-      if(i == 1) {
-        this.sound.play('scream1', { volume: 1 * volumeMultiplier});
-      } else {
-        this.sound.play('scream2', { volume: 1 * volumeMultiplier});
-      }
+      //let i = Phaser.Math.Between(1, 2);
+      //if(i == 1) {
+        //this.sound.play('scream1', { volume: 1 * volumeMultiplier});
+      //} else {
+      this.sound.play('scream2', { volume: 1 * volumeMultiplier});
+      
       this.ambientMusic.stop();
       this.walking.stop();
+      this.preyWalking.stop();
       moving = false;
       movingAway = false;
       this.scene.start('gameOverScene');
-    }    
+    }
+    //making ob fade in when touching them and then fading them out when you are not    
+    if(!fadeVariable && this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
+      fadeVariable = true;
+      for (var i = 0; i < 50; i++) {
+        this.clock = this.time.delayedCall(i * 20, () => {
+          // groups don't have alphas, so cabin alpha is substituting 
+          // for other current alphas cause they're equal here
+          this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+          this.cabin.setAlpha(this.cabin.alpha + 0.02);
+        }, null, this);
+      }
+      //fadeVariable = false;
+    }
+    if(fadeVariable && !this.physics.collide(this.player, this.treeGroup) || !this.physics.collide(this.player, this.logGroup) || !this.physics.collide(this.player, this.rockGroup) || !this.physics.collide(this.player, this.cabin)){
+      fadeVariable = false;
+      for (var i = 0; i < 50; i++) {
+        this.clock = this.time.delayedCall(i * 20 + 2000, () => {
+          this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+          this.cabin.setAlpha(this.cabin.alpha - 0.02);
+        }, null, this);
+      }
+      //fadeVariable = true;
+    }
+    
+    
 
     this.physics.collide(this.player, this.treeGroup);
     this.physics.collide(this.prey, this.treeGroup);

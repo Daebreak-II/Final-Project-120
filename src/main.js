@@ -40,6 +40,12 @@ let playerMoving = false;
 let smellUse = false;
 let echoCooldown = false;
 let timesUP = false;
+let fadeVariable = false;
+let echoSound = false;
+let smellGoing = false;
+let treeFade = 0;
+let logFade = 0;
+let rockFade = 0;
 
 //Control Variables
 
