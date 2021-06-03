@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="250" height="250" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="148">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="250" height="250" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="162">
  <editorsettings>
   <export target="gameMap.json" format="json"/>
  </editorsettings>
@@ -34,7 +34,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="8" name="cabin" tilewidth="1387" tileheight="1773" tilecount="1" columns="0">
+ <tileset firstgid="16" name="cabin" tilewidth="1387" tileheight="1773" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="1387" height="1773" source="cabinSprite.png"/>
@@ -45,7 +45,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="9" name="log" tilewidth="280" tileheight="62" tilecount="1" columns="0">
+ <tileset firstgid="17" name="log" tilewidth="280" tileheight="62" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="280" height="62" source="smalllogSprite.png"/>
@@ -54,7 +54,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="10" name="rock" tilewidth="767" tileheight="263" tilecount="1" columns="0">
+ <tileset firstgid="18" name="rock" tilewidth="767" tileheight="263" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="767" height="263" source="rockSprite.png"/>
@@ -65,7 +65,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="11" name="tent" tilewidth="240" tileheight="201" tilecount="1" columns="0">
+ <tileset firstgid="19" name="tent" tilewidth="240" tileheight="201" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="1">
    <image width="240" height="201" source="smalltentSprite.png"/>
@@ -76,56 +76,56 @@
    </objectgroup>
   </tile>
  </tileset>
- <tileset firstgid="13" name="ground" tilewidth="7000" tileheight="6991" tilecount="1" columns="0">
+ <tileset firstgid="21" name="ground" tilewidth="7000" tileheight="6991" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="7000" height="6991" source="ground.png"/>
   </tile>
  </tileset>
  <objectgroup id="8" name="groundLayer">
-  <object id="147" gid="13" x="644" y="7352" width="7000" height="6991"/>
+  <object id="147" gid="21" x="644" y="7352" width="7000" height="6991"/>
  </objectgroup>
  <objectgroup id="6" name="borderLayer">
   <object id="69" gid="7" x="0" y="8016" width="8000" height="8000"/>
  </objectgroup>
  <objectgroup id="5" name="logsLayer">
-  <object id="101" gid="9" x="3802.42" y="3949.18" width="280" height="62"/>
-  <object id="103" gid="9" x="2372" y="6367" width="280" height="62"/>
-  <object id="104" gid="9" x="2172" y="6247" width="280" height="62"/>
-  <object id="105" gid="9" x="1556" y="4175" width="280" height="62"/>
-  <object id="106" gid="9" x="1796" y="3919" width="280" height="62"/>
-  <object id="107" gid="9" x="1796" y="3919" width="280" height="62"/>
-  <object id="108" gid="9" x="5164" y="6391" width="280" height="62"/>
-  <object id="109" gid="9" x="5164" y="6391" width="280" height="62"/>
-  <object id="110" gid="9" x="5292" y="5943" width="280" height="62"/>
-  <object id="111" gid="9" x="5484" y="6231" width="280" height="62"/>
-  <object id="112" gid="9" x="5884" y="4599" width="280" height="62"/>
-  <object id="113" gid="9" x="5492" y="4119" width="280" height="62"/>
-  <object id="116" gid="9" x="5772" y="3831" width="280" height="62"/>
-  <object id="117" gid="9" x="5772" y="3831" width="280" height="62"/>
-  <object id="118" gid="9" x="3900" y="2143" width="280" height="62"/>
-  <object id="119" gid="9" x="3420" y="1543" width="280" height="62"/>
-  <object id="120" gid="9" x="3564" y="1911" width="280" height="62"/>
-  <object id="121" gid="9" x="2300" y="1487" width="280" height="62"/>
-  <object id="122" gid="9" x="2508" y="1695" width="280" height="62"/>
-  <object id="123" gid="9" x="2324" y="2871" width="280" height="62"/>
-  <object id="124" gid="9" x="2324" y="2863" width="280" height="62"/>
-  <object id="125" gid="9" x="2324" y="2863" width="280" height="62"/>
-  <object id="126" gid="9" x="2164" y="2639" width="280" height="62"/>
-  <object id="127" gid="9" x="5628" y="903" width="280" height="62"/>
-  <object id="128" gid="9" x="5628" y="903" width="280" height="62"/>
-  <object id="129" gid="9" x="5724" y="1039" width="280" height="62"/>
-  <object id="130" gid="9" x="5916" y="2751" width="280" height="62"/>
-  <object id="131" gid="9" x="2948" y="5519" width="280" height="62"/>
+  <object id="101" gid="17" x="3802.42" y="3949.18" width="280" height="62"/>
+  <object id="103" gid="17" x="2372" y="6367" width="280" height="62"/>
+  <object id="104" gid="17" x="2172" y="6247" width="280" height="62"/>
+  <object id="105" gid="17" x="1556" y="4175" width="280" height="62"/>
+  <object id="106" gid="17" x="1796" y="3919" width="280" height="62"/>
+  <object id="107" gid="17" x="1796" y="3919" width="280" height="62"/>
+  <object id="108" gid="17" x="5164" y="6391" width="280" height="62"/>
+  <object id="109" gid="17" x="5164" y="6391" width="280" height="62"/>
+  <object id="110" gid="17" x="5292" y="5943" width="280" height="62"/>
+  <object id="111" gid="17" x="5484" y="6231" width="280" height="62"/>
+  <object id="112" gid="17" x="5884" y="4599" width="280" height="62"/>
+  <object id="113" gid="17" x="5492" y="4119" width="280" height="62"/>
+  <object id="116" gid="17" x="5772" y="3831" width="280" height="62"/>
+  <object id="117" gid="17" x="5772" y="3831" width="280" height="62"/>
+  <object id="118" gid="17" x="3900" y="2143" width="280" height="62"/>
+  <object id="119" gid="17" x="3420" y="1543" width="280" height="62"/>
+  <object id="120" gid="17" x="3564" y="1911" width="280" height="62"/>
+  <object id="121" gid="17" x="2300" y="1487" width="280" height="62"/>
+  <object id="122" gid="17" x="2508" y="1695" width="280" height="62"/>
+  <object id="123" gid="17" x="2324" y="2871" width="280" height="62"/>
+  <object id="124" gid="17" x="2324" y="2863" width="280" height="62"/>
+  <object id="125" gid="17" x="2324" y="2863" width="280" height="62"/>
+  <object id="126" gid="17" x="2164" y="2639" width="280" height="62"/>
+  <object id="127" gid="17" x="5628" y="903" width="280" height="62"/>
+  <object id="128" gid="17" x="5628" y="903" width="280" height="62"/>
+  <object id="129" gid="17" x="5724" y="1039" width="280" height="62"/>
+  <object id="130" gid="17" x="5916" y="2751" width="280" height="62"/>
+  <object id="131" gid="17" x="2948" y="5519" width="280" height="62"/>
  </objectgroup>
  <objectgroup id="7" name="rocksLayer">
-  <object id="132" gid="10" x="1753" y="4636" width="767" height="263"/>
-  <object id="133" gid="10" x="5753" y="5916" width="767" height="263"/>
-  <object id="134" gid="10" x="5753" y="5916" width="767" height="263"/>
-  <object id="135" gid="10" x="2609" y="3868" width="767" height="263"/>
-  <object id="136" gid="10" x="2609" y="3868" width="767" height="263"/>
-  <object id="137" gid="10" x="1025" y="1828" width="767" height="263"/>
-  <object id="140" gid="10" x="4433" y="3388" width="767" height="263"/>
+  <object id="132" gid="18" x="1753" y="4636" width="767" height="263"/>
+  <object id="133" gid="18" x="5753" y="5916" width="767" height="263"/>
+  <object id="134" gid="18" x="5753" y="5916" width="767" height="263"/>
+  <object id="135" gid="18" x="2609" y="3868" width="767" height="263"/>
+  <object id="136" gid="18" x="2609" y="3868" width="767" height="263"/>
+  <object id="137" gid="18" x="1025" y="1828" width="767" height="263"/>
+  <object id="140" gid="18" x="4433" y="3388" width="767" height="263"/>
  </objectgroup>
  <objectgroup id="2" name="treesLayer">
   <object id="27" gid="3" x="2212" y="4966" width="280" height="508"/>
@@ -170,10 +170,10 @@
   <object id="67" gid="3" x="6620" y="5558" width="280" height="508"/>
  </objectgroup>
  <objectgroup id="9" name="cabinLayer">
-  <object id="70" gid="8" x="4619" y="1983" width="1136.67" height="1453"/>
+  <object id="70" gid="16" x="4619" y="1983" width="1136.67" height="1453"/>
  </objectgroup>
  <objectgroup id="10" name="campingLayer">
   <object id="68" gid="6" x="3852" y="3656" width="200" height="207"/>
-  <object id="145" gid="12" x="3430" y="3407" width="488.716" height="409.3"/>
+  <object id="145" gid="20" x="3430" y="3407" width="488.716" height="409.3"/>
  </objectgroup>
 </map>
