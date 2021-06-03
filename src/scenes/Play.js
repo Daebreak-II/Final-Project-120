@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
       this.load.image('campfire', './Assets/sprites/campfireSprite.png');
       this.load.image('groundTile', './Assets/sprites/groundTile.png');
       this.load.image('border', './Assets/sprites/border.png');
-      this.load.image('ground', './Assets/sprites/ground.png');
+      this.load.image('grounded', './Assets/sprites/ground.png');
       this.load.image('fog1', './Assets/sprites/fogSprite1.png');
       this.load.image('fog2', './Assets/sprites/fogSprite2.png');
       this.load.image('fog3', './Assets/sprites/fogSprite3.png');
@@ -25,6 +25,7 @@ class Play extends Phaser.Scene {
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
       this.load.image('tent', './Assets/sprites/tentSprite.png');
+      this.load.image('smallLog','/Assets/sprites/smalllogSprite.png')
       this.load.tilemapTiledJSON('gameMap', './Assets/sprites/gameMap.json');
 
       
@@ -112,8 +113,9 @@ class Play extends Phaser.Scene {
       
         // add background
         this.gameMap = this.add.tilemap('gameMap');
-        //this.jsonBackgroun = this.map.createLayer("border")
-        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
+        this.ground = this.gameMap.addTilesetImage("ground", "grounded");
+        //this.jsonBackgroun = this.gameMap.createLayer("ground", this.ground, 0, 0);
+        //this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'groundTile').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
 

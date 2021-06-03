@@ -1,35 +1,31 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"gameMap.json"
+        }
+    },
  "height":250,
  "infinite":false,
  "layers":[
         {
          "draworder":"topdown",
          "id":8,
-         "name":"ground",
+         "name":"groundLayer",
          "objects":[
                 {
-                 "gid":17,
+                 "gid":13,
                  "height":6991,
-                 "id":141,
+                 "id":147,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":7000,
-                 "x":628,
-                 "y":7336
-                }, 
-                {
-                 "gid":17,
-                 "height":6991,
-                 "id":142,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":7000,
-                 "x":628,
-                 "y":7336
+                 "x":644,
+                 "y":7352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -40,7 +36,7 @@
         {
          "draworder":"topdown",
          "id":6,
-         "name":"border",
+         "name":"borderLayer",
          "objects":[
                 {
                  "gid":7,
@@ -63,7 +59,7 @@
         {
          "draworder":"topdown",
          "id":5,
-         "name":"logs",
+         "name":"logsLayer",
          "objects":[
                 {
                  "gid":9,
@@ -410,7 +406,7 @@
         {
          "draworder":"topdown",
          "id":7,
-         "name":"rocks",
+         "name":"rocksLayer",
          "objects":[
                 {
                  "gid":10,
@@ -505,7 +501,7 @@
         {
          "draworder":"topdown",
          "id":2,
-         "name":"trees",
+         "name":"treesLayer",
          "objects":[
                 {
                  "gid":3,
@@ -996,7 +992,7 @@
         {
          "draworder":"topdown",
          "id":9,
-         "name":"cabin",
+         "name":"cabinLayer",
          "objects":[
                 {
                  "gid":8,
@@ -1019,7 +1015,7 @@
         {
          "draworder":"topdown",
          "id":10,
-         "name":"camping",
+         "name":"campingLayer",
          "objects":[
                 {
                  "gid":6,
@@ -1034,7 +1030,7 @@
                  "y":3656
                 }, 
                 {
-                 "gid":19,
+                 "gid":12,
                  "height":409.3,
                  "id":145,
                  "name":"",
@@ -1052,7 +1048,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":146,
+ "nextobjectid":149,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
@@ -1484,30 +1480,7 @@
         }, 
         {
          "columns":0,
-         "firstgid":17,
-         "grid":
-            {
-             "height":1,
-             "orientation":"orthogonal",
-             "width":1
-            },
-         "margin":0,
-         "name":"ground",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":6991,
-         "tiles":[
-                {
-                 "id":0,
-                 "image":"ground.png",
-                 "imageheight":6991,
-                 "imagewidth":7000
-                }],
-         "tilewidth":7000
-        }, 
-        {
-         "columns":0,
-         "firstgid":18,
+         "firstgid":11,
          "grid":
             {
              "height":1,
@@ -1571,6 +1544,29 @@
                     }
                 }],
          "tilewidth":240
+        }, 
+        {
+         "columns":0,
+         "firstgid":13,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"ground",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":6991,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"ground.png",
+                 "imageheight":6991,
+                 "imagewidth":7000
+                }],
+         "tilewidth":7000
         }],
  "tilewidth":32,
  "type":"map",
