@@ -4,8 +4,8 @@
 			"image": "preyAnimations.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 1720,
-				"h": 1538
+				"w": 882,
+				"h": 3856
 			},
 			"scale": 1,
 			"frames": [
@@ -31,24 +31,24 @@
 					}
 				},
 				{
-					"filename": "preyL3.png",
+					"filename": "preyUP3.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 302,
-						"h": 745
+						"w": 292,
+						"h": 789
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 302,
-						"h": 745
+						"w": 292,
+						"h": 789
 					},
 					"frame": {
 						"x": 1,
 						"y": 792,
-						"w": 302,
-						"h": 745
+						"w": 292,
+						"h": 789
 					}
 				},
 				{
@@ -73,6 +73,27 @@
 					}
 				},
 				{
+					"filename": "preyUP2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 292,
+						"h": 780
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 292,
+						"h": 780
+					},
+					"frame": {
+						"x": 589,
+						"y": 1,
+						"w": 292,
+						"h": 780
+					}
+				},
+				{
 					"filename": "preyU4.png",
 					"rotated": false,
 					"trimmed": false,
@@ -87,8 +108,29 @@
 						"h": 778
 					},
 					"frame": {
-						"x": 589,
-						"y": 1,
+						"x": 1,
+						"y": 1583,
+						"w": 292,
+						"h": 778
+					}
+				},
+				{
+					"filename": "preyUP4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 292,
+						"h": 778
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 292,
+						"h": 778
+					},
+					"frame": {
+						"x": 295,
+						"y": 783,
 						"w": 292,
 						"h": 778
 					}
@@ -108,10 +150,52 @@
 						"h": 774
 					},
 					"frame": {
-						"x": 883,
-						"y": 1,
+						"x": 589,
+						"y": 783,
 						"w": 292,
 						"h": 774
+					}
+				},
+				{
+					"filename": "preyUP1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 292,
+						"h": 774
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 292,
+						"h": 774
+					},
+					"frame": {
+						"x": 589,
+						"y": 1559,
+						"w": 292,
+						"h": 774
+					}
+				},
+				{
+					"filename": "preyL3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 302,
+						"h": 745
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 302,
+						"h": 745
+					},
+					"frame": {
+						"x": 1,
+						"y": 2363,
+						"w": 302,
+						"h": 745
 					}
 				},
 				{
@@ -129,10 +213,52 @@
 						"h": 745
 					},
 					"frame": {
-						"x": 1177,
-						"y": 1,
+						"x": 1,
+						"y": 3110,
 						"w": 302,
 						"h": 745
+					}
+				},
+				{
+					"filename": "preyL1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 277,
+						"h": 755
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 277,
+						"h": 755
+					},
+					"frame": {
+						"x": 295,
+						"y": 1563,
+						"w": 277,
+						"h": 755
+					}
+				},
+				{
+					"filename": "preyR4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 277,
+						"h": 755
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 277,
+						"h": 755
+					},
+					"frame": {
+						"x": 305,
+						"y": 2320,
+						"w": 277,
+						"h": 755
 					}
 				},
 				{
@@ -151,7 +277,7 @@
 					},
 					"frame": {
 						"x": 305,
-						"y": 783,
+						"y": 3077,
 						"w": 284,
 						"h": 748
 					}
@@ -172,51 +298,9 @@
 					},
 					"frame": {
 						"x": 591,
-						"y": 781,
+						"y": 2335,
 						"w": 284,
 						"h": 748
-					}
-				},
-				{
-					"filename": "preyL1.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 277,
-						"h": 755
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 277,
-						"h": 755
-					},
-					"frame": {
-						"x": 877,
-						"y": 781,
-						"w": 277,
-						"h": 755
-					}
-				},
-				{
-					"filename": "preyR4.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 277,
-						"h": 755
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 277,
-						"h": 755
-					},
-					"frame": {
-						"x": 1156,
-						"y": 777,
-						"w": 277,
-						"h": 755
 					}
 				},
 				{
@@ -234,8 +318,8 @@
 						"h": 748
 					},
 					"frame": {
-						"x": 1435,
-						"y": 748,
+						"x": 591,
+						"y": 3085,
 						"w": 284,
 						"h": 748
 					}
@@ -255,8 +339,8 @@
 						"h": 748
 					},
 					"frame": {
-						"x": 1435,
-						"y": 748,
+						"x": 591,
+						"y": 3085,
 						"w": 284,
 						"h": 748
 					}
@@ -267,6 +351,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:f541d446e95f0f67be8a222666b6da08:1d62f6c87f792768458414a32eb649d3:a7a801392714a3b72034944d7729a9a5$"
+		"smartupdate": "$TexturePacker:SmartUpdate:bf27eac2c96f4e849bdf33227a4fe413:f2bb386aba01297d413d2e37128fd488:a7a801392714a3b72034944d7729a9a5$"
 	}
 }
