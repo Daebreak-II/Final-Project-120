@@ -53,7 +53,7 @@ class Menu extends Phaser.Scene {
   update(){
     
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverPlay){
-      this.scene.start("playScene");      
+      this.scene.start("tutorialScene");      
     }
 
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverOptions){
