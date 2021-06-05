@@ -14,7 +14,7 @@ class Tutorial extends Phaser.Scene {
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('grounded', './Assets/sprites/ground.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
-      this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
+      this.load.image('fogOverlay', './Assets/sprites/darknessOverlay.png');
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
@@ -118,57 +118,73 @@ class Tutorial extends Phaser.Scene {
         this.overlay.depth = 4; // temporary, need a way to bring to absolute top
 
 
-        this.cabin = this.physics.add.image(gameWidth / 2 - 400, gameHeight/2 - 800,'cabin');        
+        this.cabin = this.physics.add.image(gameWidth / 2 - 300, gameHeight/2 - 800,'cabin');        
         this.cabin.setScale(0.5);
         this.cabin.setSize(1000, 1500);
         this.cabin.setOffset(130, 610);
         this.cabin.setOrigin(0.5,0);
+        this.cabin.setAlpha(1);
         this.cabin.flipX = true;
         this.cabin.body.immovable = true;
         this.cabin.body.moves = false;
-        
 
-        this.treeGroup = this.physics.add.group();
-        this.treeGroup.runChildUpdate = true;
+        
 
         for(let i = 0; i < 200; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-          this.tree = this.treeGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree');
-          this.tree.setSize(200, 350);
-          this.tree.setOffset(580, 2060); // needs to be changed for proper scaling
-          this.tree.body.immovable = true;
-          this.tree.body.moves = false;
-          if(this.physics.collide(this.tree, this.cabin)) {
-            this.tree.destroy();
-          }
-
+          this.tree = this.add.sprite(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(gameHeight/2 + 300, gameHeight/2 + 400), 'tree').setScale(0.2);
         }
-        this.treeGroup.setOrigin(0.5, 0.5);
-        // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
-        this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
-        this.treeGroup.setAlpha(0);
+        for(let i = 0; i < 200; i++) {
+            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+           this.tree2 = this.add.sprite(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(gameHeight/2 - 650, gameHeight/2 - 700), 'tree').setScale(0.2);
+        }
+        for(let i = 0; i < 200; i++) {
+            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+           this.tree3 = this.add.sprite(Phaser.Math.Between(gameWidth/2 - 800, gameWidth/2-700), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2);
+        }
 
+        
         
         this.logGroup = this.physics.add.group();
         this.logGroup.runChildUpdate = true;
-        for(let i = 0; i < 50; i++) {
-          this.log = this.logGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'log').setScale(0.2);
-          this.log.body.immovable = true;
-          this.log.body.moves = false;
-          // setAngle(Phaser.Math.Between(-5, 5))
-        }
-        this.logGroup.setAlpha(0);
+
+        //Logs for the upper side
+        this.log1 = this.logGroup.create(gameWidth/2, gameHeight/2-500, 'log').setScale(1, 1);
+        this.log1.body.immovable = true;
+        this.log1.body.moves = false;
+
+        this.log2 = this.logGroup.create(gameWidth/2 + 1245, gameHeight/2-500, 'log').setScale(1, 1);
+        this.log2.body.immovable = true;
+        this.log2.body.moves = false;
+
+        this.log3 = this.logGroup.create(gameWidth/2 + 2490, gameHeight/2-500, 'log').setScale(1, 1);
+        this.log3.body.immovable = true;
+        this.log3.body.moves = false;
+
+        this.log4 = this.logGroup.create(gameWidth/2 + 3735, gameHeight/2-500, 'log').setScale(1, 1);
+        this.log4.body.immovable = true;
+        this.log4.body.moves = false;
+
+        //logs for the lower side
+        this.log5 = this.logGroup.create(gameWidth/2, gameHeight/2+400, 'log').setScale(1, 1);
+        this.log5.body.immovable = true;
+        this.log5.body.moves = false;
+
+        this.log6 = this.logGroup.create(gameWidth/2 + 1245, gameHeight/2+400, 'log').setScale(1, 1);
+        this.log6.body.immovable = true;
+        this.log6.body.moves = false;
+
+        this.log7 = this.logGroup.create(gameWidth/2 + 2490, gameHeight/2+400, 'log').setScale(1, 1);
+        this.log7.body.immovable = true;
+        this.log7.body.moves = false;
+
+        this.log7 = this.logGroup.create(gameWidth/2 + 3735, gameHeight/2+400, 'log').setScale(1, 1);
+        this.log7.body.immovable = true;
+        this.log7.body.moves = false;
+        //this.logGroup.setAlpha(0);
 
         this.rockGroup = this.physics.add.group();
         this.rockGroup.runChildUpdate = true;
-        for(let i = 0; i < 4; i++) {
-          this.rock = this.rockGroup.create(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'rock').setScale(0.7);
-          this.rock.setSize(680, 100);
-          this.rock.setOffset(0, 100);
-          this.rock.body.immovable = true;
-          this.rock.body.moves = false;
-          // setAngle(Phaser.Math.Between(-5, 5))
-        }
         this.rockGroup.setAlpha(0);
 
         // adding in moving objects
@@ -210,78 +226,9 @@ class Tutorial extends Phaser.Scene {
         // Particles
         this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
         this.blackScreen.alpha = 0;
-
-        this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
-        this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
-        this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
-        let a = this.deathZone;
-        let b = this.deathZone2;
-        let superDeathZone = {
-          contains(x, y){
-            return a.contains(x,y) || b.contains(x,y);
-          }
-        }        
-        
-
-
-        this.fogParticle1 = this.add.particles('fog1');
-        this.fogParticle2 = this.add.particles('fog2');
-        this.fogParticle3 = this.add.particles('fog3');
-        this.fogParticle4 = this.add.particles('fog4');
         this.smellParticles = this.add.particles('smell');
-
-
-        this.fogEmitter1 = this.fogParticle1.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 2500,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter2 = this.fogParticle2.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 2500,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter3 = this.fogParticle3.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 2500,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.fogEmitter4 = this.fogParticle4.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 20000,
-          quantity: 1,
-          frequency: 2500,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-
         // problem: as the line gets shorter, the particles get more concentrated because
         // the spawn area is reduced. Actually maybe not a problem?
         this.smellEmitter = this.smellParticles.createEmitter({
@@ -304,27 +251,38 @@ class Tutorial extends Phaser.Scene {
         //adding text explaining your goal
         let textConfig = {
           fontFamily: 'Courier',
-          fontSize: '24px',
+          fontSize: '36px',
           color: '#FFFFFF',
-          align: 'right',
+          align: 'center',
           padding: {
               top: 5,
               bottom: 5,
           },
           Width: 0
         }
+
+        //Tutorial Messages
+        this.leftBoundary1 = this.add.rectangle(gameWidth/2 + 200, gameHeight/2 - 50, 100, 700);
+        this.physics.add.existing(this.leftBoundary1);
+        this.leftBoundary1.body.immovable = false;
+        this.leftBoundary1.body.moves = false;
+
+        this.leftBoundary2 = this.add.rectangle(gameWidth/2 + 1000, gameHeight/2 - 50, 100, 700);
+        this.physics.add.existing(this.leftBoundary2);
+        this.leftBoundary2.body.immovable = false;
+        this.leftBoundary2.body.moves = false;
         
-        this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
+        this.explain1 = this.add.text(gameWidth/2 + 200, gameHeight/2 + 200, 'Hi Riley :)', textConfig).setOrigin(0.5,0);
+        this.explain1.setAlpha(0);
+        this.explain1.depth = 5;
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
-        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFFFF);
-        this.daylight.setAlpha(0.2);
         this.timeRemain = 60000;
         
       }
 
     update(time, delta) {
       //checking if timer is done
-      this.timeRemain -= delta;
+      //this.timeRemain -= delta;
       if(this.timeRemain <= 0){
         timesUP = true;
         this.ambientMusic.stop();
@@ -337,19 +295,12 @@ class Tutorial extends Phaser.Scene {
         this.scene.start('gameOverScene');
       }
 
-      this.clock = this.time.delayedCall(1000, () => {
-        this.daylight.y -= 1.2;
-      }, null, this);
-
       // updating objects
       this.player.update();
       this.prey.update();
       // updating overlay
       this.overlay.x = this.player.x;
       this.overlay.y = this.player.y;
-
-      this.fogEmitZone.x = this.player.x - game.config.width / 2;
-      this.fogEmitZone.y = this.player.y - game.config.height / 2;
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
@@ -358,9 +309,7 @@ class Tutorial extends Phaser.Scene {
       this.emitZone.x = this.player.x - 3600 / 2;
       this.emitZone.y = this.player.y - 2400 / 2;
 
-      this.deathZone.x = this.player.x;
-      this.deathZone.y = this.player.y;
-
+      
       this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
       var preyDistance = Phaser.Math.Distance.BetweenPoints(this.player, this.prey);
 
@@ -392,11 +341,11 @@ class Tutorial extends Phaser.Scene {
             this.overlay.setAlpha(this.overlay.alpha - 0.01);
             // groups don't have alphas, so cabin alpha is substituting 
             // for other current alphas cause they're equal here
-            this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.logGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.cabin.setAlpha(this.cabin.alpha + 0.02);
-            this.border.setAlpha(this.border.alpha + 0.02);
+            //this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+            //this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+            //this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+            //this.cabin.setAlpha(this.cabin.alpha + 0.02);
+            //this.border.setAlpha(this.border.alpha + 0.02);
           }, null, this);
         }
 
@@ -410,11 +359,11 @@ class Tutorial extends Phaser.Scene {
             this.overlay.setScale(this.overlay.scale - 0.01);
             this.overlay.setAlpha(this.overlay.alpha + 0.01);
 
-            this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.cabin.setAlpha(this.cabin.alpha - 0.02);
-            this.border.setAlpha(this.border.alpha - 0.02);
+            //this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+            //this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+            //this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+            //this.cabin.setAlpha(this.cabin.alpha - 0.02);
+            //this.border.setAlpha(this.border.alpha - 0.02);
           }, null, this);
         }
 
@@ -578,6 +527,9 @@ class Tutorial extends Phaser.Scene {
       echoCooldown = false;
       this.scene.start('gameOverScene');
     }
+    if(this.physics.collide(this.player, this.leftBoundary1)){
+        this.explain1.setAlpha(1);
+      }
 
     //making ob fade in when touching them and then fading them out when you are not    
     // if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
@@ -618,31 +570,31 @@ class Tutorial extends Phaser.Scene {
     
     
 
-    this.physics.collide(this.player, this.treeGroup);
-    this.physics.collide(this.prey, this.treeGroup);
-    this.physics.collide(this.player, this.logGroup);
-    this.physics.collide(this.prey, this.logGroup);
-    this.physics.collide(this.player, this.rockGroup);
-    this.physics.collide(this.prey, this.rockGroup);
-    this.physics.collide(this.player, this.cabin);
-    this.physics.collide(this.prey, this.cabin);
+    // this.physics.collide(this.player, this.treeGroup);
+    // this.physics.collide(this.prey, this.treeGroup);
+     this.physics.collide(this.player, this.logGroup);
+     this.physics.collide(this.prey, this.logGroup);
+    // this.physics.collide(this.player, this.rockGroup);
+    // this.physics.collide(this.prey, this.rockGroup);
+     this.physics.collide(this.player, this.cabin);
+     this.physics.collide(this.prey, this.cabin);
 
-    //Boundaries for player
-    this.physics.collide(this.player, this.rightBoundary1);
-    this.physics.collide(this.player, this.rightBoundary2);
-    this.physics.collide(this.player, this.upperBoundary1);
-    this.physics.collide(this.player, this.upperBoundary2);
-    this.physics.collide(this.player, this.leftBoundary1);
-    this.physics.collide(this.player, this.leftBoundary2);
-    this.physics.collide(this.player, this.downBoundary1);
-    //boundaries for prey
-    this.physics.collide(this.prey, this.rightBoundary1);
-    this.physics.collide(this.prey, this.rightBoundary2);
-    this.physics.collide(this.prey, this.upperBoundary1);
-    this.physics.collide(this.prey, this.upperBoundary2);
-    this.physics.collide(this.prey, this.leftBoundary1);
-    this.physics.collide(this.prey, this.leftBoundary2);
-    this.physics.collide(this.prey, this.downBoundary1);
+    // //Boundaries for player
+    // this.physics.collide(this.player, this.rightBoundary1);
+    // this.physics.collide(this.player, this.rightBoundary2);
+    // this.physics.collide(this.player, this.upperBoundary1);
+    // this.physics.collide(this.player, this.upperBoundary2);
+    // this.physics.collide(this.player, this.leftBoundary1);
+    // this.physics.collide(this.player, this.leftBoundary2);
+    // this.physics.collide(this.player, this.downBoundary1);
+    // //boundaries for prey
+    // this.physics.collide(this.prey, this.rightBoundary1);
+    // this.physics.collide(this.prey, this.rightBoundary2);
+    // this.physics.collide(this.prey, this.upperBoundary1);
+    // this.physics.collide(this.prey, this.upperBoundary2);
+    // this.physics.collide(this.prey, this.leftBoundary1);
+    // this.physics.collide(this.prey, this.leftBoundary2);
+    // this.physics.collide(this.prey, this.downBoundary1);
     
 
     // walking sounds
