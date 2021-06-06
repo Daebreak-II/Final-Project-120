@@ -420,7 +420,7 @@ class Tutorial extends Phaser.Scene {
 
       //Prey's movement
       
-      if(preyDistance <= 50){
+      if(preyDistance <= 100){
         if(!movingAway) {
           movingAway = true;
           //moving = true;
