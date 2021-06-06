@@ -18,6 +18,7 @@ class Tutorial extends Phaser.Scene {
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
+      this.load.image('bridge', './Assets/sprites/bridgeSprite.png');
 
       
       
@@ -108,8 +109,8 @@ class Tutorial extends Phaser.Scene {
         //this.jsonBackgroun = this.gameMap.createLayer("Background", this.ground, 0, 0);
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'grounded').setOrigin(0, 0);
         this.background.setScale(2);
-        //this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
-        this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
+        
+        
 
         // add overlay
         this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
@@ -130,18 +131,7 @@ class Tutorial extends Phaser.Scene {
 
         
 
-        for(let i = 0; i < 200; i++) {
-          // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-          this.tree = this.add.sprite(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(gameHeight/2 + 300, gameHeight/2 + 400), 'tree').setScale(0.2);
-        }
-        for(let i = 0; i < 200; i++) {
-            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-           this.tree2 = this.add.sprite(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(gameHeight/2 - 650, gameHeight/2 - 700), 'tree').setScale(0.2);
-        }
-        for(let i = 0; i < 200; i++) {
-            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-           this.tree3 = this.add.sprite(Phaser.Math.Between(gameWidth/2 - 800, gameWidth/2-700), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2);
-        }
+        
 
         
         
@@ -183,6 +173,25 @@ class Tutorial extends Phaser.Scene {
         this.log7.body.moves = false;
         //this.logGroup.setAlpha(0);
 
+        this.river1 = this.add.image(gameWidth/2 + 3500, gameHeight/2, 'river').setScale(2, 0.7);
+        this.river1.setAngle(100);
+        this.bridge = this.add.image(gameWidth/2 + 3500, gameHeight/2 - 25, 'bridge').setScale(1, 0.7);
+        this.bridge.setAngle(-75);
+        this.border = this.add.image(1400, 0, 'border').setOrigin(0,0);
+
+        for(let i = 0; i < 200; i++) {
+          // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+          this.tree = this.add.sprite(Phaser.Math.Between(0, gameWidth - 850), Phaser.Math.Between(gameHeight/2 + 300, gameHeight/2 + 400), 'tree').setScale(0.2);
+        }
+        for(let i = 0; i < 200; i++) {
+            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+           this.tree2 = this.add.sprite(Phaser.Math.Between(0, gameWidth - 850), Phaser.Math.Between(gameHeight/2 - 650, gameHeight/2 - 700), 'tree').setScale(0.2);
+        }
+        for(let i = 0; i < 200; i++) {
+            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
+           this.tree3 = this.add.sprite(Phaser.Math.Between(gameWidth/2 - 800, gameWidth/2-700), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2);
+        }
+
         this.rockGroup = this.physics.add.group();
         this.rockGroup.runChildUpdate = true;
         this.rockGroup.setAlpha(0);
@@ -193,7 +202,7 @@ class Tutorial extends Phaser.Scene {
         this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
         this.player.setFrame('playerR4.png');
 
-        this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
+        this.prey = new Prey(this, gameWidth/2 + 2500, gameHeight/2, 'prey', 0).setOrigin(0.5, 0.5);
         this.prey.setScale(0.1);
         this.prey.setSize(this.prey.width, this.prey.height);
 
@@ -267,14 +276,28 @@ class Tutorial extends Phaser.Scene {
         this.leftBoundary1.body.immovable = false;
         this.leftBoundary1.body.moves = false;
 
-        this.leftBoundary2 = this.add.rectangle(gameWidth/2 + 1000, gameHeight/2 - 50, 100, 700);
+        this.leftBoundary2 = this.add.rectangle(gameWidth/2 + 1500, gameHeight/2 - 50, 100, 700);
         this.physics.add.existing(this.leftBoundary2);
         this.leftBoundary2.body.immovable = false;
         this.leftBoundary2.body.moves = false;
+
+        this.leftBoundary3 = this.add.rectangle(gameWidth/2 + 3200, gameHeight/2 - 50, 100, 700);
+        this.physics.add.existing(this.leftBoundary3);
+        this.leftBoundary3.body.immovable = false;
+        this.leftBoundary3.body.moves = false;
         
-        this.explain1 = this.add.text(gameWidth/2 + 200, gameHeight/2 + 200, 'Hi Riley :)', textConfig).setOrigin(0.5,0);
+        this.explain1 = this.add.text(gameWidth/2 + 200, gameHeight/2 + 200, 'Press Space to see better in the darkness', textConfig).setOrigin(0.5,0);
         this.explain1.setAlpha(0);
         this.explain1.depth = 5;
+
+        this.explain2 = this.add.text(gameWidth/2 + 1500, gameHeight/2 + 200, 'Check where your friend is by pressing S', textConfig).setOrigin(0.5,0);
+        this.explain2.setAlpha(0);
+        this.explain2.depth = 5;
+
+        this.explain3 = this.add.text(gameWidth/2 + 1500, gameHeight/2 + 200, 'Find your friend before morning!', textConfig).setOrigin(0.5,0);
+        this.explain3.setAlpha(0);
+        this.explain3.depth = 5;
+
         this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
         this.timeRemain = 60000;
         
@@ -396,51 +419,30 @@ class Tutorial extends Phaser.Scene {
 
 
       //Prey's movement
-      if(!moving && !movingAway) {
-      moving = true;
-      let changeDirection = Phaser.Math.Between(1, 4);
-      if(changeDirection <= 1) {
-        this.prey.setVelocityX(500);
-      } else if(changeDirection <= 2) {
-        this.prey.setVelocityX(-500);
-      } else if (changeDirection <= 3) {
-        this.prey.setVelocityY(500);
-      } else if (changeDirection <= 4) {
-        this.prey.setVelocityY(-500);
-      }
-
-      this.prey.setVelocityX(Phaser.Math.Between(-500, 500));
-      this.prey.setVelocityY(Phaser.Math.Between(-500, 500));
-
-      this.clock = this.time.delayedCall(4000, () => {
-        moving = false;
-      }, null, this);
-      }
-
       
-      if(preyDistance <= 250){
+      if(preyDistance <= 50){
         if(!movingAway) {
           movingAway = true;
           //moving = true;
           // if player is on the left makes the prey move to the right faster
           if (this.player.x < this.prey.x && this.prey.body.velocity.x >= 0) {
             // move prey to the right
-            this.prey.body.velocity.x = 480;
+            this.prey.body.velocity.x = 560;
           }
           // if player is on the right makes the prey move to the left faster
           if (this.player.x > this.prey.x && this.prey.body.velocity.x <= 0) {
             // move prey to left
-            this.prey.body.velocity.x -= 480;
+            this.prey.body.velocity.x = 560;
           }
           // if player is on the bottom makes the prey moves up faster
           if (this.player.y < this.prey.y && this.prey.body.velocity.y >= 0) {
             // move prey up
-            this.prey.body.velocity.y = 480;
+            this.prey.body.velocity.x = 560;
           }
           // if player is on the top prey moves downward faster
           if (this.player.y > this.prey.y && this.prey.body.velocity.y <= 0) {
             // move prey downward
-            this.prey.body.velocity.y -= 480;
+            this.prey.body.velocity.x = 560;
           }
     
 
@@ -450,86 +452,41 @@ class Tutorial extends Phaser.Scene {
         }
       }
 
-
-
-      //if prey is on the boudanries move them to either direction depending on the boundary
-
-      //upper boundaries bounces prey diagonally down
-      if(this.physics.collide(this.prey, this.upperBoundary1) || this.physics.collide(this.prey, this.upperBoundary2)){
-        let changeDirection = Phaser.Math.Between(1, 2);
-        if(changeDirection <= 1) {
-          this.prey.setVelocityX(500);
-          this.prey.setVelocityY(500);
-        } else if(changeDirection <= 2) {
-          this.prey.setVelocityX(-500);
-          this.prey.setVelocityY(500);
-        }
-
-      }
-      //left boundary bounces prey diagonally right
-      if(this.physics.collide(this.prey, this.leftBoundary1) || this.physics.collide(this.prey, this.leftBoundary2)){
-        let changeDirection = Phaser.Math.Between(1, 2);
-        if(changeDirection <= 1) {
-          this.prey.setVelocityX(500);
-          this.prey.setVelocityY(-500);
-        } else if(changeDirection <= 2) {
-          this.prey.setVelocityX(500);
-          this.prey.setVelocityY(500);
-        }
-
-      }
-      //right boundaries bounces prey diagonally left 
-      if(this.physics.collide(this.prey, this.rightBoundary1) || this.physics.collide(this.prey,this.rightBoundary2)){
-        let changeDirection = Phaser.Math.Between(1, 2);
-        if(changeDirection <= 1) {
-          this.prey.setVelocityX(-500);
-          this.prey.setVelocityY(-500);
-        } else if(changeDirection <= 2) {
-          this.prey.setVelocityX(-500);
-          this.prey.setVelocityY(500);
-        }
-
-      }
-      //down boundary bounces prey up diagonally
-      if(this.physics.collide(this.prey, this.downBoundary1)){
-        let changeDirection = Phaser.Math.Between(1, 2);
-        if(changeDirection <= 1) {
-          this.prey.setVelocityX(500);
-          this.prey.setVelocityY(-500);
-        } else if(changeDirection <= 2) {
-          this.prey.setVelocityX(-500);
-          this.prey.setVelocityY(-500);
-        }
-
-      }
-      
-      if(this.physics.collide(this.prey, this.treeGroup)){
-        this.prey.body.bounce.x = 1;
-        this.prey.body.bounce.x = 1;
-      }
-
-    // collisions 
-    if(this.physics.collide(this.player, this.prey)) {
-      //let i = Phaser.Math.Between(1, 2);
-      //if(i == 1) {
-        //this.sound.play('scream1', { volume: 1 * volumeMultiplier});
-      //} else {
-      this.sound.play('scream2', { volume: 1 * volumeMultiplier});
-      
+    if(this.physics.collide(this.player, this.leftBoundary1)){
+        this.explain1.setAlpha(1);
+    }
+    if(this.physics.collide(this.player, this.leftBoundary2)){
+      this.explain2.setAlpha(1);
+    }
+    if(this.physics.collide(this.player, this.leftBoundary3)){
+      this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
+      this.input.keyboard.enabled = false;
+      this.blackScreen.setAlpha(1);      
       this.ambientMusic.stop();
+      this.playerWalking.setVolume(0);
       this.playerWalking.stop();
       this.preyWalking.stop();
+      
       moving = false;
       movingAway = false;
       echoUse = false;
       smellUse = false;
       smellCooldown = false;
       echoCooldown = false;
-      this.scene.start('gameOverScene');
+      this.explain3.x = this.player.x;
+      this.explain3.y = this.player.y;
+      this.explain3.setAlpha(1);
+
+      this.clock = this.time.delayedCall(5000, () => {
+        this.input.keyboard.enabled = true;
+        this.player.setVelocityX(800);
+        this.player.setVelocityY(800);  
+        this.playerWalking.setVolume(0.1 * volumeMultiplier);
+        this.scene.start('playScene');
+      }, null, this);
+      
     }
-    if(this.physics.collide(this.player, this.leftBoundary1)){
-        this.explain1.setAlpha(1);
-      }
 
     //making ob fade in when touching them and then fading them out when you are not    
     // if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
@@ -605,12 +562,12 @@ class Tutorial extends Phaser.Scene {
 
 
     // turning on/off multiple step recording
-    if(preyDistance <= 4000){
-      this.preyWalking.setVolume((4000 - preyDistance) / 40000  * volumeMultiplier);
-      this.preyWalking.resume();
-    } else {
-      this.preyWalking.pause();
-    }
+    // if(preyDistance <= 4000){
+    //   this.preyWalking.setVolume((4000 - preyDistance) / 40000  * volumeMultiplier);
+    //   this.preyWalking.resume();
+    // } else {
+    //   this.preyWalking.pause();
+    // }
     
   }
 }
