@@ -238,6 +238,7 @@ class Tutorial extends Phaser.Scene {
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         this.smellParticles = this.add.particles('smell');
+        this.smellParticles.setDepth(5);
         // problem: as the line gets shorter, the particles get more concentrated because
         // the spawn area is reduced. Actually maybe not a problem?
         this.smellEmitter = this.smellParticles.createEmitter({
