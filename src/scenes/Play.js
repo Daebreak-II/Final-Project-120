@@ -36,6 +36,8 @@ class Play extends Phaser.Scene {
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
       this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
+      this.load.audio('sizzling', './Assets/sfx/sizzling.wav');
+      this.load.audio('monsterScreech', './Assets/sfx/monsterScreech.wav');
       this.load.audio('music', './Assets/sfx/ambient_music.wav');
       this.load.audio('walking', './Assets/sfx/Walking.wav');
       this.load.audio('smelling', './Assets/sfx/smelling.wav');
@@ -319,6 +321,10 @@ class Play extends Phaser.Scene {
 
         this.smellSound = this.sound.add('smelling', { volume: 1 * volumeMultiplier, loop: false});
 
+        this.screech = this.sound.add('monsterScreech', { volume: 1 * volumeMultiplier, loop: false});
+
+        this.sizzling = this.sound.add('sizzling', { volume: 1 * volumeMultiplier, loop: true});
+
         
 
         // Particles
@@ -346,7 +352,7 @@ class Play extends Phaser.Scene {
         this.smellParticles.setDepth(5);
 
 
-        this.fogEmitter1 = this.fogParticle1.createEmitter({
+        this.sizzleEmitter1 = this.sizzleParticle1.createEmitter({
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
@@ -358,7 +364,7 @@ class Play extends Phaser.Scene {
           on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
-        this.fogEmitter2 = this.fogParticle2.createEmitter({
+        this.sizzleEmitter2 = this.sizzleParticle2.createEmitter({
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
@@ -370,7 +376,7 @@ class Play extends Phaser.Scene {
           on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
-        this.fogEmitter3 = this.fogParticle3.createEmitter({
+        this.sizzleEmitter3 = this.sizzleParticle3.createEmitter({
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
@@ -382,7 +388,7 @@ class Play extends Phaser.Scene {
           on: false,
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
-        this.fogEmitter4 = this.fogParticle4.createEmitter({
+        this.sizzleEmitter4 = this.sizzleParticle4.createEmitter({
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
@@ -436,6 +442,9 @@ class Play extends Phaser.Scene {
         }
 
         this.timeRemain = 60000;
+        this.clock = this.time.delayedCall(40000, () => {
+          this.sizzling.play();
+        }, null, this);
         
       }
 
@@ -447,12 +456,15 @@ class Play extends Phaser.Scene {
         this.ambientMusic.stop();
         this.playerWalking.stop();
         this.preyWalking.stop();
+        this.sizzling.stop()
         moving = false;
         movingAway = false;
         echoCooldown = false;
         smellUse = false;
         this.scene.start('gameOverScene');
       }
+
+      
 
       // updating objects
       this.player.update();
@@ -501,6 +513,7 @@ class Play extends Phaser.Scene {
         this.ambientMusic.stop();
         this.playerWalking.stop();
         this.preyWalking.stop();
+        this.sizzling.stop();
         moving = false;
         movingAway = false;
         echoUse = false;
@@ -511,10 +524,17 @@ class Play extends Phaser.Scene {
         this.scene.start('menuScene');
       }
 
+      //Sizzling effects
+      if(this.timeRemain <= 20000){
+        this.sizzling.play();
+        this.sizzleEmitter.start();
+      }
+
       // echolocation Mechanic
       if (Phaser.Input.Keyboard.JustDown(keySPACE) && !echoCooldown && !smellCooldown) {
         echoUse = true; 
         echoCooldown = true;
+        this.screech.play();
         this.playerWalking.setRate(this.playerWalking.rate / 1.1);
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
@@ -727,6 +747,7 @@ class Play extends Phaser.Scene {
       this.ambientMusic.stop();
       this.playerWalking.stop();
       this.preyWalking.stop();
+      this.sizzling.stop();
       moving = false;
       movingAway = false;
       echoUse = false;
