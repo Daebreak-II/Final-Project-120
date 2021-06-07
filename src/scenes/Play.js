@@ -567,7 +567,7 @@ class Play extends Phaser.Scene {
         smellUse = true;
         smellCooldown = true;
         this.smellEmitter.start();
-        this.blackScreen.alpha = 0.8;
+        this.blackScreen.alpha = 0.5;
         this.smellSound.play();
         this.playerWalking.setRate(this.playerWalking.rate / 1.1);        
       }

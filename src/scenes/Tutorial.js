@@ -108,12 +108,14 @@ class Tutorial extends Phaser.Scene {
         
         
 
-        // add overlay
+        // add overlays
         this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
         this.overlay.depth = 4; // temporary, need a way to bring to absolute top
 
+        this.blackScreen = this.add.rectangle(0, 0, game.config.width * 1.1, game.config.height * 1.1, 0x000000);
+        this.blackScreen.alpha = 0;
 
         this.cabin = this.physics.add.image(gameWidth / 2 - 300, gameHeight/2 - 800,'cabin');        
         this.cabin.setScale(0.5);
@@ -195,7 +197,7 @@ class Tutorial extends Phaser.Scene {
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
         this.player.setScale(playerScale * 3);
-        this.player.setSize(this.player.width * 0.45, this.player.height * 0.8);
+        this.player.setSize(this.player.width * 0.45, this.player.height * 0.6);
         this.player.setFrame('playerR4.png');
 
         this.prey = new Prey(this, gameWidth/2 + 2500, gameHeight/2, 'prey', 0).setOrigin(0.5, 0.5);
@@ -229,8 +231,6 @@ class Tutorial extends Phaser.Scene {
         
 
         // Particles
-        this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
-        this.blackScreen.alpha = 0;
         this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         this.smellParticles = this.add.particles('smell');
@@ -391,7 +391,7 @@ class Tutorial extends Phaser.Scene {
         smellUse = true;
         smellCooldown = true;
         this.smellEmitter.start();
-        this.blackScreen.alpha = 0.8;
+        this.blackScreen.alpha = 0.5;
         this.smellSound.play();
         this.playerWalking.setRate(this.playerWalking.rate / 1.1);        
       }
@@ -480,6 +480,7 @@ class Tutorial extends Phaser.Scene {
         this.player.setVelocityX(800);
         this.player.setVelocityY(800);  
         this.playerWalking.setVolume(0.1 * volumeMultiplier);
+        this.input.keyboard.enabled = true;
         this.scene.start('playScene');
       }, null, this);
       
@@ -513,6 +514,7 @@ class Tutorial extends Phaser.Scene {
         this.player.setVelocityX(800);
         this.player.setVelocityY(800);  
         this.playerWalking.setVolume(0.1 * volumeMultiplier);
+        this.input.keyboard.enabled = true;
         this.scene.start('playScene');
       }, null, this);
       
