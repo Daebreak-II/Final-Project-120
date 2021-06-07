@@ -195,7 +195,7 @@ class Tutorial extends Phaser.Scene {
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
         this.player.setScale(playerScale * 3);
-        this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
+        this.player.setSize(this.player.width * 0.45, this.player.height * 0.8);
         this.player.setFrame('playerR4.png');
 
         this.prey = new Prey(this, gameWidth/2 + 2500, gameHeight/2, 'prey', 0).setOrigin(0.5, 0.5);
