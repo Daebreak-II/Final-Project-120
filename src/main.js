@@ -16,7 +16,7 @@ let config = {
     scene: [ Menu, Play, GameOver, Options, Tutorial, Credits],
     physics: {
         default: 'arcade',
-        arcade: {debug: true} ,
+        arcade: {debug: false} ,
     }
 }
 
