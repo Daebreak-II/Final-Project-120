@@ -37,6 +37,7 @@ class Tutorial extends Phaser.Scene {
         
     create() {
         // define keys
+        this.input.keyboard.enabled = true;
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -460,6 +461,7 @@ class Tutorial extends Phaser.Scene {
       this.explain4.setAlpha(0);
       this.input.keyboard.enabled = false;
       this.blackScreen.setAlpha(1);      
+      this.blackScreen.depth = 5;    
       this.ambientMusic.stop();
       this.playerWalking.setVolume(0);
       this.playerWalking.stop();
@@ -480,7 +482,6 @@ class Tutorial extends Phaser.Scene {
         this.player.setVelocityX(800);
         this.player.setVelocityY(800);  
         this.playerWalking.setVolume(0.1 * volumeMultiplier);
-        this.input.keyboard.enabled = true;
         this.scene.start('playScene');
       }, null, this);
       
@@ -493,7 +494,8 @@ class Tutorial extends Phaser.Scene {
       this.explain2.setAlpha(0);
       this.explain4.setAlpha(0);
       this.input.keyboard.enabled = false;
-      this.blackScreen.setAlpha(1);      
+      this.blackScreen.setAlpha(1); 
+      this.blackScreen.depth = 5;     
       this.ambientMusic.stop();
       this.playerWalking.setVolume(0);
       this.playerWalking.stop();
@@ -514,7 +516,6 @@ class Tutorial extends Phaser.Scene {
         this.player.setVelocityX(800);
         this.player.setVelocityY(800);  
         this.playerWalking.setVolume(0.1 * volumeMultiplier);
-        this.input.keyboard.enabled = true;
         this.scene.start('playScene');
       }, null, this);
       
