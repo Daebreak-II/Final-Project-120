@@ -59,76 +59,52 @@ class Play extends Phaser.Scene {
         // creating Animations
         this.anims.create({
           key: 'walkRight',
-          frames: [{
-            key: 'playerAnim',
-            frame: 'playerR1.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerR2.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerR3.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerR4.png'
-          }, ],
+          frames: this.anims.generateFrameNames('playerAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'playerR',
+            suffix: '.png'
+          }),
           frameRate: 8,
           repeat: -1
         });
 
         this.anims.create({
           key: 'walkLeft',
-          frames: [{
-            key: 'playerAnim',
-            frame: 'playerL1.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerL2.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerL3.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerL4.png'
-          }, ],
+          frames: this.anims.generateFrameNames('playerAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'playerL',
+            suffix: '.png'
+          }),
           frameRate: 8,
           repeat: -1
         });
 
         this.anims.create({
           key: 'walkUp',
-          frames: [{
-            key: 'playerAnim',
-            frame: 'playerUP1.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerUP2.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerUP3.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerUP4.png'
-          }, ],
+          frames: this.anims.generateFrameNames('playerAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'playerUP',
+            suffix: '.png'
+          }),
           frameRate: 8,
           repeat: -1
         });
 
         this.anims.create({
           key: 'walkDown',
-          frames: [{
-            key: 'playerAnim',
-            frame: 'playerU1.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerU2.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerU3.png'
-          }, {
-            key: 'playerAnim',
-            frame: 'playerU4.png'
-          }, ],
+          frames: this.anims.generateFrameNames('playerAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'playerU',
+            suffix: '.png'
+          }),
           frameRate: 8,
           repeat: -1
         });
@@ -306,7 +282,7 @@ class Play extends Phaser.Scene {
 
         this.fogEmitter1 = this.fogParticle1.createEmitter({
           speed: { min: -10, max: 10 },
-          lifespan: 20000,
+          lifespan: 10000,
           quantity: 1,
           frequency: 2500,
           scale: { min: 2 , max: 4 },
@@ -318,7 +294,7 @@ class Play extends Phaser.Scene {
         });
         this.fogEmitter2 = this.fogParticle2.createEmitter({
           speed: { min: -10, max: 10 },
-          lifespan: 20000,
+          lifespan: 10000,
           quantity: 1,
           frequency: 2500,
           scale: { min: 2 , max: 4 },
@@ -330,7 +306,7 @@ class Play extends Phaser.Scene {
         });
         this.fogEmitter3 = this.fogParticle3.createEmitter({
           speed: { min: -10, max: 10 },
-          lifespan: 20000,
+          lifespan: 10000,
           quantity: 1,
           frequency: 2500,
           scale: { min: 2 , max: 4 },
@@ -342,7 +318,7 @@ class Play extends Phaser.Scene {
         });
         this.fogEmitter4 = this.fogParticle4.createEmitter({
           speed: { min: -10, max: 10 },
-          lifespan: 20000,
+          lifespan: 10000,
           quantity: 1,
           frequency: 2500,
           scale: { min: 2 , max: 4 },
