@@ -487,72 +487,11 @@ class Tutorial extends Phaser.Scene {
       }, null, this);
       
     }
-
-    //making ob fade in when touching them and then fading them out when you are not    
-    // if(this.physics.collide(this.player, this.treeGroup) || this.physics.collide(this.player, this.logGroup) || this.physics.collide(this.player, this.rockGroup) || this.physics.collide(this.player, this.cabin)){
-    //   //fadeVariable = true;
-    //   for (var i = 0; i < 50; i++) {
-    //     this.clock = this.time.delayedCall(i * 20, () => {
-    //       // groups don't have alphas, so cabin alpha is substituting 
-    //       // for other current alphas cause they're equal here
-    //       this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
-    //       this.logGroup.setAlpha(this.cabin.alpha + 0.02);
-    //       this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
-    //       this.cabin.setAlpha(this.cabin.alpha + 0.02);
-    //     }, null, this);
-    //   }
-
-    //   for (var i = 0; i < 50; i++) {
-    //     this.clock = this.time.delayedCall(i * 20 + 2000, () => {
-    //       this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.cabin.setAlpha(this.cabin.alpha - 0.02);
-    //     }, null, this);
-    //   }
-    //   //fadeVariable = false;
-    // }
-    // if(!this.physics.collide(this.player, this.treeGroup) || !this.physics.collide(this.player, this.logGroup) || !this.physics.collide(this.player, this.rockGroup) || !this.physics.collide(this.player, this.cabin)){
-    //   //fadeVariable = false;
-    //   for (var i = 0; i < 50; i++) {
-    //     this.clock = this.time.delayedCall(i * 20 + 2000, () => {
-    //       this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-    //       this.cabin.setAlpha(this.cabin.alpha - 0.02);
-    //     }, null, this);
-    //   }
-    //   //fadeVariable = true;
-    // }
     
-    
-
-    // this.physics.collide(this.player, this.treeGroup);
-    // this.physics.collide(this.prey, this.treeGroup);
      this.physics.collide(this.player, this.logGroup);
      this.physics.collide(this.prey, this.logGroup);
-    // this.physics.collide(this.player, this.rockGroup);
-    // this.physics.collide(this.prey, this.rockGroup);
      this.physics.collide(this.player, this.cabin);
-     this.physics.collide(this.prey, this.cabin);
-
-    // //Boundaries for player
-    // this.physics.collide(this.player, this.rightBoundary1);
-    // this.physics.collide(this.player, this.rightBoundary2);
-    // this.physics.collide(this.player, this.upperBoundary1);
-    // this.physics.collide(this.player, this.upperBoundary2);
-    // this.physics.collide(this.player, this.leftBoundary1);
-    // this.physics.collide(this.player, this.leftBoundary2);
-    // this.physics.collide(this.player, this.downBoundary1);
-    // //boundaries for prey
-    // this.physics.collide(this.prey, this.rightBoundary1);
-    // this.physics.collide(this.prey, this.rightBoundary2);
-    // this.physics.collide(this.prey, this.upperBoundary1);
-    // this.physics.collide(this.prey, this.upperBoundary2);
-    // this.physics.collide(this.prey, this.leftBoundary1);
-    // this.physics.collide(this.prey, this.leftBoundary2);
-    // this.physics.collide(this.prey, this.downBoundary1);
-    
+     this.physics.collide(this.prey, this.cabin);    
 
     // walking sounds
     // repeating single step
