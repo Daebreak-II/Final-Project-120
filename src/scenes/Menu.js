@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene {
     this.load.image('play', './Assets/sprites/startButton.png');
     this.load.image('quit', './Assets/sprites/quitButton.png');
     this.load.image('options', './Assets/sprites/optionsButton.png');
+    this.load.image('credits', './Assets/sprites/creditsButton.png');
   }
   
   create() {
@@ -25,10 +26,17 @@ class Menu extends Phaser.Scene {
 
 
       this.mouseOptions = this.selectOptions.setInteractive();
+
+      this.selectCredits = this.add.sprite(550, game.config.height/2 - 55, 'credits').setOrigin(0, 0);
+      this.selectCredits.setScale(0.7);
+
+      this.mouseCredits = this.selectCredits.setInteractive();
       
       this.mousePointerisOverPlay = false;
 
       this.mousePointerisOverOptions = false;
+
+      this.mousePointerisOverCredits = false;
 
       //setting up mouse cursor over object
       this.mousePlay.on('pointerover', () => { 
@@ -49,6 +57,14 @@ class Menu extends Phaser.Scene {
         this.mousePointerisOverOptions = false; 
       });
       
+      this.mouseCredits.on('pointerover', () => { 
+        this.mousePointerisOverCredits = true;
+        
+      });
+      
+      this.mouseOptions.on('pointerout', () => { 
+        this.mousePointerisOverCredits = false; 
+      });
   }
   update(){
     
@@ -58,6 +74,10 @@ class Menu extends Phaser.Scene {
 
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverOptions){
       this.scene.start("optionScene");
+    }
+
+    if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverCredits){
+      this.scene.start("creditsScene");
     }
   }
 }
