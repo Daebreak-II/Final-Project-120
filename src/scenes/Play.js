@@ -119,7 +119,7 @@ class Play extends Phaser.Scene {
         //this.jsonBackgroun = this.gameMap.createLayer("Background", this.ground, 0, 0);
         this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'grounded').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
-        this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
+        this.border = this.add.image(0, 0, 'border').setOrigin(0,0);
 
         // add overlay
         this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
@@ -173,7 +173,7 @@ class Play extends Phaser.Scene {
         this.cabin.setSize(1200, 600);
         this.cabin.setOffset(130, 910);
         this.cabin.setOrigin(0.5,0);
-        this.cabin.setAlpha(0);
+        // this.cabin.setAlpha(0);
         this.cabin.body.immovable = true;
         this.cabin.body.moves = false;
         
@@ -196,7 +196,7 @@ class Play extends Phaser.Scene {
         this.treeGroup.setOrigin(0.5, 0.5);
         // this.treeGroup.rotate(Phaser.Math.Between(-2, 2) * Math.PI / 180);
         this.treeGroup.scaleXY(-0.8); // this ADDS to the scale, so to scale down we need to subtract
-        this.treeGroup.setAlpha(0);
+        // this.treeGroup.setAlpha(0);
 
         
         this.logGroup = this.physics.add.group();
@@ -207,7 +207,7 @@ class Play extends Phaser.Scene {
           this.log.body.moves = false;
           // setAngle(Phaser.Math.Between(-5, 5))
         }
-        this.logGroup.setAlpha(0);
+        // this.logGroup.setAlpha(0);
 
         this.rockGroup = this.physics.add.group();
         this.rockGroup.runChildUpdate = true;
@@ -219,7 +219,7 @@ class Play extends Phaser.Scene {
           this.rock.body.moves = false;
           // setAngle(Phaser.Math.Between(-5, 5))
         }
-        this.rockGroup.setAlpha(0);
+        // this.rockGroup.setAlpha(0);
 
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
@@ -364,9 +364,6 @@ class Play extends Phaser.Scene {
           },
           Width: 0
         }
-        
-        this.explain = this.add.text(gameWidth/2, gameHeight/2 + 70, 'Find your friend by moving with the arrow keys', textConfig).setOrigin(0.5,0);
-        this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
         this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFFFF);
         this.daylight.setAlpha(0.2);
         this.timeRemain = 60000;
@@ -443,11 +440,11 @@ class Play extends Phaser.Scene {
             this.overlay.setAlpha(this.overlay.alpha - 0.01);
             // groups don't have alphas, so cabin alpha is substituting 
             // for other current alphas cause they're equal here
-            this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.logGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
-            this.cabin.setAlpha(this.cabin.alpha + 0.02);
-            this.border.setAlpha(this.border.alpha + 0.02);
+            // this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
+            // this.logGroup.setAlpha(this.cabin.alpha + 0.02);
+            // this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
+            // this.cabin.setAlpha(this.cabin.alpha + 0.02);
+            // this.border.setAlpha(this.border.alpha + 0.02);
           }, null, this);
         }
 
@@ -461,11 +458,11 @@ class Play extends Phaser.Scene {
             this.overlay.setScale(this.overlay.scale - 0.01);
             this.overlay.setAlpha(this.overlay.alpha + 0.01);
 
-            this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-            this.cabin.setAlpha(this.cabin.alpha - 0.02);
-            this.border.setAlpha(this.border.alpha - 0.02);
+            // this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
+            // this.logGroup.setAlpha(this.cabin.alpha - 0.02);
+            // this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
+            // this.cabin.setAlpha(this.cabin.alpha - 0.02);
+            // this.border.setAlpha(this.border.alpha - 0.02);
           }, null, this);
         }
 
