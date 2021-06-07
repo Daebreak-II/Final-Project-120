@@ -482,7 +482,8 @@ class Tutorial extends Phaser.Scene {
       
     }
     
-    if(Phaser.Input.Keyboard.JustDown(keyENTER)) {
+    //if(Phaser.Input.Keyboard.JustDown(keyENTER)) {
+    if(keyENTER.isDown){
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
       this.explain1.setAlpha(0);
