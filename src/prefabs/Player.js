@@ -12,8 +12,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update() {
       if (smellUse || echoUse) {
         this.moveSpeed = 400/4;
+        this.anims.msPerFrame = 200;
       } else {
         this.moveSpeed = 400;
+        this.anims.msPerFrame = 125;
       }
 
       // player's 8 direction movement

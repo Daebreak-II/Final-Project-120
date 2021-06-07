@@ -456,6 +456,7 @@ class Play extends Phaser.Scene {
         movingAway = false;
         echoCooldown = false;
         smellUse = false;
+        this.screech.play();
         this.scene.start('gameOverScene');
       }
 
@@ -523,7 +524,6 @@ class Play extends Phaser.Scene {
       if (Phaser.Input.Keyboard.JustDown(keySPACE) && !echoCooldown && !smellCooldown) {
         echoUse = true; 
         echoCooldown = true;
-        this.screech.play();
         this.playerWalking.setRate(this.playerWalking.rate / 1.1);
         for (var i = 0; i < 50; i++) {
           this.clock = this.time.delayedCall(i * 20, () => {
