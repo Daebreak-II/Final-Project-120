@@ -14,7 +14,7 @@ class Tutorial extends Phaser.Scene {
       this.load.image('border', './Assets/sprites/border.png');
       this.load.image('grounded', './Assets/sprites/ground.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
-      this.load.image('fogOverlay', './Assets/sprites/darknessOverlay.png');
+      this.load.image('darkOverlay', './Assets/sprites/darknessOverlay.png');
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
@@ -85,6 +85,26 @@ class Tutorial extends Phaser.Scene {
         });
 
         this.anims.create({
+          key: 'walkUp',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerUP1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+
+        this.anims.create({
           key: 'walkDown',
           frames: [{
             key: 'playerAnim',
@@ -113,7 +133,7 @@ class Tutorial extends Phaser.Scene {
         
 
         // add overlay
-        this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
+        this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
         this.overlay.depth = 4; // temporary, need a way to bring to absolute top

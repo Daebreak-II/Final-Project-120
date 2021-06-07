@@ -19,25 +19,44 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       // player's 8 direction movement
       if(keyLEFT.isDown){
         this.setVelocityX(this.moveSpeed * -1);  
-        this.playAfterRepeat('walkLeft');
+        if(this.anims.getName() != 'walkLeft') {
+          this.play('walkLeft');
+        } else if (!this.anims.isPlaying) {
+          this.play('walkLeft');
+        }
         playerMoving = true;         
       }
       else if(keyRIGHT.isDown){
-         this.setVelocityX(this.moveSpeed);
-         this.playAfterRepeat('walkRight', 1);
-         playerMoving = true;
+        this.setVelocityX(this.moveSpeed);
+        if(this.anims.getName() != 'walkRight') {
+          this.play('walkRight');
+        } else if (!this.anims.isPlaying) {
+          this.play('walkRight');
+        }
+        playerMoving = true;
       }
       else {
          this.setVelocityX(0);
+         if (this.anims.getName() == 'walkRight' || this.anims.getName() == 'walkLeft') {
+          this.anims.stop();
+         }
       }
       if(keyUP.isDown){
           this.setVelocityY(this.moveSpeed * -1);
-          this.setFrame('playerR4.png');
+          if(this.anims.getName() != 'walkUp' && this.anims.getName() != 'walkLeft' && this.anims.getName() != 'walkRight') {
+            this.play('walkUp');
+          } else if (!this.anims.isPlaying) {
+            this.play('walkUp');
+          }
           playerMoving = true;          
       }
       else if(keyDOWN.isDown){
           this.setVelocityY(this.moveSpeed);
-          this.playAfterRepeat('walkDown', 1);
+          if(this.anims.getName() != 'walkDown' && this.anims.getName() != 'walkLeft' && this.anims.getName() != 'walkRight') {
+            this.play('walkDown');
+          } else if (!this.anims.isPlaying) {
+            this.play('walkDown');
+          }
           playerMoving = true;
       }
       else{
@@ -47,7 +66,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       if(!keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown && !keyDOWN.isDown){
         this.setVelocityY(0);
         this.setVelocityX(0);
-        this.stop();
+        this.anims.stop();
         playerMoving = false; 
       }
     }

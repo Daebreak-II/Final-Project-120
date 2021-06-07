@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
       this.load.image('campfire', './Assets/sprites/campfireSprite.png');
       this.load.image('groundTile', './Assets/sprites/groundTile.png');
       this.load.image('border', './Assets/sprites/border.png');
-      this.load.image('grounded', './Assets/sprites/ground.png');
+      this.load.image('ground', './Assets/sprites/ground.png');
       this.load.image('fog1', './Assets/sprites/fogSprite1.png');
       this.load.image('fog2', './Assets/sprites/fogSprite2.png');
       this.load.image('fog3', './Assets/sprites/fogSprite3.png');
@@ -41,7 +41,8 @@ class Play extends Phaser.Scene {
       this.load.audio('preyWalking', './Assets/sfx/prey_walking.wav');
 
       //load animations
-      this.load.atlas('playerAnim', './Assets/animations/playerAnimations-0.png', './Assets/animations/playerAnimations.json')
+      this.load.atlas('playerAnim', './Assets/animations/playerAnimations-0.png', './Assets/animations/playerAnimations.json');
+      this.load.atlas('preyAnim', './Assets/animations/preyAnimations.png', './Assets/animations/preyAnimations.json');
     }
 
         
@@ -95,6 +96,25 @@ class Play extends Phaser.Scene {
         });
 
         this.anims.create({
+          key: 'walkUp',
+          frames: [{
+            key: 'playerAnim',
+            frame: 'playerUP1.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP2.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP3.png'
+          }, {
+            key: 'playerAnim',
+            frame: 'playerUP4.png'
+          }, ],
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
           key: 'walkDown',
           frames: [{
             key: 'playerAnim',
@@ -117,7 +137,7 @@ class Play extends Phaser.Scene {
         // this.gameMap = this.add.tilemap('gameMap');
         // this.ground = this.gameMap.addTilesetImage('Tree', 'smallTree');
         //this.jsonBackgroun = this.gameMap.createLayer("Background", this.ground, 0, 0);
-        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'grounded').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'ground').setOrigin(0, 0);
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0);
 
@@ -125,7 +145,7 @@ class Play extends Phaser.Scene {
         this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
-        this.overlay.depth = 4; // temporary, need a way to bring to absolute top
+        this.overlay.depth = 4;
 
 
         //adding the boundary hitboxes of the map 
@@ -401,7 +421,6 @@ class Play extends Phaser.Scene {
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
-
     
       this.emitZone.x = this.player.x - 3600 / 2;
       this.emitZone.y = this.player.y - 2400 / 2;

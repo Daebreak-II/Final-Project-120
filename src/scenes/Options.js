@@ -37,7 +37,8 @@ class Options extends Phaser.Scene {
       
 
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverPlay){
-        this.scene.start("playScene");
+        // this.scene.start("playScene");
+        this.scene.start('gameOverScene');
       }
 
 
