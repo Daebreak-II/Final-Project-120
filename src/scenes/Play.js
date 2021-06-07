@@ -632,7 +632,7 @@ class Play extends Phaser.Scene {
       //if(i == 1) {
         //this.sound.play('scream1', { volume: 1 * volumeMultiplier});
       //} else {
-      this.sound.play('scream2', { volume: 1 * volumeMultiplier});
+      // this.sound.play('scream2', { volume: 1 * volumeMultiplier});
       
       this.ambientMusic.stop();
       this.playerWalking.stop();

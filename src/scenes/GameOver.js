@@ -4,8 +4,12 @@ class GameOver extends Phaser.Scene {
     }
 
     preload() {
+      // load audio
+      this.load.audio('scream2', './Assets/sfx/scream_2.mp3');
+      // load sprites
       this.load.image('darkOverlay', './Assets/sprites/darknessOverlay.png');
       this.load.image('ground', './Assets/sprites/groundTile.png');
+      // load animations
       this.load.atlas('finalAnimation', './Assets/animations/finalAnimation-0.png', './Assets/animations/finalAnimation.json')
     }
 
@@ -39,19 +43,19 @@ class GameOver extends Phaser.Scene {
       });
 
       if(!timesUP){
-        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'ground').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, gameWidth, gameHeight, 'ground').setOrigin(0.5, 0.5);
         this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0, 0);
         this.overlay.setAlpha(1);
-        this.overlay.depth = 4;
         this.prey = new Prey(this, game.config.width / 2, game.config.height / 2, 'finalAnimation', 0);
         this.prey.x -= this.prey.width / 2 * 0.2;
         this.prey.y += this.prey.height / 2 * 0.2;
         this.prey.setScale(0.2);
         this.prey.play('caught');
+        this.sound.play('scream2', { volume: 1 * volumeMultiplier});
         this.clock = this.time.delayedCall(2500, () => {
           this.background.destroy();
           this.prey.destroy();
-          this.overlay.setAlpha(0);
+          this.overlay.destroy();
           this.add.text(game.config.width / 2, game.config.height / 2, 'You found your friend! Press r to restart', textConfig).setOrigin(0.5,0);
         }, null, this);
       }
