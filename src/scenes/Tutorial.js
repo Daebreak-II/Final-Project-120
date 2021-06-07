@@ -178,19 +178,14 @@ class Tutorial extends Phaser.Scene {
         this.bridge.setAngle(-75);
         this.border = this.add.image(1400, 0, 'border').setOrigin(0,0);
 
-        for(let i = 0; i < 200; i++) {
+        for(let i = 0; i < 100; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
           this.tree = this.add.sprite(Phaser.Math.Between(0, gameWidth - 850), Phaser.Math.Between(gameHeight/2 + 300, gameHeight/2 + 400), 'tree').setScale(0.2);
         }
-        for(let i = 0; i < 200; i++) {
+        for(let i = 0; i < 100; i++) {
             // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
            this.tree2 = this.add.sprite(Phaser.Math.Between(0, gameWidth - 850), Phaser.Math.Between(gameHeight/2 - 650, gameHeight/2 - 700), 'tree').setScale(0.2);
         }
-        for(let i = 0; i < 200; i++) {
-            // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-           this.tree3 = this.add.sprite(Phaser.Math.Between(gameWidth/2 - 800, gameWidth/2-700), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2);
-        }
-
         this.rockGroup = this.physics.add.group();
         this.rockGroup.runChildUpdate = true;
         this.rockGroup.setAlpha(0);
