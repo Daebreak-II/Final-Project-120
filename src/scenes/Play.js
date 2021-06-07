@@ -108,6 +108,59 @@ class Play extends Phaser.Scene {
           frameRate: 8,
           repeat: -1
         });
+
+
+        this.anims.create({
+          key: 'fleeRight',
+          frames: this.anims.generateFrameNames('preyAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'preyR',
+            suffix: '.png'
+          }),
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'fleeLeft',
+          frames: this.anims.generateFrameNames('preyAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'preyL',
+            suffix: '.png'
+          }),
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'fleeDown',
+          frames: this.anims.generateFrameNames('preyAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'preyU',
+            suffix: '.png'
+          }),
+          frameRate: 8,
+          repeat: -1
+        });
+
+        this.anims.create({
+          key: 'fleeUp',
+          frames: this.anims.generateFrameNames('preyAnim', {
+            start: 1,
+            end: 4,
+            zeroPad: 1,
+            prefix: 'preyUP',
+            suffix: '.png'
+          }),
+          frameRate: 8,
+          repeat: -1
+        });
       
         // add background
         // this.gameMap = this.add.tilemap('gameMap');
@@ -215,7 +268,6 @@ class Play extends Phaser.Scene {
           this.rock.body.moves = false;
           // setAngle(Phaser.Math.Between(-5, 5))
         }
-        // this.rockGroup.setAlpha(0);
 
         // adding in moving objects
         this.player = new Player(this, gameWidth/2, gameHeight/2, 'playerAnim', 0).setOrigin(0.5, 0.5);
@@ -223,8 +275,8 @@ class Play extends Phaser.Scene {
         this.player.setSize(this.player.width * 0.9, this.player.height * 0.8);
         this.player.setFrame('playerR4.png');
 
-        this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'prey', 0).setOrigin(0.5, 0.5);
-        this.prey.setScale(0.1);
+        this.prey = new Prey(this, Phaser.Math.Between(gameWidth * 0.2, gameWidth * 0.8), Phaser.Math.Between(gameHeight * 0.2, gameHeight * 0.8), 'preyAnim', 0).setOrigin(0.5, 0.5);
+        this.prey.setScale(0.2);
         this.prey.setSize(this.prey.width, this.prey.height);
 
         // set up camera
@@ -284,7 +336,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
-          frequency: 2500,
+          frequency: 5000,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -296,7 +348,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
-          frequency: 2500,
+          frequency: 5000,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -308,7 +360,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
-          frequency: 2500,
+          frequency: 5000,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -320,7 +372,7 @@ class Play extends Phaser.Scene {
           speed: { min: -10, max: 10 },
           lifespan: 10000,
           quantity: 1,
-          frequency: 2500,
+          frequency: 5000,
           scale: { min: 2 , max: 4 },
           alpha: { start: 0, end: 0.8 },
           blendMode: 'ADD',
@@ -394,6 +446,18 @@ class Play extends Phaser.Scene {
 
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
+      // this.fogEmitter1.setAlpha(function (p, k, t) {
+      //   return 1 - 2 * Math.abs(t - 0.5);
+      // });
+      // this.fogEmitter2.setAlpha(function (p, k, t) {
+      //   return 1 - 2 * Math.abs(t - 0.5);
+      // });
+      // this.fogEmitter3.setAlpha(function (p, k, t) {
+      //   return 1 - 2 * Math.abs(t - 0.5);
+      // });
+      // this.fogEmitter4.setAlpha(function (p, k, t) {
+      //   return 1 - 2 * Math.abs(t - 0.5);
+      // });
 
       this.blackScreen.x = this.player.x;
       this.blackScreen.y = this.player.y;
@@ -600,6 +664,33 @@ class Play extends Phaser.Scene {
       if(this.physics.collide(this.prey, this.treeGroup)){
         this.prey.body.bounce.x = 1;
         this.prey.body.bounce.x = 1;
+      }
+
+      // animation handling based on highest directional velocity of prey
+      if (Math.abs(this.prey.body.velocity.x) >= Math.abs(this.prey.body.velocity.y)) {
+        if (this.prey.body.velocity.x >= 0) {
+          // highest vel is right
+          if (this.prey.anims.getName() != 'fleeRight') {
+            this.prey.play('fleeRight');
+          }
+        } else {
+          // highest vel is left
+          if (this.prey.anims.getName() != 'fleeLeft') {
+            this.prey.play('fleeLeft');
+          }
+        }
+      } else {
+        if (this.prey.body.velocity.y >= 0) {
+          // highest vel is down
+          if (this.prey.anims.getName() != 'fleeDown') {
+            this.prey.play('fleeDown');
+          }
+        } else {
+          // highest vel is up
+          if (this.prey.anims.getName() != 'fleeUp') {
+            this.prey.play('fleeUp');
+          }
+        }
       }
 
     // collisions 
