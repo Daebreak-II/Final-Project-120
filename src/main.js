@@ -25,7 +25,7 @@ let game = new Phaser.Game(config);
 
 
 // reserving keys
-let keyF, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN, keySPACE, keyS;
+let keyF, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN, keySPACE, keyS, keyENTER;
 
 // game dimension variables
 let gameWidth = 8000;

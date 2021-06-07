@@ -44,6 +44,7 @@ class Tutorial extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
         // creating Animations
         this.anims.create({
@@ -282,7 +283,9 @@ class Tutorial extends Phaser.Scene {
         let textConfig = {
           fontFamily: 'Courier',
           fontSize: '36px',
-          color: '#FFFFFF',
+          color: '#FFF',
+          stroke: '#FFF',
+          strokeThickness: 1,
           align: 'center',
           padding: {
               top: 5,
@@ -306,6 +309,11 @@ class Tutorial extends Phaser.Scene {
         this.physics.add.existing(this.leftBoundary3);
         this.leftBoundary3.body.immovable = false;
         this.leftBoundary3.body.moves = false;
+
+        this.leftBoundary4 = this.add.rectangle(gameWidth/2 + 2700, gameHeight/2 - 50, 100, 700);
+        this.physics.add.existing(this.leftBoundary4);
+        this.leftBoundary4.body.immovable = false;
+        this.leftBoundary4.body.moves = false;
         
         this.explain1 = this.add.text(gameWidth/2 + 200, gameHeight/2 + 200, 'Press Space to see better in the darkness', textConfig).setOrigin(0.5,0);
         this.explain1.setAlpha(0);
@@ -319,26 +327,13 @@ class Tutorial extends Phaser.Scene {
         this.explain3.setAlpha(0);
         this.explain3.depth = 5;
 
-        this.playerSpeaking = this.add.text(this.player.x, this.player.y, '', textConfig).setOrigin(0.5, 3.5);
-        this.timeRemain = 60000;
-        
+        this.explain4 = this.add.text(gameWidth/2 + 2700, gameHeight/2 + 200, 'If you want to skip the tutorial\n next time press the enter key', textConfig).setOrigin(0.5,0);
+        this.explain4.setAlpha(0);
+        this.explain4.depth = 5;
+       
       }
 
     update(time, delta) {
-      //checking if timer is done
-      //this.timeRemain -= delta;
-      if(this.timeRemain <= 0){
-        timesUP = true;
-        this.ambientMusic.stop();
-        this.playerWalking.stop();
-        this.preyWalking.stop();
-        moving = false;
-        movingAway = false;
-        echoCooldown = false;
-        smellUse = false;
-        this.scene.start('gameOverScene');
-      }
-
       // updating objects
       this.player.update();
       this.prey.update();
@@ -479,9 +474,15 @@ class Tutorial extends Phaser.Scene {
     if(this.physics.collide(this.player, this.leftBoundary2)){
       this.explain2.setAlpha(1);
     }
+    if(this.physics.collide(this.player, this.leftBoundary4)){
+      this.explain4.setAlpha(1);
+  }
     if(this.physics.collide(this.player, this.leftBoundary3)){
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
+      this.explain1.setAlpha(0);
+      this.explain2.setAlpha(0);
+      this.explain4.setAlpha(0);
       this.input.keyboard.enabled = false;
       this.blackScreen.setAlpha(1);      
       this.ambientMusic.stop();
@@ -509,6 +510,38 @@ class Tutorial extends Phaser.Scene {
       
     }
     
+    if(Phaser.Input.Keyboard.JustDown(keyENTER)) {
+      this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
+      this.explain1.setAlpha(0);
+      this.explain2.setAlpha(0);
+      this.explain4.setAlpha(0);
+      this.input.keyboard.enabled = false;
+      this.blackScreen.setAlpha(1);      
+      this.ambientMusic.stop();
+      this.playerWalking.setVolume(0);
+      this.playerWalking.stop();
+      this.preyWalking.stop();
+      
+      moving = false;
+      movingAway = false;
+      echoUse = false;
+      smellUse = false;
+      smellCooldown = false;
+      echoCooldown = false;
+      this.explain3.x = this.player.x;
+      this.explain3.y = this.player.y;
+      this.explain3.setAlpha(1);
+
+      this.clock = this.time.delayedCall(5000, () => {
+        this.input.keyboard.enabled = true;
+        this.player.setVelocityX(800);
+        this.player.setVelocityY(800);  
+        this.playerWalking.setVolume(0.1 * volumeMultiplier);
+        this.scene.start('playScene');
+      }, null, this);
+      
+    }
      this.physics.collide(this.player, this.logGroup);
      this.physics.collide(this.prey, this.logGroup);
      this.physics.collide(this.player, this.cabin);
