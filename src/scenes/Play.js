@@ -25,13 +25,7 @@ class Play extends Phaser.Scene {
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
-      this.load.image('tent', './Assets/sprites/tentSprite.png');
-      this.load.image('smallLog','/Assets/sprites/smalllogSprite.png');
-      this.load.image('smallTree','/Assets/sprites/smallertreeSprite.png');
-      //this.load.image('forestTiles','/Assets/sprites/allTiles.png');
-      this.load.tilemapTiledJSON('gameMap', './Assets/sprites/gameMap.json');
-
-      
+      this.load.image('tent', './Assets/sprites/tentSprite.png');      
       
       // load audio
       this.load.audio('scream1', './Assets/sfx/scream_1.mp3');
