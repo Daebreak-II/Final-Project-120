@@ -5,14 +5,16 @@ class Options extends Phaser.Scene {
 
     preload(){
       this.load.image('playOptions', './Assets/sprites/playButton.png');
-      this.load.image('back', './Assets/sprites/backButton.png');
-      this.load.image('river', './Assets/sprites/riverSprite.png');
-      this.load.image('grounded', './Assets/sprites/ground.png');
+      this.load.image('backOptions', './Assets/sprites/backButton.png');
+      this.load.image('playOptionsOverlay', './Assets/sprites/playButtonOverlay.png');
+      this.load.image('backOptionsOverlay', './Assets/sprites/backButtonOverlay.png');
+      this.load.image('riverOptions', './Assets/sprites/riverSprite.png');
+      this.load.image('groundedOptions', './Assets/sprites/ground.png');
       this.load.image('leftArrow', './Assets/sprites/leftarrow.png');
       this.load.image('rightArrow', './Assets/sprites/rightarrow.png');
-      this.load.image('tree', './Assets/sprites/treeSprite.png');
+      this.load.image('treeOptions', './Assets/sprites/treeSprite.png');
 
-      this.load.audio('smelling', './Assets/sfx/smelling.wav');
+      this.load.audio('smellingOptions', './Assets/sfx/smelling.wav');
 
       
     }
@@ -51,21 +53,21 @@ class Options extends Phaser.Scene {
           width: 100
         }
         
-        this.ground = this.add.image(0, 0, 'grounded').setAlpha(0.9);
+        this.ground = this.add.image(0, 0, 'groundedOptions').setAlpha(0.9);
 
         
 
-        this.river = this.add.image(game.config.width/2 - 100, 0, 'river');
+        this.river = this.add.image(game.config.width/2 - 100, 0, 'riverOptions');
         this.river.setAngle(-60);
 
         for(let i = 0; i < 30; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-          this.tree = this.add.sprite(Phaser.Math.Between(0, game.config.width / 2 - 275), Phaser.Math.Between(0, game.config.height), 'tree').setScale(0.1);
+          this.tree = this.add.sprite(Phaser.Math.Between(0, game.config.width / 2 - 275), Phaser.Math.Between(0, game.config.height), 'treeOptions').setScale(0.1);
         }
 
         for(let i = 0; i < 30; i++) {
           // this.add.image(Phaser.Math.Between(0, gameWidth), Phaser.Math.Between(0, gameHeight), 'tree').setScale(0.2).setAngle(Phaser.Math.Between(-5, 5));
-          this.tree = this.add.sprite(Phaser.Math.Between(game.config.width / 2 + 200, game.config.width), Phaser.Math.Between(0, game.config.height), 'tree').setScale(0.1);
+          this.tree = this.add.sprite(Phaser.Math.Between(game.config.width / 2 + 200, game.config.width), Phaser.Math.Between(0, game.config.height), 'treeOptions').setScale(0.1);
         }
 
         this.titleOptions = this.add.text(game.config.width / 2 - 150, 0, 'Options', titleConfig);
@@ -75,6 +77,10 @@ class Options extends Phaser.Scene {
         this.selectPlay = this.add.sprite(game.config.width - 300, game.config.height/2 + 250, 'playOptions').setOrigin(0, 0);
         this.selectPlay.setScale(0.8);
 
+        this.selectPlayOverlay = this.add.sprite(game.config.width - 300, game.config.height/2 + 250, 'playOptionsOverlay').setOrigin(0, 0);
+        this.selectPlayOverlay.setScale(0.8);
+        this.selectPlayOverlay.setAlpha(0);
+
         this.mousePlay = this.selectPlay.setInteractive();
        
 
@@ -82,15 +88,21 @@ class Options extends Phaser.Scene {
         
         
         this.mousePlay.on('pointerover', () => { 
-          this.mousePointerisOverPlay = true; 
+          this.mousePointerisOverPlay = true;
+          this.selectPlayOverlay.setAlpha(0.2); 
         });
         this.mousePlay.on('pointerout', () => { 
           this.mousePointerisOverPlay = false; 
+          this.selectPlayOverlay.setAlpha(0);
         });
 
         //mouse over back button
-        this.selectBack = this.add.sprite(50, game.config.height/2 + 250, 'back').setOrigin(0, 0);
+        this.selectBack = this.add.sprite(50, game.config.height/2 + 250, 'backOptions').setOrigin(0, 0);
         this.selectBack.setScale(0.8);
+
+        this.selectBackOverlay = this.add.sprite(50, game.config.height/2 + 250, 'backOptionsOverlay').setOrigin(0, 0);
+        this.selectBackOverlay.setScale(0.8);
+        this.selectBackOverlay.setAlpha(0);
 
         this.mouseBack = this.selectBack.setInteractive();
        
@@ -100,9 +112,11 @@ class Options extends Phaser.Scene {
         
         this.mouseBack.on('pointerover', () => { 
           this.mousePointerisOverBack = true; 
+          this.selectBackOverlay.setAlpha(0.2);
         });
         this.mouseBack.on('pointerout', () => { 
-          this.mousePointerisOverBack = false; 
+          this.mousePointerisOverBack = false;
+          this.selectBackOverlay.setAlpha(0);
         });
 
         //Volume settings 
@@ -156,7 +170,7 @@ class Options extends Phaser.Scene {
         if(volumeMultiplier > 0){
           volumeMultiplier -= 1;
           this.volumeLevel.text = volumeMultiplier;
-          this.sound.play('smelling', {volume: 1 * volumeMultiplier});
+          this.sound.play('smellingOptions', {volume: 1 * volumeMultiplier});
         }
         this.clock = this.time.delayedCall(100, () => {
           this.mousePointerisOverLeftVolume = true;
@@ -169,7 +183,7 @@ class Options extends Phaser.Scene {
         if(volumeMultiplier < 3){
           volumeMultiplier += 1;
           this.volumeLevel.text = volumeMultiplier;
-          this.sound.play('smelling', {volume: 1 * volumeMultiplier});
+          this.sound.play('smellingOptions', {volume: 1 * volumeMultiplier});
         }
         this.clock = this.time.delayedCall(100, () => {
           this.mousePointerisOverRightVolume = true;

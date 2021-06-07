@@ -4,8 +4,10 @@ class Credits extends Phaser.Scene {
     }
 
     preload(){
-      this.load.image('playOptions', './Assets/sprites/playButton.png');
-      this.load.image('back', './Assets/sprites/backButton.png');
+      this.load.image('playCredits', './Assets/sprites/playButton.png');
+      this.load.image('backCredits', './Assets/sprites/backButton.png');
+      this.load.image('playCreditsOverlay', './Assets/sprites/playButtonOverlay.png');
+      this.load.image('backCreditsOverlay', './Assets/sprites/backButtonOverlay.png');
       this.load.image('creditsScreen', './Assets/sprites/creditScreen.png');
       
     }
@@ -49,8 +51,12 @@ class Credits extends Phaser.Scene {
 
 
         //mouse over back button
-        this.selectBack = this.add.sprite(50, game.config.height/2 + 250, 'back').setOrigin(0, 0);
+        this.selectBack = this.add.sprite(50, game.config.height/2 + 250, 'backCredits').setOrigin(0, 0);
         this.selectBack.setScale(0.8);
+
+        this.selectBackOverlay = this.add.sprite(50, game.config.height/2 + 250, 'backCreditsOverlay').setOrigin(0, 0);
+        this.selectBackOverlay.setScale(0.8);
+        this.selectBackOverlay.setAlpha(0);
 
         this.mouseBack = this.selectBack.setInteractive();
        
@@ -59,10 +65,12 @@ class Credits extends Phaser.Scene {
         
         
         this.mouseBack.on('pointerover', () => { 
-          this.mousePointerisOverBack = true; 
+          this.mousePointerisOverBack = true;
+          this.selectBackOverlay.setAlpha(0.2); 
         });
         this.mouseBack.on('pointerout', () => { 
-          this.mousePointerisOverBack = false; 
+          this.mousePointerisOverBack = false;
+          this.selectBackOverlay.setAlpha(0); 
         });
     }
     update(){
