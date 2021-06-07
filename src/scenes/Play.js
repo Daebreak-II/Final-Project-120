@@ -19,6 +19,7 @@ class Play extends Phaser.Scene {
       this.load.image('fog2', './Assets/sprites/fogSprite2.png');
       this.load.image('fog3', './Assets/sprites/fogSprite3.png');
       this.load.image('fog4', './Assets/sprites/fogSprite4.png');
+      this.load.image('sizzle', './Assets/sprites/sizzleSprite2.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
       this.load.image('darkOverlay', './Assets/sprites/darknessOverlay.png');
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
@@ -161,6 +162,9 @@ class Play extends Phaser.Scene {
           frameRate: 8,
           repeat: -1
         });
+
+        // initialize graphics
+        this.graphics = this.add.graphics();
       
         // add background
         // this.gameMap = this.add.tilemap('gameMap');
@@ -170,12 +174,25 @@ class Play extends Phaser.Scene {
         this.river1 = this.add.image(gameWidth/2, gameHeight/2 + 600, 'river').setScale(2, 0.7);
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0);
 
-        // add overlay
+        // add overlays
         this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
         this.overlay.depth = 4;
 
+        this.blackScreen = this.add.rectangle(0, 0, game.config.width * 1.1, game.config.height * 1.1, 0x000000);
+        this.blackScreen.alpha = 0;
+
+        this.daylight = this.add.rectangle(0, 0, game.config.width * 1.1, game.config.height * 1.1, 0xFFFFFF).setOrigin(0.5, 0.5);
+        this.daylight.setAlpha(0);
+        this.daylight.setAngle(45);
+        this.daylightPositionX = 0;
+        this.daylightPositionY = 0;
+        // this.daylight = new Phaser.Geom.Rectangle(0, 0, game.config.width * 1.1, game.config.height * 1.1);
+        // this.daylight.depth = 5;
+        // this.graphics.fillGradientStyle(0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 1);
+        // this.graphics.fillRect(0, 0, game.config.width * 1.1, game.config.height * 1.1);
+        // this.graphics.fillRectShape(this.daylight);
 
         //adding the boundary hitboxes of the map 
 
@@ -222,7 +239,6 @@ class Play extends Phaser.Scene {
         this.cabin.setSize(1200, 600);
         this.cabin.setOffset(130, 910);
         this.cabin.setOrigin(0.5,0);
-        // this.cabin.setAlpha(0);
         this.cabin.body.immovable = true;
         this.cabin.body.moves = false;
         
@@ -306,11 +322,8 @@ class Play extends Phaser.Scene {
         
 
         // Particles
-        this.blackScreen = this.add.rectangle(0, 0, 2400, 1600, 0x000000);
-        this.blackScreen.alpha = 0;
-
         this.fogEmitZone = new Phaser.Geom.Rectangle(this.player.x, this.player.y, game.config.width, game.config.height);
-        this.emitZone = new Phaser.Geom.Rectangle(0, 0, game.config.width, game.config.height);
+        this.sizzleEmitZone = new Phaser.Geom.Rectangle(0, 0, this.player.width * 0.2, this.player.height * 0.2);
         this.smellLine = new Phaser.Geom.Line(this.player.x, this.player.y, this.prey.x, this.prey.y);
         this.deathZone = new Phaser.Geom.Circle(0, 0, 200);
         this.deathZone2 = new Phaser.Geom.Circle(0, 0, 800);
@@ -328,6 +341,7 @@ class Play extends Phaser.Scene {
         this.fogParticle2 = this.add.particles('fog2');
         this.fogParticle3 = this.add.particles('fog3');
         this.fogParticle4 = this.add.particles('fog4');
+        this.sizzleParticles = this.add.particles('sizzle');
         this.smellParticles = this.add.particles('smell');
         this.smellParticles.setDepth(5);
 
@@ -381,6 +395,18 @@ class Play extends Phaser.Scene {
           deathzone: {type:  'onEnter', source: superDeathZone },
         });
 
+        this.sizzleEmitter = this.sizzleParticles.createEmitter({
+          speed: { min: -10, max: 10 },
+          lifespan: 2000,
+          quantity: 1,
+          frequency: 700,
+          scale: { min: 0.1 , max: 0.3 },
+          alpha: { start: 0.8, end: 0 },
+          blendMode: 'ADD',
+          emitZone: { source: this.sizzleEmitZone },
+          on: false,
+        });
+
         // problem: as the line gets shorter, the particles get more concentrated because
         // the spawn area is reduced. Actually maybe not a problem?
         this.smellEmitter = this.smellParticles.createEmitter({
@@ -395,10 +421,6 @@ class Play extends Phaser.Scene {
           on: false,
           emitZone: { type: 'random', source: this.smellLine}, 
         });
-
-
-
-        this.graphics = this.add.graphics(); // what does this do Juan?
         
         //adding text explaining your goal
         let textConfig = {
@@ -412,8 +434,7 @@ class Play extends Phaser.Scene {
           },
           Width: 0
         }
-        this.daylight = this.add.circle(gameWidth/2, gameHeight + 4500, 5000, 0xFFFFFF);
-        this.daylight.setAlpha(0.2);
+
         this.timeRemain = 60000;
         
       }
@@ -433,17 +454,22 @@ class Play extends Phaser.Scene {
         this.scene.start('gameOverScene');
       }
 
-      this.clock = this.time.delayedCall(1000, () => {
-        this.daylight.y -= 1.2;
-      }, null, this);
-
       // updating objects
       this.player.update();
       this.prey.update();
-      // updating overlay
+      // updating overlays
       this.overlay.x = this.player.x;
       this.overlay.y = this.player.y;
 
+      this.blackScreen.x = this.player.x;
+      this.blackScreen.y = this.player.y;
+
+      this.daylightPositionX += game.config.width / 60000;
+      this.daylightPositionY += game.config.height / 60000;
+      this.daylight.x = this.player.x + this.daylightPosition;
+      this.daylight.y = this.player.y - this.daylightPosition;
+
+      // updating emitters
       this.fogEmitZone.x = this.player.x - game.config.width / 2;
       this.fogEmitZone.y = this.player.y - game.config.height / 2;
       // this.fogEmitter1.setAlpha(function (p, k, t) {
@@ -458,17 +484,14 @@ class Play extends Phaser.Scene {
       // this.fogEmitter4.setAlpha(function (p, k, t) {
       //   return 1 - 2 * Math.abs(t - 0.5);
       // });
-
-      this.blackScreen.x = this.player.x;
-      this.blackScreen.y = this.player.y;
     
-      this.emitZone.x = this.player.x - 3600 / 2;
-      this.emitZone.y = this.player.y - 2400 / 2;
+      this.sizzleEmitZone.x = this.player.x - this.player.width * 0.1;
+      this.sizzleEmitZone.y = this.player.y - this.player.height * 0.1;
 
+      this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
       this.deathZone.x = this.player.x;
       this.deathZone.y = this.player.y;
 
-      this.smellLine.setTo(this.player.x, this.player.y, this.prey.x, this.prey.y);
       var preyDistance = Phaser.Math.Distance.BetweenPoints(this.player, this.prey);
 
       this.graphics.clear();
