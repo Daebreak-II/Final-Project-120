@@ -4,105 +4,30 @@
 			"image": "playerAnimations-0.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 2737,
-				"h": 1981
+				"w": 2753,
+				"h": 1982
 			},
 			"scale": 1,
 			"frames": [
 				{
 					"filename": "playerUP3.png",
 					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 270,
-						"h": 1049
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 270,
-						"h": 1049
-					},
-					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 270,
-						"h": 1049
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "playerR2.png",
-					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 562,
-						"h": 1003
+						"w": 561,
+						"h": 1049
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 64,
-						"w": 562,
-						"h": 874
+						"x": 144,
+						"y": 0,
+						"w": 272,
+						"h": 1049
 					},
 					"frame": {
 						"x": 1,
-						"y": 1052,
-						"w": 562,
-						"h": 874
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "playerU1.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 270,
-						"h": 1048
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 270,
-						"h": 1048
-					},
-					"frame": {
-						"x": 273,
 						"y": 1,
-						"w": 270,
-						"h": 1048
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "playerU3.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 269,
-						"h": 1048
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 269,
-						"h": 1048
-					},
-					"frame": {
-						"x": 545,
-						"y": 1,
-						"w": 269,
-						"h": 1048
+						"w": 272,
+						"h": 1049
 					},
 					"anchor": {
 						"x": 0.5,
@@ -115,44 +40,44 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 561,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 68,
-						"y": 37,
+						"y": 60,
 						"w": 425,
 						"h": 929
 					},
 					"frame": {
-						"x": 565,
-						"y": 1051,
+						"x": 1,
+						"y": 1052,
 						"w": 425,
 						"h": 929
 					},
 					"anchor": {
-						"x": 0.5,
+						"x": 0.50534759,
 						"y": 0.5
 					}
 				},
 				{
-					"filename": "playerUP1.png",
+					"filename": "playerU3.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 269,
-						"h": 1048
+						"w": 561,
+						"h": 1049
 					},
 					"spriteSourceSize": {
-						"x": 0,
+						"x": 145,
 						"y": 0,
-						"w": 269,
-						"h": 1048
+						"w": 271,
+						"h": 1049
 					},
 					"frame": {
-						"x": 816,
+						"x": 275,
 						"y": 1,
-						"w": 269,
-						"h": 1048
+						"w": 271,
+						"h": 1049
 					},
 					"anchor": {
 						"x": 0.5,
@@ -165,17 +90,17 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 562,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 69,
-						"y": 37,
+						"y": 60,
 						"w": 424,
 						"h": 929
 					},
 					"frame": {
-						"x": 992,
-						"y": 1051,
+						"x": 428,
+						"y": 1052,
 						"w": 424,
 						"h": 929
 					},
@@ -185,24 +110,24 @@
 					}
 				},
 				{
-					"filename": "playerU4.png",
+					"filename": "playerUP1.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 270,
-						"h": 1028
+						"w": 561,
+						"h": 1049
 					},
 					"spriteSourceSize": {
-						"x": 0,
+						"x": 145,
 						"y": 0,
-						"w": 270,
-						"h": 1028
+						"w": 271,
+						"h": 1049
 					},
 					"frame": {
-						"x": 1087,
+						"x": 548,
 						"y": 1,
-						"w": 270,
-						"h": 1028
+						"w": 271,
+						"h": 1049
 					},
 					"anchor": {
 						"x": 0.5,
@@ -210,24 +135,24 @@
 					}
 				},
 				{
-					"filename": "playerUP4.png",
+					"filename": "playerU1.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 270,
-						"h": 1028
+						"w": 561,
+						"h": 1048
 					},
 					"spriteSourceSize": {
-						"x": 0,
+						"x": 144,
 						"y": 0,
-						"w": 270,
-						"h": 1028
+						"w": 272,
+						"h": 1048
 					},
 					"frame": {
-						"x": 1359,
+						"x": 821,
 						"y": 1,
-						"w": 270,
-						"h": 1028
+						"w": 272,
+						"h": 1048
 					},
 					"anchor": {
 						"x": 0.5,
@@ -240,17 +165,17 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 562,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 75,
-						"y": 37,
+						"y": 60,
 						"w": 411,
 						"h": 929
 					},
 					"frame": {
-						"x": 1418,
-						"y": 1031,
+						"x": 854,
+						"y": 1051,
 						"w": 411,
 						"h": 929
 					},
@@ -260,24 +185,24 @@
 					}
 				},
 				{
-					"filename": "playerU2.png",
+					"filename": "playerU4.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 270,
-						"h": 1026
+						"w": 561,
+						"h": 1049
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 270,
-						"h": 1026
+						"x": 144,
+						"y": 9,
+						"w": 272,
+						"h": 1030
 					},
 					"frame": {
-						"x": 1631,
+						"x": 1095,
 						"y": 1,
-						"w": 270,
-						"h": 1026
+						"w": 272,
+						"h": 1030
 					},
 					"anchor": {
 						"x": 0.5,
@@ -290,17 +215,17 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 561,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 75,
-						"y": 37,
+						"y": 60,
 						"w": 410,
 						"h": 929
 					},
 					"frame": {
-						"x": 1831,
-						"y": 1029,
+						"x": 1267,
+						"y": 1033,
 						"w": 410,
 						"h": 929
 					},
@@ -310,23 +235,98 @@
 					}
 				},
 				{
-					"filename": "playerUP2.png",
+					"filename": "playerU2.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 270,
-						"h": 1026
+						"w": 561,
+						"h": 1049
+					},
+					"spriteSourceSize": {
+						"x": 144,
+						"y": 10,
+						"w": 272,
+						"h": 1028
+					},
+					"frame": {
+						"x": 1369,
+						"y": 1,
+						"w": 272,
+						"h": 1028
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "playerUP4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 561,
+						"h": 1049
+					},
+					"spriteSourceSize": {
+						"x": 144,
+						"y": 11,
+						"w": 272,
+						"h": 1028
+					},
+					"frame": {
+						"x": 1643,
+						"y": 1,
+						"w": 272,
+						"h": 1028
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "playerR2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 562,
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 270,
+						"y": 87,
+						"w": 562,
+						"h": 874
+					},
+					"frame": {
+						"x": 1679,
+						"y": 1031,
+						"w": 562,
+						"h": 874
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "playerUP2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 561,
+						"h": 1049
+					},
+					"spriteSourceSize": {
+						"x": 144,
+						"y": 12,
+						"w": 272,
 						"h": 1026
 					},
 					"frame": {
-						"x": 1903,
+						"x": 1917,
 						"y": 1,
-						"w": 270,
+						"w": 272,
 						"h": 1026
 					},
 					"anchor": {
@@ -340,16 +340,16 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 561,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 64,
+						"y": 87,
 						"w": 561,
 						"h": 874
 					},
 					"frame": {
-						"x": 2175,
+						"x": 2191,
 						"y": 1,
 						"w": 561,
 						"h": 874
@@ -365,19 +365,19 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 562,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 159,
-						"y": 0,
+						"y": 22,
 						"w": 243,
-						"h": 1003
+						"h": 1004
 					},
 					"frame": {
 						"x": 2243,
 						"y": 877,
 						"w": 243,
-						"h": 1003
+						"h": 1004
 					},
 					"anchor": {
 						"x": 0.5,
@@ -390,19 +390,19 @@
 					"trimmed": true,
 					"sourceSize": {
 						"w": 561,
-						"h": 1003
+						"h": 1049
 					},
 					"spriteSourceSize": {
 						"x": 160,
-						"y": 0,
+						"y": 22,
 						"w": 241,
-						"h": 1003
+						"h": 1004
 					},
 					"frame": {
 						"x": 2488,
 						"y": 877,
 						"w": 241,
-						"h": 1003
+						"h": 1004
 					},
 					"anchor": {
 						"x": 0.5,
@@ -415,6 +415,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:5c1a46aa1d3ac4cfaf20a10dcce80997:f8c9fe5ea4257fc24962bb8b69671d9d:59249f3fdbe678da61d5c8c5cab0a1fb$"
+		"smartupdate": "$TexturePacker:SmartUpdate:57f7c3d4b91a558846df79b4717178a3:4090aef2613082f8a7fa14ae4f40a8e6:59249f3fdbe678da61d5c8c5cab0a1fb$"
 	}
 }
