@@ -15,6 +15,8 @@ class Options extends Phaser.Scene {
       this.load.image('treeOptions', './Assets/sprites/treeSprite.png');
 
       this.load.audio('smellingOptions', './Assets/sfx/smelling.wav');
+      this.load.audio('selectingOptions', './Assets/sfx/selection.wav');
+      this.load.audio('mouseOverOptions', './Assets/sfx/wind.mp3');
 
       
     }
@@ -89,7 +91,8 @@ class Options extends Phaser.Scene {
         
         this.mousePlay.on('pointerover', () => { 
           this.mousePointerisOverPlay = true;
-          this.selectPlayOverlay.setAlpha(0.2); 
+          this.selectPlayOverlay.setAlpha(0.2);
+          this.sound.play('mouseOverOptions', {volume: 0.07 * volumeMultiplier}); 
         });
         this.mousePlay.on('pointerout', () => { 
           this.mousePointerisOverPlay = false; 
@@ -113,6 +116,7 @@ class Options extends Phaser.Scene {
         this.mouseBack.on('pointerover', () => { 
           this.mousePointerisOverBack = true; 
           this.selectBackOverlay.setAlpha(0.2);
+          this.sound.play('mouseOverOptions', {volume: 0.07 * volumeMultiplier});
         });
         this.mouseBack.on('pointerout', () => { 
           this.mousePointerisOverBack = false;
@@ -137,6 +141,7 @@ class Options extends Phaser.Scene {
         //setting up mouse cursor over object
         this.mouseLeftVolume.on('pointerover', () => { 
           this.mousePointerisOverLeftVolume = true;
+          this.sound.play('mouseOverOptions', {volume: 0.07 * volumeMultiplier});
         });
         
         this.mouseLeftVolume.on('pointerout', () => { 
@@ -145,6 +150,7 @@ class Options extends Phaser.Scene {
 
         this.mouseRightVolume.on('pointerover', () => { 
           this.mousePointerisOverRightVolume = true;
+          this.sound.play('mouseOverOptions', {volume: 0.07 * volumeMultiplier});
         });
         this.mouseRightVolume.on('pointerout', () => { 
           this.mousePointerisOverRightVolume = false;
@@ -159,9 +165,11 @@ class Options extends Phaser.Scene {
 
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverPlay){
         this.scene.start("tutorialScene");
+        this.sound.play('selectingOptions', {volume: 0.5 * volumeMultiplier});
       }
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverBack){
         this.scene.start("menuScene");
+        this.sound.play('selectingOptions', {volume: 0.5 * volumeMultiplier});
       }
 
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverLeftVolume){

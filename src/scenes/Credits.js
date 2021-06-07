@@ -10,6 +10,8 @@ class Credits extends Phaser.Scene {
       this.load.image('backCreditsOverlay', './Assets/sprites/backButtonOverlay.png');
       this.load.image('creditsScreen', './Assets/sprites/creditScreen.png');
       
+      this.load.audio('selectingCredits', './Assets/sfx/selection.wav');
+      this.load.audio('mouseOverCredits', './Assets/sfx/wind.mp3');
     }
     
     create() {
@@ -66,7 +68,8 @@ class Credits extends Phaser.Scene {
         
         this.mouseBack.on('pointerover', () => { 
           this.mousePointerisOverBack = true;
-          this.selectBackOverlay.setAlpha(0.2); 
+          this.selectBackOverlay.setAlpha(0.2);
+          this.sound.play('mouseOverCredits', {volume: 0.07 * volumeMultiplier}); 
         });
         this.mouseBack.on('pointerout', () => { 
           this.mousePointerisOverBack = false;
@@ -78,6 +81,7 @@ class Credits extends Phaser.Scene {
       //Going into the play scene or back to the main menu
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverBack){
         this.scene.start("menuScene");
+        this.sound.play('selectingCredits', {volume: 0.5 * volumeMultiplier});
       }
 
       if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverLeftVolume){

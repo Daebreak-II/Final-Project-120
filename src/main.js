@@ -48,6 +48,7 @@ let smellGoing = false;
 let treeFade = 0;
 let logFade = 0;
 let rockFade = 0;
+let stillInMenu = false;
 
 //Control Variables
 

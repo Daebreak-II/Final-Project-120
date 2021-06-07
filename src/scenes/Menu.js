@@ -12,12 +12,20 @@ class Menu extends Phaser.Scene {
     this.load.image('playOverlay', './Assets/sprites/startButtonOverlay.png');
     this.load.image('creditsButtonOverlay', './Assets/sprites/creditsButtonOverlay.png');
     this.load.image('optionsOverlay', './Assets/sprites/optionsButtonOverlay.png');
+
+    this.load.audio('menuMusic', './Assets/sfx/menuAmbiance.wav');
+    this.load.audio('selecting', './Assets/sfx/selection.wav');
+    this.load.audio('mouseOver', './Assets/sfx/wind.mp3');
     
   }
   
   create() {
       //setting up main meny screen images
       this.menuImage = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'menu').setOrigin(0, 0);
+      if(!stillInMenu){
+        this.menuAmbientMusic = this.sound.add('menuMusic', { volume: 0.1 * volumeMultiplier, loop: true });
+        this.menuAmbientMusic.play();
+      }
 
       //setting up options in menu
       this.selectPlay = this.add.sprite(300, game.config.height/2 - 150, 'play').setOrigin(0, 0);
@@ -57,6 +65,7 @@ class Menu extends Phaser.Scene {
       this.mousePlay.on('pointerover', () => { 
         this.mousePointerisOverPlay = true;
         this.selectPlayOverlay.setAlpha(0.2);
+        this.sound.play('mouseOver', {volume: 0.07 * volumeMultiplier});
         
       });
       
@@ -67,7 +76,8 @@ class Menu extends Phaser.Scene {
 
       this.mouseOptions.on('pointerover', () => { 
         this.mousePointerisOverOptions = true;
-        this.selectOptionsOverlay.setAlpha(0.2);        
+        this.selectOptionsOverlay.setAlpha(0.2);
+        this.sound.play('mouseOver', {volume: 0.07 * volumeMultiplier});        
       });
       
       this.mouseOptions.on('pointerout', () => { 
@@ -78,6 +88,7 @@ class Menu extends Phaser.Scene {
       this.mouseCredits.on('pointerover', () => { 
         this.mousePointerisOverCredits = true;
         this.selectCreditsOverlay.setAlpha(0.2);
+        this.sound.play('mouseOver', {volume: 0.07 * volumeMultiplier});
         
       });
       
@@ -89,15 +100,22 @@ class Menu extends Phaser.Scene {
   update(){
     
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverPlay){
-      this.scene.start("tutorialScene");      
+      this.menuAmbientMusic.stop();
+      stillInMenu = false;
+      this.scene.start("tutorialScene");
+      this.sound.play('selecting', {volume: 0.5 * volumeMultiplier});      
     }
 
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverOptions){
+      stillInMenu = true;
       this.scene.start("optionScene");
+      this.sound.play('selecting', {volume: 0.5 * volumeMultiplier});
     }
 
     if(game.input.activePointer.leftButtonDown() && this.mousePointerisOverCredits){
+      stillInMenu = true;
       this.scene.start("creditsScene");
+      this.sound.play('selecting', {volume: 0.5 * volumeMultiplier});
     }
   }
 }
