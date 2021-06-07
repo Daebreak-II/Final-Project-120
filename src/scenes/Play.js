@@ -352,54 +352,54 @@ class Play extends Phaser.Scene {
         this.smellParticles.setDepth(5);
 
 
-        this.sizzleEmitter1 = this.sizzleParticle1.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 10000,
-          quantity: 1,
-          frequency: 5000,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.sizzleEmitter2 = this.sizzleParticle2.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 10000,
-          quantity: 1,
-          frequency: 5000,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.sizzleEmitter3 = this.sizzleParticle3.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 10000,
-          quantity: 1,
-          frequency: 5000,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
-        this.sizzleEmitter4 = this.sizzleParticle4.createEmitter({
-          speed: { min: -10, max: 10 },
-          lifespan: 10000,
-          quantity: 1,
-          frequency: 5000,
-          scale: { min: 2 , max: 4 },
-          alpha: { start: 0, end: 0.8 },
-          blendMode: 'ADD',
-          emitZone: { source: this.fogEmitZone },
-          on: false,
-          deathzone: {type:  'onEnter', source: superDeathZone },
-        });
+        // this.sizzleEmitter1 = this.sizzleParticle1.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 10000,
+        //   quantity: 1,
+        //   frequency: 5000,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: false,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.sizzleEmitter2 = this.sizzleParticle2.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 10000,
+        //   quantity: 1,
+        //   frequency: 5000,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: false,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.sizzleEmitter3 = this.sizzleParticle3.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 10000,
+        //   quantity: 1,
+        //   frequency: 5000,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: false,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
+        // this.sizzleEmitter4 = this.sizzleParticle4.createEmitter({
+        //   speed: { min: -10, max: 10 },
+        //   lifespan: 10000,
+        //   quantity: 1,
+        //   frequency: 5000,
+        //   scale: { min: 2 , max: 4 },
+        //   alpha: { start: 0, end: 0.8 },
+        //   blendMode: 'ADD',
+        //   emitZone: { source: this.fogEmitZone },
+        //   on: false,
+        //   deathzone: {type:  'onEnter', source: superDeathZone },
+        // });
 
         this.sizzleEmitter = this.sizzleParticles.createEmitter({
           speed: { min: -10, max: 10 },
@@ -444,6 +444,7 @@ class Play extends Phaser.Scene {
         this.timeRemain = 60000;
         this.clock = this.time.delayedCall(40000, () => {
           this.sizzling.play();
+          this.sizzleEmitter.start();
         }, null, this);
         
       }
@@ -522,12 +523,6 @@ class Play extends Phaser.Scene {
         echoCooldown = false;
 
         this.scene.start('menuScene');
-      }
-
-      //Sizzling effects
-      if(this.timeRemain <= 20000){
-        this.sizzling.play();
-        this.sizzleEmitter.start();
       }
 
       // echolocation Mechanic
