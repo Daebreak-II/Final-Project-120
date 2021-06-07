@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
       this.load.image('fog3', './Assets/sprites/fogSprite3.png');
       this.load.image('fog4', './Assets/sprites/fogSprite4.png');
       this.load.image('smell', './Assets/sprites/scentSprite.png');
-      this.load.image('fogOverlay', './Assets/sprites/fogOverlay.png');
+      this.load.image('darkOverlay', './Assets/sprites/darknessOverlay.png');
       this.load.image('cabin', './Assets/sprites/cabinSprite.png');
       this.load.image('river', './Assets/sprites/riverSprite.png');
       this.load.image('rock', './Assets/sprites/rockSprite.png');
@@ -122,7 +122,7 @@ class Play extends Phaser.Scene {
         this.border = this.add.image(0, 0, 'border').setOrigin(0,0).setAlpha(0);
 
         // add overlay
-        this.overlay = this.add.image(0, 0, 'fogOverlay').setOrigin(0.5, 0.5);
+        this.overlay = this.add.image(0, 0, 'darkOverlay').setOrigin(0.5, 0.5);
         this.overlay.setScale(1.1);
         this.overlay.setAlpha(1);
         this.overlay.depth = 4; // temporary, need a way to bring to absolute top
@@ -281,6 +281,7 @@ class Play extends Phaser.Scene {
         this.fogParticle3 = this.add.particles('fog3');
         this.fogParticle4 = this.add.particles('fog4');
         this.smellParticles = this.add.particles('smell');
+        this.smellParticles.setDepth(5);
 
 
         this.fogEmitter1 = this.fogParticle1.createEmitter({
