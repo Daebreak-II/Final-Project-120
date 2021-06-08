@@ -349,13 +349,6 @@ class Tutorial extends Phaser.Scene {
           this.clock = this.time.delayedCall(i * 20, () => {
             this.overlay.setScale(this.overlay.scale + 0.01);
             this.overlay.setAlpha(this.overlay.alpha - 0.01);
-            // groups don't have alphas, so cabin alpha is substituting 
-            // for other current alphas cause they're equal here
-            //this.treeGroup.setAlpha(this.cabin.alpha + 0.02);
-            //this.logGroup.setAlpha(this.cabin.alpha + 0.02);
-            //this.rockGroup.setAlpha(this.cabin.alpha + 0.02);
-            //this.cabin.setAlpha(this.cabin.alpha + 0.02);
-            //this.border.setAlpha(this.border.alpha + 0.02);
           }, null, this);
         }
 
@@ -368,12 +361,6 @@ class Tutorial extends Phaser.Scene {
           this.clock = this.time.delayedCall(i * 20 + 2000, () => {
             this.overlay.setScale(this.overlay.scale - 0.01);
             this.overlay.setAlpha(this.overlay.alpha + 0.01);
-
-            //this.treeGroup.setAlpha(this.cabin.alpha - 0.02);
-            //this.logGroup.setAlpha(this.cabin.alpha - 0.02);
-            //this.rockGroup.setAlpha(this.cabin.alpha - 0.02);
-            //this.cabin.setAlpha(this.cabin.alpha - 0.02);
-            //this.border.setAlpha(this.border.alpha - 0.02);
           }, null, this);
         }
 
@@ -526,15 +513,6 @@ class Tutorial extends Phaser.Scene {
     if(playerMoving && !this.playerWalking.isPlaying) {
       this.playerWalking.play();
     }
-
-
-    // turning on/off multiple step recording
-    // if(preyDistance <= 4000){
-    //   this.preyWalking.setVolume((4000 - preyDistance) / 40000  * volumeMultiplier);
-    //   this.preyWalking.resume();
-    // } else {
-    //   this.preyWalking.pause();
-    // }
     
   }
 }
