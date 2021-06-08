@@ -298,7 +298,7 @@ class Tutorial extends Phaser.Scene {
         this.explain3.setAlpha(0);
         this.explain3.depth = 5;
 
-        this.explain4 = this.add.text(gameWidth/2 + 2700, gameHeight/2 + 200, 'If you want to skip the tutorial\n next time press the enter key', textConfig).setOrigin(0.5,0);
+        this.explain4 = this.add.text(gameWidth/2 + 2700, gameHeight/2 + 200, 'If you want to skip the tutorial\n next time press the enter key\nAnd if you feel like restarting press R', textConfig).setOrigin(0.5,0);
         this.explain4.setAlpha(0);
         this.explain4.depth = 5;
        
